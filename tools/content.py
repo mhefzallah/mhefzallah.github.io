@@ -6,7 +6,6 @@ EMAIL = "mohammed.hefzallah@gmail.com"
 WHATSAPP = "201554463171"
 LINKEDIN = "https://www.linkedin.com/in/mohamed-hefzallah-14297022b/"
 GITHUB = "https://github.com/mhefzallah"
-CV = "assets/Mohammed-Abdullah-CV.pdf"
 
 # --------------------------------------------------------------------------
 # Case studies. Order = order on the home page.
@@ -210,8 +209,8 @@ PROJECTS = [
         "title": ("ERP systems for Saudi operations", "أنظمة ERP لعمليات سعودية"),
         "short": ("HR & payroll · Delivery · Automotive · Government", "موارد بشرية ورواتب · توصيل · سيارات · حكومة"),
         "sector": ("Government · Oil & gas · Construction · Automotive · Logistics · Consulting", "حكومة · نفط وغاز · مقاولات · سيارات · لوجستيات · استشارات"),
-        "role": ("Senior Odoo developer at an Odoo Gold Partner, leading delivery for 9 enterprise environments",
-                 "مطوّر Odoo أول لدى شريك Odoo ذهبي، أقود التسليم لـ ٩ بيئات مؤسسية"),
+        "role": ("Odoo developer — module design, development, migrations and go-live across 9 enterprise environments",
+                 "مطوّر Odoo — تصميم وتطوير الموديولات والترقيات والتشغيل عبر ٩ بيئات مؤسسية"),
         "outcome": ("Odoo systems that run payroll, deliveries, dealerships and government departments.",
                     "أنظمة Odoo تدير الرواتب والتوصيل ووكالات السيارات وإدارات حكومية."),
         "stack": "Odoo 11 – 19 (CE & EE) · Python · OWL · QWeb · PostgreSQL · Odoo.sh · REST/JWT · SMSA · OneStock · Neoleap · Google Drive API",
@@ -246,7 +245,7 @@ PROJECTS = [
             ("Staging-first delivery on Odoo.sh with weekly sprints, code review and user acceptance testing for every client.",
              "تسليم عبر بيئات Odoo.sh التجريبية أولًا، بسبرنتات أسبوعية ومراجعة كود واختبار قبول لكل عميل."),
         ],
-        "results": [("9", "enterprise environments led", "بيئات مؤسسية تحت إدارتي"), ("40+", "HR & payroll modules", "موديول موارد بشرية ورواتب"),
+        "results": [("9", "enterprise environments", "بيئات مؤسسية"), ("40+", "HR & payroll modules", "موديول موارد بشرية ورواتب"),
                     ("−20%", "warehouse return errors", "أخطاء مرتجعات المستودع"), ("15%", "faster critical reports", "تقارير حرجة أسرع")],
         "gallery": [], "mobile": [],
     },

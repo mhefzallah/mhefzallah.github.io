@@ -7,7 +7,7 @@ import os
 from html import escape
 from urllib.parse import quote
 
-from content import (SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, CV, PROJECTS, ARCHIVE)
+from content import (SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
@@ -24,6 +24,7 @@ def wa(text):
 
 MAIL = (f"mailto:{EMAIL}?subject={quote('Project enquiry')}&body="
         + quote("Hi Mohammed,\n\nCompany:\nWhat we need (Odoo / web / mobile):\nTimeline:\nBudget range:\n\nThanks,"))
+CV_REQ = wa("Hi Mohammed, could you share your CV? I found you through your portfolio.")
 CALL = wa("Hi Mohammed, I saw your portfolio and would like to book a 30-minute call about a project.")
 
 KIND_LABEL = {"web": ("Web", "ويب"), "erp": ("Odoo ERP", "Odoo ERP"), "mobile": ("Mobile", "جوال")}
@@ -173,7 +174,7 @@ def footer(prefix):
         <li><a href="{MAIL}">{T("Email", "البريد")}</a></li>
         <li><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="{prefix}{CV}" download>{T("Résumé (PDF)", "السيرة الذاتية PDF")}</a></li>
+        <li><a href="{CV_REQ}" target="_blank" rel="noopener">{T("Request my CV", "اطلب السيرة الذاتية")}</a></li>
       </ul>
     </div>
     <div class="wrap footer__base">
@@ -255,8 +256,8 @@ def home():
       <div class="hero__grid">
         <div class="hero__text">
           <h1 class="display">{T("I build the systems businesses <em>run&nbsp;on.</em>", "أبني الأنظمة التي <em>تُدار بها</em> الأعمال.")}</h1>
-          <p class="lede">{T("Senior Odoo developer and fullstack engineer. For four years I’ve designed, migrated and shipped ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law to booking sites that take live payments.",
-                             "مطوّر Odoo أول ومهندس ويب متكامل. على مدار أربع سنوات صمّمتُ وطوّرتُ وأطلقتُ أنظمة ERP ومنصّات ويب لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي، إلى مواقع حجز تستقبل مدفوعات حقيقية.")}</p>
+          <p class="lede">{T("Odoo ERP developer and fullstack engineer. For four years I’ve designed, migrated and shipped ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law to booking sites that take live payments.",
+                             "مطوّر Odoo ERP ومهندس ويب متكامل. على مدار أربع سنوات صمّمتُ وطوّرتُ وأطلقتُ أنظمة ERP ومنصّات ويب لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي، إلى مواقع حجز تستقبل مدفوعات حقيقية.")}</p>
           <div class="actions">
             <a class="btn btn--ink" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}<span class="arrow" aria-hidden="true">→</span></a>
             <a class="btn btn--line" href="#work">{T("See the work", "شاهد الأعمال")}</a>
@@ -269,15 +270,15 @@ def home():
       </div>
 
       <dl class="ledger">
-        <div><dt>{T("Now", "حاليًا")}</dt><dd>{T("Senior Odoo Developer at QS Solutions, an Odoo Gold Partner", "مطوّر Odoo أول في QS Solutions، شريك Odoo الذهبي")}</dd></div>
+        <div><dt>{T("Now", "حاليًا")}</dt><dd>{T("Odoo Developer at AZM Squad", "مطوّر Odoo في AZM Squad")}</dd></div>
         <div><dt>{T("Certified", "معتمد")}</dt><dd>{T("Odoo Certified Professional (v15)", "شهادة Odoo المعتمدة (الإصدار 15)")}</dd></div>
-        <div><dt>{T("Worked with", "عملت مع")}</dt><dd>QS Solutions · Wasla · AZM Squad · Hayah · Algoriza</dd></div>
+        <div><dt>{T("Clients in", "عملاء في")}</dt><dd>{T("Saudi Arabia · UAE · Egypt", "السعودية · الإمارات · مصر")}</dd></div>
         <div><dt>{T("Sectors", "القطاعات")}</dt><dd>{T("Government, oil &amp; gas, construction, automotive, retail, logistics, tourism, education", "الحكومة، النفط والغاز، المقاولات، السيارات، التجزئة، اللوجستيات، السياحة، التعليم")}</dd></div>
       </dl>
 
       <dl class="stats">
         <div><dt>4<span class="plus">+</span></dt><dd>{T("years building ERP &amp; web products", "سنوات في بناء أنظمة ERP ومنتجات ويب")}</dd></div>
-        <div><dt>9</dt><dd>{T("enterprise Odoo.sh environments led", "بيئات Odoo.sh مؤسسية تحت إدارتي")}</dd></div>
+        <div><dt>9</dt><dd>{T("enterprise Odoo.sh environments delivered", "بيئات Odoo.sh مؤسسية تم تسليمها")}</dd></div>
         <div><dt>63</dt><dd>{T("modules migrated v17 → v19, zero data loss", "موديول نُقلت من v17 إلى v19 دون فقدان بيانات")}</dd></div>
         <div><dt>500<span class="plus">+</span></dt><dd>{T("shipments a day through systems I built", "شحنة يوميًا عبر أنظمة من تطويري")}</dd></div>
       </dl>
@@ -382,7 +383,7 @@ def home():
       <header class="section__head">
         <p class="eyebrow">N° 04</p>
         <h2 class="title">{T("Experience", "الخبرة")}</h2>
-        <p class="section__note"><a class="u" href="{CV}" download>{T("Download résumé (PDF)", "تحميل السيرة الذاتية (PDF)")} ↓</a></p>
+        <p class="section__note"><a class="u" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request my full CV", "اطلب السيرة الذاتية كاملة")} ↗</a></p>
       </header>
       <ol class="timeline">
         {exp_rows()}
@@ -413,17 +414,14 @@ def home():
     </section>
   </main>'''
     title = "Mohammed Abdullah — Odoo ERP & Fullstack Engineer"
-    desc = "Senior Odoo developer and fullstack engineer building ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt."
+    desc = "Odoo ERP developer and fullstack engineer building ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt."
     return head(title, desc, "", "") + masthead("", True) + body + footer("")
 
 
 def exp_rows():
     rows = [
-        (("2026 — now", "٢٠٢٦ — الآن"), ("Senior Odoo Developer", "مطوّر Odoo أول"), "QS Solutions", ("Odoo Gold Partner · leading 9 enterprise environments, $100K+ budgets", "شريك Odoo الذهبي · قيادة ٩ بيئات مؤسسية وميزانيات تتجاوز ١٠٠ ألف دولار"), ("Remote", "عن بُعد")),
-        (("2025 — now", "٢٠٢٥ — الآن"), ("Odoo Developer, part-time", "مطوّر Odoo، دوام جزئي"), "Wasla", ("Sole developer of the v17 → v19 migration", "المطوّر الوحيد لترقية v17 إلى v19"), ("Saudi Arabia", "السعودية")),
-        (("2025 — now", "٢٠٢٥ — الآن"), ("Partner Associate", "شريك تنفيذي"), "AZM Squad", ("Government ERP serving 1,000+ users", "نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم"), ("Saudi Arabia", "السعودية")),
-        (("2025 — now", "٢٠٢٥ — الآن"), ("Freelance Fullstack Developer", "مطوّر ويب متكامل مستقل"), ("Travel, tech &amp; education clients", "عملاء في السياحة والتقنية والتعليم"), ("Booking platforms, corporate sites, learning apps", "منصّات حجز، مواقع شركات، تطبيقات تعليمية"), ("KSA · Egypt", "السعودية · مصر")),
-        (("2026", "٢٠٢٦"), ("Odoo Developer, contract", "مطوّر Odoo، عقد"), "Hayah", ("Delivery operations for 500+ shipments a day", "عمليات توصيل لأكثر من ٥٠٠ شحنة يوميًا"), ("Dubai", "دبي")),
+        (("2025 — now", "٢٠٢٥ — الآن"), ("Odoo Developer", "مطوّر Odoo"), "AZM Squad", ("Government ERP serving 1,000+ users across 10+ departments", "نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم في أكثر من ١٠ إدارات"), ("Saudi Arabia · remote", "السعودية · عن بُعد")),
+        (("2025 — now", "٢٠٢٥ — الآن"), ("Independent ERP &amp; Fullstack Consultant", "مستشار ERP ومطوّر ويب مستقل"), ("Self-employed", "عمل حر"), ("Odoo migrations, Saudi HR &amp; payroll, delivery operations, booking platforms and learning apps", "ترقيات Odoo، موارد بشرية ورواتب سعودية، عمليات توصيل، منصّات حجز وتطبيقات تعليمية"), ("KSA · UAE · Egypt", "السعودية · الإمارات · مصر")),
         (("2022 — 2025", "٢٠٢٢ — ٢٠٢٥"), ("Odoo Developer", "مطوّر Odoo"), "Algoriza", ("10+ modules for Saudi logistics &amp; e-commerce", "أكثر من ١٠ موديولات للوجستيات والتجارة الإلكترونية في السعودية"), ("Remote", "عن بُعد")),
         (("2022", "٢٠٢٢"), ("Junior Odoo Developer", "مطوّر Odoo مبتدئ"), "Algoriza", ("5 modules shipped to production as an intern", "٥ موديولات على الإنتاج خلال فترة التدريب"), ("Remote", "عن بُعد")),
     ]
