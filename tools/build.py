@@ -139,9 +139,9 @@ def masthead(prefix, home):
   <a class="skip" href="#main">{T("Skip to content", "انتقل إلى المحتوى")}</a>
   <header class="masthead">
     <div class="wrap masthead__row">
-      <a class="mark" href="{prefix}index.html" aria-label="Mohammed Abdullah — home">
+      <a class="mark" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
         <span class="mark__mono">M<i>.</i>A</span>
-        <span class="mark__name">{T("Mohammed Abdullah", "محمد عبدالله")}</span>
+        <span class="mark__name">{T("Mohammed Hefzallah", "محمد حفظ الله")}</span>
       </a>
       <nav class="nav" aria-label="Main">
         <a href="{h}#work">{T("Work", "الأعمال")}</a>
@@ -178,7 +178,7 @@ def footer(prefix):
       </ul>
     </div>
     <div class="wrap footer__base">
-      <p>© <span data-year>2026</span> {T("Mohammed Abdullah", "محمد عبدالله")} · {T("2026 Edition", "إصدار ٢٠٢٦")}</p>
+      <p>© <span data-year>2026</span> {T("Mohammed Hefzallah", "محمد حفظ الله")} · {T("2026 Edition", "إصدار ٢٠٢٦")}</p>
       <p class="colophon">{T("Set in Fraunces &amp; IBM Plex. Built with plain HTML, CSS and a little JavaScript.", "بخطوط Fraunces وIBM Plex. مبني بـ HTML وCSS وقليل من JavaScript.")}</p>
       <p><a class="u" href="#main">{T("Back to top", "للأعلى")} ↑</a></p>
     </div>
@@ -264,8 +264,8 @@ def home():
           </div>
         </div>
         <figure class="portrait">
-          <div class="portrait__frame"><img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Abdullah" fetchpriority="high"></div>
-          <figcaption><span>{T("Mohammed Abdullah", "محمد عبدالله")}</span><span>{T("Cairo, Egypt", "القاهرة، مصر")}</span></figcaption>
+          <div class="portrait__frame"><img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high"></div>
+          <figcaption><span>{T("Mohammed Hefzallah", "محمد حفظ الله")}</span><span>{T("Cairo, Egypt", "القاهرة، مصر")}</span></figcaption>
         </figure>
       </div>
 
@@ -407,13 +407,13 @@ def home():
         <div class="contact__links">
           <button class="big-link" type="button" data-copy="{EMAIL}"><span class="big-link__label">{T("Email — click to copy", "البريد — اضغط للنسخ")}</span><span class="big-link__value" dir="ltr">{EMAIL}</span><span class="copied" aria-live="polite"></span></button>
           <a class="big-link" href="{CALL}" target="_blank" rel="noopener"><span class="big-link__label">WhatsApp</span><span class="big-link__value" dir="ltr">+20 155 446 3171</span></a>
-          <a class="big-link" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="big-link__label">LinkedIn</span><span class="big-link__value" dir="ltr">in/mohamed-hefzallah</span></a>
+          <a class="big-link" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="big-link__label">LinkedIn</span><span class="big-link__value" dir="ltr">in/mhefzallah</span></a>
           <a class="big-link" href="{GITHUB}" target="_blank" rel="noopener"><span class="big-link__label">GitHub</span><span class="big-link__value" dir="ltr">@mhefzallah</span></a>
         </div>
       </div>
     </section>
   </main>'''
-    title = "Mohammed Abdullah — Odoo ERP & Fullstack Engineer"
+    title = "Mohammed Hefzallah — Odoo ERP & Fullstack Engineer"
     desc = "Odoo ERP developer and fullstack engineer building ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt."
     return head(title, desc, "", "") + masthead("", True) + body + footer("")
 
@@ -522,7 +522,7 @@ def case(i, p):
       </a>
     </div>
   </main>'''
-    title = f'{p["title"][0]} — Mohammed Abdullah'
+    title = f'{p["title"][0]} — Mohammed Hefzallah'
     return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre) + masthead(pre, False) + body + footer(pre)
 
 

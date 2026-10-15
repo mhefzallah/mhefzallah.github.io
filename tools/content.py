@@ -4,7 +4,7 @@
 SITE = "https://mhefzallah.github.io"
 EMAIL = "mohammed.hefzallah@gmail.com"
 WHATSAPP = "201554463171"
-LINKEDIN = "https://www.linkedin.com/in/mohamed-hefzallah-14297022b/"
+LINKEDIN = "https://www.linkedin.com/in/mhefzallah/"
 GITHUB = "https://github.com/mhefzallah"
 
 # --------------------------------------------------------------------------
