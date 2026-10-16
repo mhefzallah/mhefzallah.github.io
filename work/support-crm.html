@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr" data-lang="en" data-theme="paper">
+<html lang="en" dir="ltr" data-lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Customer support CRM with an AI co-pilot — Mohammed Hefzallah</title>
   <meta name="description" content="A complete bilingual help desk covering a 12-part requirements brief.">
-  <meta name="theme-color" content="#F3EFE6">
+  <meta name="theme-color" content="#0B5D4B">
   <link rel="canonical" href="https://mhefzallah.github.io/work/support-crm.html">
   <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/work/support-crm.html?lang=en">
   <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/work/support-crm.html?lang=ar">
@@ -20,16 +20,15 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/style.css">
   <script>
     (function () {
-      var r = document.documentElement, q = new URLSearchParams(location.search), s = {};
-      try { s.l = localStorage.getItem('lang'); s.t = localStorage.getItem('theme'); } catch (e) {}
-      var l = q.get('lang') || s.l || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
+      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
+      try { s = localStorage.getItem('lang'); } catch (e) {}
+      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
       if (l !== 'ar' && l !== 'en') l = 'en';
-      var t = s.t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper');
-      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l; r.dataset.theme = t;
+      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
       r.classList.add('js');
     })();
   </script>
@@ -38,105 +37,96 @@
   <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="ar">انتقل إلى المحتوى</span></a>
   <header class="masthead">
     <div class="wrap masthead__row">
-      <a class="mark" href="../index.html" aria-label="Mohammed Hefzallah — home">
-        <span class="mark__mono">M<i>.</i>A</span>
-        <span class="mark__name"><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></span>
+      <a class="brand" href="../index.html" aria-label="Mohammed Hefzallah — home">
+        <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
+        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Odoo ERP · Fullstack</span><span lang="ar">Odoo ERP · ويب متكامل</span></small></span>
       </a>
       <nav class="nav" aria-label="Main">
-        <a href="../#work"><span lang="en">Work</span><span lang="ar">الأعمال</span></a>
-        <a href="../#services"><span lang="en">Services</span><span lang="ar">الخدمات</span></a>
-        <a href="../#experience"><span lang="en">Experience</span><span lang="ar">الخبرة</span></a>
-        <a href="../#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
-        <span class="nav__bar" aria-hidden="true"></span>
+        <a href="../index.html#work"><span lang="en">Work</span><span lang="ar">الأعمال</span></a>
+        <a href="../index.html#services"><span lang="en">Services</span><span lang="ar">الخدمات</span></a>
+        <a href="../index.html#experience"><span lang="en">Experience</span><span lang="ar">الخبرة</span></a>
+        <a href="../index.html#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
       </nav>
       <div class="tools">
-        <span class="clock" title="Cairo time"><span class="clock__dot" aria-hidden="true"></span><span data-clock>--:--</span> <span lang="en">Cairo</span><span lang="ar">القاهرة</span></span>
-        <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>
-        </button>
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">عربي</span><span lang="ar">English</span></button>
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">العربية</span><span lang="ar">English</span></button>
+        <a class="btn btn--gold btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a call</span><span lang="ar">احجز مكالمة</span></a>
       </div>
     </div>
   </header>
   <main id="main" class="casepage">
-    <div class="wrap">
-      <a class="back u" href="../index.html#work">← <span lang="en">All work</span><span lang="ar">كل الأعمال</span></a>
-      <header class="case-head">
-        <p class="strip mono"><span><span lang="en">Web</span><span lang="ar">ويب</span></span><span><span lang="en">Software services · KSA</span><span lang="ar">خدمات برمجية · السعودية</span></span><span>2026</span></p>
+    <section class="case-hero">
+      <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+      <div class="wrap">
+        <a class="back" href="../index.html#work"><span lang="en">← All work</span><span lang="ar">→ كل الأعمال</span></a>
+        <div class="case-hero__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="tag tag--line"><span lang="en">Software services · KSA</span><span lang="ar">خدمات برمجية · السعودية</span></span><span class="tag tag--line" dir="ltr">2026</span></div>
         <h1 class="case-title"><span lang="en">Customer support CRM with an AI co-pilot</span><span lang="ar">نظام دعم فني وخدمة عملاء بمساعد ذكي</span></h1>
         <p class="case-out"><span lang="en">A complete bilingual help desk covering a 12-part requirements brief.</span><span lang="ar">منصّة دعم فني ثنائية اللغة تغطي متطلبات من ١٢ قسمًا بالكامل.</span></p>
-      </header>
-      <div class="case-hero reveal"><div class="cover"><img class="" src="../assets/work/crm-dashboard.webp" width="1440" height="900" alt="Customer support CRM with an AI co-pilot"></div></div>
-
+      </div>
+    </section>
+    <div class="wrap">
+      <div class="case-cover reveal"><div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/work/crm-dashboard.webp" width="1440" height="900" alt="Customer support CRM with an AI co-pilot"></div></div>
       <div class="case-grid">
         <aside class="case-meta">
           <dl>
             <div><dt><span lang="en">Role</span><span lang="ar">الدور</span></dt><dd><span lang="en">Fullstack developer — Django API, React app, AI features</span><span lang="ar">مطوّر متكامل — Django API وتطبيق React ومزايا الذكاء الاصطناعي</span></dd></div>
-            <div><dt><span lang="en">Year</span><span lang="ar">السنة</span></dt><dd>2026</dd></div>
-            <div><dt><span lang="en">Built with</span><span lang="ar">التقنيات</span></dt><dd class="mono stack">Django 5 · Django REST Framework · SimpleJWT · PostgreSQL · React · TypeScript · Vite · Tailwind · i18next · OpenAPI</dd></div>
+            <div><dt><span lang="en">Year</span><span lang="ar">السنة</span></dt><dd dir="ltr">2026</dd></div>
+            <div><dt><span lang="en">Built with</span><span lang="ar">التقنيات</span></dt><dd class="stack" dir="ltr">Django 5 · Django REST Framework · SimpleJWT · PostgreSQL · React · TypeScript · Vite · Tailwind · i18next · OpenAPI</dd></div>
             
           </dl>
-          <a class="btn btn--ink btn--block" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Need something similar?</span><span lang="ar">تحتاج شيئًا مشابهًا؟</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--primary btn--block" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Need something similar?</span><span lang="ar">تحتاج شيئًا مشابهًا؟</span></a>
         </aside>
         <div class="case-body">
-          <section class="block reveal">
-            <h2 class="block__h"><span lang="en">Context</span><span lang="ar">السياق</span></h2>
-            <p class="prose"><span lang="en">A Saudi software consultancy needed one place for customer tickets across email, WhatsApp, live chat, SMS and web forms — with SLA tracking, a knowledge base and a self-service portal, in Arabic and English.</span><span lang="ar">احتاجت شركة استشارات برمجية سعودية مكانًا واحدًا لتذاكر العملاء من البريد وواتساب والمحادثة المباشرة والرسائل والنماذج — مع تتبّع SLA وقاعدة معرفة وبوابة خدمة ذاتية، بالعربية والإنجليزية.</span></p>
-          </section>
-          <section class="block">
-            <h2 class="block__h reveal"><span lang="en">What I built</span><span lang="ar">ما الذي بنيته</span></h2>
-            <ol class="did"><li class="reveal"><span class="mono">01</span><div><h4><span lang="en">Agent workspace</span><span lang="ar">مساحة عمل الموظف</span></h4><p><span lang="en">Ticket queue, customer 360° profile, internal notes and escalation.</span><span lang="ar">قائمة التذاكر، ملف العميل الشامل ٣٦٠°، الملاحظات الداخلية والتصعيد.</span></p></div></li><li class="reveal"><span class="mono">02</span><div><h4><span lang="en">AI co-pilot</span><span lang="ar">المساعد الذكي</span></h4><p><span lang="en">One-click ticket summaries, suggested replies, auto-classification and a support chatbot.</span><span lang="ar">تلخيص التذاكر بضغطة، اقتراح الردود، التصنيف التلقائي، وبوت دعم تفاعلي.</span></p></div></li><li class="reveal"><span class="mono">03</span><div><h4><span lang="en">SLA & automation</span><span lang="ar">SLA والأتمتة</span></h4><p><span lang="en">Response and resolution timers with breach alerts and escalation rules.</span><span lang="ar">مؤقتات للرد والحل مع تنبيهات التجاوز وقواعد التصعيد.</span></p></div></li><li class="reveal"><span class="mono">04</span><div><h4><span lang="en">Customer portal</span><span lang="ar">بوابة العميل</span></h4><p><span lang="en">Submit and follow tickets, search the knowledge base, rate support (CSAT).</span><span lang="ar">إنشاء التذاكر ومتابعتها، البحث في قاعدة المعرفة، وتقييم الخدمة (CSAT).</span></p></div></li><li class="reveal"><span class="mono">05</span><div><h4><span lang="en">Manager dashboard</span><span lang="ar">لوحة المدير</span></h4><p><span lang="en">KPIs, SLA compliance and team performance, with role-based access for admin, manager, agent and customer.</span><span lang="ar">مؤشرات الأداء والتزام SLA وأداء الفريق، مع صلاحيات للأدمن والمدير والموظف والعميل.</span></p></div></li></ol>
-          </section>
-          
-        <section class="block reveal">
-          <h2 class="block__h"><span lang="en">Key decisions</span><span lang="ar">قرارات أساسية</span></h2>
-          <ul class="decisions"><li><span lang="en">A documented REST API (OpenAPI) first, so WhatsApp, email and future channels plug into the same ticket model.</span><span lang="ar">بناء REST API موثّق (OpenAPI) أولًا، لتتصل قنوات واتساب والبريد وأي قناة مستقبلية بنفس نموذج التذاكر.</span></li><li><span lang="en">Full RTL/LTR switching at runtime with i18next instead of two separate front-ends.</span><span lang="ar">تبديل كامل بين RTL وLTR أثناء التشغيل عبر i18next بدل واجهتين منفصلتين.</span></li></ul>
-        </section>
-          
-        <section class="block reveal">
-          <h2 class="block__h"><span lang="en">Results</span><span lang="ar">النتائج</span></h2>
-          <dl class="results"><div><dt>12/12</dt><dd><span lang="en">brief sections delivered</span><span lang="ar">قسمًا من المتطلبات منفّذة</span></dd></div><div><dt>4</dt><dd><span lang="en">roles with their own views</span><span lang="ar">أدوار بواجهات مخصّصة</span></dd></div><div><dt>AR/EN</dt><dd><span lang="en">full RTL & LTR</span><span lang="ar">دعم كامل RTL وLTR</span></dd></div></dl>
-        </section>
+          <section class="block reveal"><h2 class="block__h"><span lang="en">Context</span><span lang="ar">السياق</span></h2><p class="prose"><span lang="en">A Saudi software consultancy needed one place for customer tickets across email, WhatsApp, live chat, SMS and web forms — with SLA tracking, a knowledge base and a self-service portal, in Arabic and English.</span><span lang="ar">احتاجت شركة استشارات برمجية سعودية مكانًا واحدًا لتذاكر العملاء من البريد وواتساب والمحادثة المباشرة والرسائل والنماذج — مع تتبّع SLA وقاعدة معرفة وبوابة خدمة ذاتية، بالعربية والإنجليزية.</span></p></section>
+          <section class="block"><h2 class="block__h reveal"><span lang="en">What I built</span><span lang="ar">ما الذي بنيته</span></h2><ol class="steps"><li class="step reveal"><span class="step__n" dir="ltr">01</span><div><h4><span lang="en">Agent workspace</span><span lang="ar">مساحة عمل الموظف</span></h4><p><span lang="en">Ticket queue, customer 360° profile, internal notes and escalation.</span><span lang="ar">قائمة التذاكر، ملف العميل الشامل ٣٦٠°، الملاحظات الداخلية والتصعيد.</span></p></div></li><li class="step reveal"><span class="step__n" dir="ltr">02</span><div><h4><span lang="en">AI co-pilot</span><span lang="ar">المساعد الذكي</span></h4><p><span lang="en">One-click ticket summaries, suggested replies, auto-classification and a support chatbot.</span><span lang="ar">تلخيص التذاكر بضغطة، اقتراح الردود، التصنيف التلقائي، وبوت دعم تفاعلي.</span></p></div></li><li class="step reveal"><span class="step__n" dir="ltr">03</span><div><h4><span lang="en">SLA & automation</span><span lang="ar">SLA والأتمتة</span></h4><p><span lang="en">Response and resolution timers with breach alerts and escalation rules.</span><span lang="ar">مؤقتات للرد والحل مع تنبيهات التجاوز وقواعد التصعيد.</span></p></div></li><li class="step reveal"><span class="step__n" dir="ltr">04</span><div><h4><span lang="en">Customer portal</span><span lang="ar">بوابة العميل</span></h4><p><span lang="en">Submit and follow tickets, search the knowledge base, rate support (CSAT).</span><span lang="ar">إنشاء التذاكر ومتابعتها، البحث في قاعدة المعرفة، وتقييم الخدمة (CSAT).</span></p></div></li><li class="step reveal"><span class="step__n" dir="ltr">05</span><div><h4><span lang="en">Manager dashboard</span><span lang="ar">لوحة المدير</span></h4><p><span lang="en">KPIs, SLA compliance and team performance, with role-based access for admin, manager, agent and customer.</span><span lang="ar">مؤشرات الأداء والتزام SLA وأداء الفريق، مع صلاحيات للأدمن والمدير والموظف والعميل.</span></p></div></li></ol></section>
+          <section class="block reveal"><h2 class="block__h"><span lang="en">Key decisions</span><span lang="ar">قرارات أساسية</span></h2>
+          <ul class="decisions"><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span lang="en">A documented REST API (OpenAPI) first, so WhatsApp, email and future channels plug into the same ticket model.</span><span lang="ar">بناء REST API موثّق (OpenAPI) أولًا، لتتصل قنوات واتساب والبريد وأي قناة مستقبلية بنفس نموذج التذاكر.</span></span></li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><span lang="en">Full RTL/LTR switching at runtime with i18next instead of two separate front-ends.</span><span lang="ar">تبديل كامل بين RTL وLTR أثناء التشغيل عبر i18next بدل واجهتين منفصلتين.</span></span></li></ul></section>
+          <section class="block reveal"><h2 class="block__h"><span lang="en">Results</span><span lang="ar">النتائج</span></h2>
+          <dl class="results"><div><dt dir="ltr">12/12</dt><dd><span lang="en">brief sections delivered</span><span lang="ar">قسمًا من المتطلبات منفّذة</span></dd></div><div><dt dir="ltr">4</dt><dd><span lang="en">roles with their own views</span><span lang="ar">أدوار بواجهات مخصّصة</span></dd></div><div><dt dir="ltr">AR/EN</dt><dd><span lang="en">full RTL & LTR</span><span lang="ar">دعم كامل RTL وLTR</span></dd></div></dl></section>
         </div>
       </div>
-      
-        <section class="block">
-          <h2 class="block__h reveal"><span lang="en">Gallery</span><span lang="ar">معرض الصور</span></h2>
-          <div class="gallery"><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img class="" src="../assets/work/crm-workspace.webp" width="1440" height="900" alt="Agent workspace with the AI co-pilot" loading="lazy" decoding="async"></button><figcaption><span class="mono">Fig. 1</span> <span lang="en">Agent workspace with the AI co-pilot</span><span lang="ar">مساحة الموظف مع المساعد الذكي</span></figcaption></figure><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img class="" src="../assets/work/crm-portal.webp" width="1440" height="900" alt="Customer self-service portal" loading="lazy" decoding="async"></button><figcaption><span class="mono">Fig. 2</span> <span lang="en">Customer self-service portal</span><span lang="ar">بوابة الخدمة الذاتية للعملاء</span></figcaption></figure><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img class="" src="../assets/work/crm-login.webp" width="1440" height="900" alt="Sign-in with role-based demo access" loading="lazy" decoding="async"></button><figcaption><span class="mono">Fig. 3</span> <span lang="en">Sign-in with role-based demo access</span><span lang="ar">تسجيل الدخول مع حسابات تجريبية حسب الدور</span></figcaption></figure></div>
-          
-        </section>
-
+    </div>
+    <section class="gallery-wrap"><div class="wrap">
+          <h2 class="block__h"><span lang="en">Gallery</span><span lang="ar">معرض الصور</span></h2>
+          <div class="gallery"><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img src="../assets/work/crm-workspace.webp" width="1440" height="900" alt="Agent workspace with the AI co-pilot" loading="lazy" decoding="async"></button><figcaption><span lang="en">Agent workspace with the AI co-pilot</span><span lang="ar">مساحة الموظف مع المساعد الذكي</span></figcaption></figure><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img src="../assets/work/crm-portal.webp" width="1440" height="900" alt="Customer self-service portal" loading="lazy" decoding="async"></button><figcaption><span lang="en">Customer self-service portal</span><span lang="ar">بوابة الخدمة الذاتية للعملاء</span></figcaption></figure><figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge"><img src="../assets/work/crm-login.webp" width="1440" height="900" alt="Sign-in with role-based demo access" loading="lazy" decoding="async"></button><figcaption><span lang="en">Sign-in with role-based demo access</span><span lang="ar">تسجيل الدخول مع حسابات تجريبية حسب الدور</span></figcaption></figure></div></div></section>
+    <div class="wrap">
       <a class="next reveal" href="ag-academy.html">
-        <span class="mono muted"><span lang="en">Next case study</span><span lang="ar">دراسة الحالة التالية</span></span>
-        <span class="next__title"><span lang="en">AG Academy — a learning platform with Android & iOS apps</span><span lang="ar">أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span> <span class="arrow" aria-hidden="true">→</span></span>
+        <span class="kicker"><span lang="en">Next case study</span><span lang="ar">دراسة الحالة التالية</span></span>
+        <span class="next__title"><span lang="en">AG Academy — a learning platform with Android & iOS apps</span><span lang="ar">أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
   </main>
-  <footer class="footer">
-    <div class="wrap footer__grid">
+  <section class="cta" id="contact">
+    <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+    <div class="wrap cta__grid">
       <div>
-        <p class="footer__big"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه — أو إصلاحه؟</span></p>
-        <a class="btn btn--ink" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span><span class="arrow" aria-hidden="true">→</span></a>
+        <p class="kicker kicker--gold"><span lang="en">Let’s work together</span><span lang="ar">لنعمل معًا</span></p>
+        <h2 class="cta__title"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه أو تطويره؟</span></h2>
+        <p class="cta__lede"><span lang="en">Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.</span><span lang="ar">أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
+        <div class="cta__actions">
+          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
+          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span lang="en">Send a project brief</span><span lang="ar">أرسل وصف المشروع</span></a>
+        </div>
       </div>
-      <ul class="footer__links">
-        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener">WhatsApp</a></li>
-        <li><a href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><span lang="en">Email</span><span lang="ar">البريد</span></a></li>
-        <li><a href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/mhefzallah" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request my CV</span><span lang="ar">اطلب السيرة الذاتية</span></a></li>
+      <ul class="contact-list">
+        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span lang="en">Email · click to copy</span><span lang="ar">البريد · اضغط للنسخ</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><a class="contact-item" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
+        <li><a class="contact-item" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
+        <li><a class="contact-item" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
       </ul>
     </div>
-    <div class="wrap footer__base">
-      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span> · <span lang="en">2026 Edition</span><span lang="ar">إصدار ٢٠٢٦</span></p>
-      <p class="colophon"><span lang="en">Set in Fraunces &amp; IBM Plex. Built with plain HTML, CSS and a little JavaScript.</span><span lang="ar">بخطوط Fraunces وIBM Plex. مبني بـ HTML وCSS وقليل من JavaScript.</span></p>
-      <p><a class="u" href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
+  </section>
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></p>
+      <p><span lang="en">Cairo · Working with KSA, UAE &amp; Europe</span><span lang="ar">القاهرة · أعمل مع السعودية والإمارات وأوروبا</span> · <span data-clock>--:--</span></p>
+      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request CV</span><span lang="ar">اطلب السيرة الذاتية</span></a> · <a href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>
     <button class="lightbox__close" type="button" aria-label="Close">×</button>
-    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">←</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">‹</button>
     <figure><img alt=""><figcaption></figcaption></figure>
-    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">→</button>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">›</button>
   </div>
   <script src="../assets/main.js" defer></script>
 </body>

@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 """Build the static portfolio: index.html + work/<slug>.html.
 
+Design: "Vision 2030" — emerald + gold, Alexandria headings, IBM Plex Sans Arabic text.
 Run:  python3 tools/build.py
 """
 import os
 from html import escape
 from urllib.parse import quote
 
-from content import (SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE)
+from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE
+from diagrams import diagram
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
 
 
 def T(en, ar, tag="span"):
@@ -29,65 +30,31 @@ CALL = wa("Hi Mohammed, I saw your portfolio and would like to book a 30-minute 
 
 KIND_LABEL = {"web": ("Web", "ويب"), "erp": ("Odoo ERP", "Odoo ERP"), "mobile": ("Mobile", "جوال")}
 
-# ----------------------------------------------------------------------------
-# Diagrams (inline SVG, themed through CSS variables)
-# ----------------------------------------------------------------------------
+# small inline icons (stroke = currentColor)
+ICON = {
+    "arrow": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    "erp": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>',
+    "upgrade": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/><path d="M5 21h14"/></svg>',
+    "web": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg>',
+    "wa": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg>',
+    "mail": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    "in": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>',
+    "gh": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
+    "check": '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+}
 
-def diagram(name):
-    if name == "migration":
-        steps = [("01", "Audit", "مراجعة", "63 modules"), ("02", "Rewrite", "إعادة كتابة", "ORM · XML · OWL"),
-                 ("03", "Validate", "تحقق", "Odoo.sh staging"), ("04", "Release", "إطلاق", "Zero data loss")]
-        cells = []
-        for i, (n, en, ar, sub) in enumerate(steps):
-            x = 40 + i * 190
-            cells.append(f'''
-      <g transform="translate({x} 150)">
-        <rect width="160" height="120" class="d-box{' d-box--accent' if i == 3 else ''}"/>
-        <text x="14" y="26" class="d-mono">{n}</text>
-        <text x="14" y="70" class="d-title"><tspan lang="en">{en}</tspan><tspan lang="ar">{ar}</tspan></text>
-        <text x="14" y="98" class="d-mono">{sub}</text>
-      </g>''')
-            if i < 3:
-                cells.append(f'<path d="M{x + 166} 210 h18" class="d-line" marker-end="url(#arr)"/>')
-        mods = ["POS", "ZATCA", "Telr", "HR", "Website", "Inventory", "Accounting", "Reports"]
-        chips = "".join(
-            f'<g transform="translate({40 + i * 95} 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">{m}</text></g>'
-            for i, m in enumerate(mods))
-        return f'''<svg class="diagram" viewBox="0 0 800 400" role="img" aria-label="Migration process: audit, rewrite, validate, release">
-      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
-      <text x="40" y="70" class="d-big">v17</text>
-      <path d="M150 58 h110" class="d-line" marker-end="url(#arr)"/>
-      <text x="280" y="70" class="d-big d-accent">v19</text>
-      <text x="40" y="110" class="d-mono">FIG. — MIGRATION PIPELINE</text>
-      {''.join(cells)}
-      {chips}
-    </svg>'''
-    if name == "erp":
-        mods = [("HR & Payroll", "الموارد البشرية", -90), ("Accounting · ZATCA", "المحاسبة · ZATCA", -30),
-                ("POS & Retail", "نقاط البيع", 30), ("Inventory · WMS", "المخزون", 90),
-                ("Fleet · Automotive", "السيارات", 150), ("Approvals · Purchase", "الموافقات", 210)]
-        import math
-        cx, cy = 400, 235
-        nodes = []
-        for en, ar, deg in mods:
-            a = math.radians(deg)
-            x, y = cx + 175 * math.cos(a), cy + 120 * math.sin(a)
-            nodes.append(f'<path d="M{cx} {cy} L{x:.0f} {y:.0f}" class="d-line d-line--thin"/>')
-            nodes.append(f'<g transform="translate({x - 80:.0f} {y - 17:.0f})"><rect width="160" height="34" class="d-chip d-chip--solid"/>'
-                         f'<text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">{en}</tspan><tspan lang="ar">{ar}</tspan></text></g>')
-        ints = ["SMSA", "OneStock", "Neoleap", "Telr", "PayTabs", "Google Drive", "REST · JWT", "ZATCA"]
-        ring = "".join(
-            f'<text x="{cx + 340 * math.cos(math.radians(-67.5 + i * 45)):.0f}" y="{cy + 200 * math.sin(math.radians(-67.5 + i * 45)) + 4:.0f}" text-anchor="middle" class="d-mono">{n}</text>'
-            for i, n in enumerate(ints))
-        return f'''<svg class="diagram" viewBox="0 0 800 470" role="img" aria-label="Odoo core with HR, accounting, POS, inventory, automotive and approvals modules, plus integrations">
-      <ellipse cx="{cx}" cy="{cy}" rx="340" ry="200" class="d-ring"/>
-      {''.join(nodes)}
-      <circle cx="{cx}" cy="{cy}" r="46" class="d-core"/>
-      <text x="{cx}" y="{cy + 8}" text-anchor="middle" class="d-core-t">odoo</text>
-      {ring}
-      <text x="24" y="28" class="d-mono">FIG. — MODULES &amp; INTEGRATIONS</text>
-    </svg>'''
-    return ""
+# 8-point star pattern used on dark sections
+PATTERN = ('<svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse">'
+           '<path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/>'
+           '<rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/>'
+           '</pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>')
+
+STATS = [
+    ("17", "Odoo client projects in the last 21 months", "مشروع Odoo لعملاء خلال آخر ٢١ شهرًا"),
+    ("1,900+", "commits across 347 working days", "commit على مدار ٣٤٧ يوم عمل"),
+    ("120+", "modules delivered — built or integrated", "موديول تم تسليمه — تطويرًا أو تكاملًا"),
+    ("11 → 19", "every Odoo version from 11 to 19", "كل إصدارات Odoo من ١١ إلى ١٩"),
+]
 
 
 # ----------------------------------------------------------------------------
@@ -97,13 +64,13 @@ def diagram(name):
 def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
     url = SITE + "/" + path
     return f'''<!doctype html>
-<html lang="en" dir="ltr" data-lang="en" data-theme="paper">
+<html lang="en" dir="ltr" data-lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{escape(title_en)}</title>
   <meta name="description" content="{escape(desc)}">
-  <meta name="theme-color" content="#F3EFE6">
+  <meta name="theme-color" content="#0B5D4B">
   <link rel="canonical" href="{url}">
   <link rel="alternate" hreflang="en" href="{url}?lang=en">
   <link rel="alternate" hreflang="ar" href="{url}?lang=ar">
@@ -118,16 +85,15 @@ def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
   <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{prefix}assets/style.css">
   <script>
     (function () {{
-      var r = document.documentElement, q = new URLSearchParams(location.search), s = {{}};
-      try {{ s.l = localStorage.getItem('lang'); s.t = localStorage.getItem('theme'); }} catch (e) {{}}
-      var l = q.get('lang') || s.l || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
+      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
+      try {{ s = localStorage.getItem('lang'); }} catch (e) {{}}
+      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
       if (l !== 'ar' && l !== 'en') l = 'en';
-      var t = s.t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper');
-      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l; r.dataset.theme = t;
+      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
       r.classList.add('js');
     }})();
   </script>
@@ -135,29 +101,25 @@ def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
 
 
 def masthead(prefix, home):
-    h = "" if home else prefix
+    h = "" if home else prefix + "index.html"
     return f'''
 <body>
   <a class="skip" href="#main">{T("Skip to content", "انتقل إلى المحتوى")}</a>
   <header class="masthead">
     <div class="wrap masthead__row">
-      <a class="mark" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
-        <span class="mark__mono">M<i>.</i>A</span>
-        <span class="mark__name">{T("Mohammed Hefzallah", "محمد حفظ الله")}</span>
+      <a class="brand" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
+        <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
+        <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Odoo ERP · Fullstack", "Odoo ERP · ويب متكامل")}</small></span>
       </a>
       <nav class="nav" aria-label="Main">
         <a href="{h}#work">{T("Work", "الأعمال")}</a>
         <a href="{h}#services">{T("Services", "الخدمات")}</a>
         <a href="{h}#experience">{T("Experience", "الخبرة")}</a>
         <a href="{h}#contact">{T("Contact", "تواصل")}</a>
-        <span class="nav__bar" aria-hidden="true"></span>
       </nav>
       <div class="tools">
-        <span class="clock" title="Cairo time"><span class="clock__dot" aria-hidden="true"></span><span data-clock>--:--</span> {T("Cairo", "القاهرة")}</span>
-        <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>
-        </button>
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language">{T("عربي", "English")}</button>
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language">{T("العربية", "English")}</button>
+        <a class="btn btn--gold btn--sm" href="{CALL}" target="_blank" rel="noopener">{T("Book a call", "احجز مكالمة")}</a>
       </div>
     </div>
   </header>'''
@@ -165,31 +127,38 @@ def masthead(prefix, home):
 
 def footer(prefix):
     return f'''
-  <footer class="footer">
-    <div class="wrap footer__grid">
+  <section class="cta" id="contact">
+    {PATTERN}
+    <div class="wrap cta__grid">
       <div>
-        <p class="footer__big">{T("Have a system to build — or fix?", "عندك نظام تريد بناءه — أو إصلاحه؟")}</p>
-        <a class="btn btn--ink" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}<span class="arrow" aria-hidden="true">→</span></a>
+        <p class="kicker kicker--gold">{T("Let’s work together", "لنعمل معًا")}</p>
+        <h2 class="cta__title">{T("Have a system to build — or fix?", "عندك نظام تريد بناءه أو تطويره؟")}</h2>
+        <p class="cta__lede">{T("Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.", "أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.")}</p>
+        <div class="cta__actions">
+          <a class="btn btn--gold" href="{CALL}" target="_blank" rel="noopener">{ICON["wa"]}{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}</a>
+          <a class="btn btn--ghost" href="{MAIL}">{ICON["mail"]}{T("Send a project brief", "أرسل وصف المشروع")}</a>
+        </div>
       </div>
-      <ul class="footer__links">
-        <li><a href="{CALL}" target="_blank" rel="noopener">WhatsApp</a></li>
-        <li><a href="{MAIL}">{T("Email", "البريد")}</a></li>
-        <li><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="{CV_REQ}" target="_blank" rel="noopener">{T("Request my CV", "اطلب السيرة الذاتية")}</a></li>
+      <ul class="contact-list">
+        <li><button type="button" class="contact-item" data-copy="{EMAIL}">{ICON["mail"]}<span><small>{T("Email · click to copy", "البريد · اضغط للنسخ")}</small><b dir="ltr">{EMAIL}</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><a class="contact-item" href="{CALL}" target="_blank" rel="noopener">{ICON["wa"]}<span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
+        <li><a class="contact-item" href="{LINKEDIN}" target="_blank" rel="noopener">{ICON["in"]}<span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
+        <li><a class="contact-item" href="{GITHUB}" target="_blank" rel="noopener">{ICON["gh"]}<span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
       </ul>
     </div>
-    <div class="wrap footer__base">
-      <p>© <span data-year>2026</span> {T("Mohammed Hefzallah", "محمد حفظ الله")} · {T("2026 Edition", "إصدار ٢٠٢٦")}</p>
-      <p class="colophon">{T("Set in Fraunces &amp; IBM Plex. Built with plain HTML, CSS and a little JavaScript.", "بخطوط Fraunces وIBM Plex. مبني بـ HTML وCSS وقليل من JavaScript.")}</p>
-      <p><a class="u" href="#main">{T("Back to top", "للأعلى")} ↑</a></p>
+  </section>
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <p>© <span data-year>2026</span> {T("Mohammed Hefzallah", "محمد حفظ الله")}</p>
+      <p>{T("Cairo · Working with KSA, UAE &amp; Europe", "القاهرة · أعمل مع السعودية والإمارات وأوروبا")} · <span data-clock>--:--</span></p>
+      <p><a href="{CV_REQ}" target="_blank" rel="noopener">{T("Request CV", "اطلب السيرة الذاتية")}</a> · <a href="#main">{T("Back to top", "للأعلى")} ↑</a></p>
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>
     <button class="lightbox__close" type="button" aria-label="Close">×</button>
-    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">←</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">‹</button>
     <figure><img alt=""><figcaption></figcaption></figure>
-    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">→</button>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">›</button>
   </div>
   <script src="{prefix}assets/main.js" defer></script>
 </body>
@@ -197,220 +166,197 @@ def footer(prefix):
 '''
 
 
-def img(prefix, name, alt, cls="", lazy=True, w=1440, h=900):
-    if name.endswith("mobile"):
-        w, h = 390, 844
-    return (f'<img class="{cls}" src="{prefix}assets/work/{name}.webp" width="{w}" height="{h}" alt="{escape(alt)}"'
-            f'{" loading=\"lazy\" decoding=\"async\"" if lazy else ""}>')
+def img(prefix, name, alt, lazy=True):
+    w, h = (390, 844) if name.endswith("mobile") else (1440, 900)
+    lz = ' loading="lazy" decoding="async"' if lazy else ""
+    return f'<img src="{prefix}assets/work/{name}.webp" width="{w}" height="{h}" alt="{escape(alt)}"{lz}>'
 
 
 def cover(prefix, p, lazy=True):
     if p.get("diagram"):
         return f'<div class="cover cover--diagram">{diagram(p["diagram"])}</div>'
-    return f'<div class="cover">{img(prefix, p["cover"], p["title"][0], lazy=lazy)}</div>'
-
-
-def kinds_attr(p):
-    return " ".join(p["kinds"])
+    return f'<div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div>{img(prefix, p["cover"], p["title"][0], lazy)}</div>'
 
 
 def kinds_label(p):
-    return " · ".join(T(*KIND_LABEL[k]) for k in p["kinds"])
+    return "".join(f'<span class="tag">{T(*KIND_LABEL[k])}</span>' for k in p["kinds"])
+
+
+def section_head(n, en, ar, note=None, extra=""):
+    note_html = f'<p class="section__note">{T(*note)}</p>' if note else ""
+    return f'''<header class="section__head">
+          <div><p class="kicker">{n}</p><h2 class="title">{T(en, ar)}</h2>{note_html}</div>{extra}
+        </header>'''
 
 
 # ----------------------------------------------------------------------------
-# Home page
+# Home
 # ----------------------------------------------------------------------------
 
 def home():
     pre = ""
     counts = {k: sum(k in p["kinds"] for p in PROJECTS) for k in KIND_LABEL}
-    filters = [("all", ("All", "الكل"), len(PROJECTS))] + [(k, KIND_LABEL[k], counts[k]) for k in ("web", "erp", "mobile")]
+    filters = [("all", ("All", "الكل"), len(PROJECTS))] + [(k, KIND_LABEL[k], counts[k]) for k in ("erp", "web", "mobile")]
     chips = "".join(
-        f'<button type="button" class="chip{" is-on" if k == "all" else ""}" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{T(*lab)}<sup>{n}</sup></button>'
+        f'<button type="button" class="chip{" is-on" if k == "all" else ""}" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{T(*lab)} <sup>{n}</sup></button>'
         for k, lab, n in filters)
 
-    cards = []
-    for i, p in enumerate(PROJECTS, 1):
-        big = " card--wide" if i in (1, 2) else ""
-        cards.append(f'''
-        <article class="card{big} reveal" data-kinds="{kinds_attr(p)}">
+    cards = "".join(f'''
+        <article class="card{" card--wide" if i == 1 else ""} reveal" data-kinds="{" ".join(p["kinds"])}">
           <a class="card__link" href="work/{p["slug"]}.html">
             {cover(pre, p)}
-            <div class="card__meta"><span class="num">N° {i:02d}</span><span>{kinds_label(p)}</span><span>{p["year"]}</span></div>
-            <h3 class="card__title">{T(*p["title"])}</h3>
-            <p class="card__out">{T(*p["outcome"])}</p>
-            <span class="card__more">{T("Read case study", "اقرأ دراسة الحالة")} <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="card__body">
+              <div class="card__tags">{kinds_label(p)}<span class="card__year">{p["year"]}</span></div>
+              <h3 class="card__title">{T(*p["title"])}</h3>
+              <p class="card__out">{T(*p["outcome"])}</p>
+              <span class="card__more">{T("View case study", "عرض دراسة الحالة")} {ICON["arrow"]}</span>
+            </div>
           </a>
-        </article>''')
+        </article>''' for i, p in enumerate(PROJECTS, 1))
 
     rows = "".join(f'''
-          <tr data-kinds="{'erp' if t == 'Odoo' else 'web'}"><td class="mono">{y}</td><td>{T(*name)}</td><td class="muted">{T(*sector)}</td><td class="mono tag">{t}</td><td class="mono muted">{stack}</td></tr>'''
+            <tr data-kinds="{'erp' if t == 'Odoo' else 'web'}"><td class="num">{y}</td><td><b>{T(*name)}</b></td><td>{T(*sector)}</td><td><span class="tag tag--soft">{t}</span></td><td class="muted" dir="ltr">{stack}</td></tr>'''
                    for y, t, name, sector, stack in ARCHIVE)
+
+    stats = "".join(f'<div class="stat reveal"><dt dir="ltr">{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in STATS)
+
+    exp = exp_rows()
 
     body = f'''
   <main id="main">
-    <section class="hero wrap">
-      <div class="hero__top">
-        <p class="status"><span class="dot" aria-hidden="true"></span>{T("Available for new projects", "متاح لمشاريع جديدة")}</p>
-        <p class="status status--muted">{T("Remote · KSA · UAE · Europe", "عن بُعد · السعودية · الإمارات · أوروبا")}</p>
-      </div>
-      <div class="hero__grid">
+    <section class="hero">
+      <div class="wrap hero__grid">
         <div class="hero__text">
-          <h1 class="display">{T("I build the systems businesses <em>run&nbsp;on.</em>", "أبني الأنظمة التي <em>تُدار بها</em> الأعمال.")}</h1>
-          <p class="lede">{T("Odoo ERP developer and fullstack engineer. For four years I’ve designed, migrated and shipped ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law to booking sites that take live payments.",
-                             "مطوّر Odoo ERP ومهندس ويب متكامل. على مدار أربع سنوات صمّمتُ وطوّرتُ وأطلقتُ أنظمة ERP ومنصّات ويب لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي، إلى مواقع حجز تستقبل مدفوعات حقيقية.")}</p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Available for new projects", "متاح لمشاريع جديدة")}</p>
+          <h1 class="display">{T("I build the systems businesses <em>run on.</em>", "أبني الأنظمة التي <em>تُدار بها</em> الأعمال.")}</h1>
+          <p class="lede">{T("Odoo ERP developer and fullstack engineer for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.",
+                             "مطوّر أنظمة Odoo ERP ومهندس ويب متكامل لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.")}</p>
           <div class="actions">
-            <a class="btn btn--ink" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}<span class="arrow" aria-hidden="true">→</span></a>
-            <a class="btn btn--line" href="#work">{T("See the work", "شاهد الأعمال")}</a>
+            <a class="btn btn--primary" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")} {ICON["arrow"]}</a>
+            <a class="btn btn--outline" href="#work">{T("View my work", "شاهد أعمالي")}</a>
           </div>
+          <ul class="hero__points">
+            <li>{ICON["check"]}{T("Odoo Certified Professional", "معتمد من Odoo")}</li>
+            <li>{ICON["check"]}{T("Odoo 11 → 19, Community &amp; Enterprise", "Odoo من ١١ إلى ١٩، Community وEnterprise")}</li>
+            <li>{ICON["check"]}{T("Arabic &amp; English", "العربية والإنجليزية")}</li>
+          </ul>
         </div>
         <figure class="portrait">
-          <div class="portrait__frame"><img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high"></div>
-          <figcaption><span>{T("Mohammed Hefzallah", "محمد حفظ الله")}</span><span>{T("Cairo, Egypt", "القاهرة، مصر")}</span></figcaption>
+          <div class="portrait__card">
+            {PATTERN}
+            <img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high">
+          </div>
+          <figcaption class="portrait__tag">
+            <b>{T("Mohammed Hefzallah", "محمد حفظ الله")}</b>
+            <span>{T("Odoo Developer at AZM Squad", "مطوّر Odoo في AZM Squad")}</span>
+          </figcaption>
+          <div class="portrait__float" aria-hidden="true"><b dir="ltr">63</b><span>{T("modules moved to v19, zero data loss", "موديول تمت ترقيتها لـ v19 دون فقدان بيانات")}</span></div>
         </figure>
       </div>
-
-      <dl class="ledger">
-        <div><dt>{T("Now", "حاليًا")}</dt><dd>{T("Odoo Developer at AZM Squad", "مطوّر Odoo في AZM Squad")}</dd></div>
-        <div><dt>{T("Certified", "معتمد")}</dt><dd>{T("Odoo Certified Professional (v15)", "شهادة Odoo المعتمدة (الإصدار 15)")}</dd></div>
-        <div><dt>{T("Clients in", "عملاء في")}</dt><dd>{T("Saudi Arabia · UAE · Egypt", "السعودية · الإمارات · مصر")}</dd></div>
-        <div><dt>{T("Sectors", "القطاعات")}</dt><dd>{T("Government, oil &amp; gas, construction, automotive, retail, logistics, tourism, education", "الحكومة، النفط والغاز، المقاولات، السيارات، التجزئة، اللوجستيات، السياحة، التعليم")}</dd></div>
-      </dl>
-
-      <dl class="stats">
-        <div><dt>4<span class="plus">+</span></dt><dd>{T("years building ERP &amp; web products", "سنوات في بناء أنظمة ERP ومنتجات ويب")}</dd></div>
-        <div><dt>9</dt><dd>{T("enterprise Odoo.sh environments delivered", "بيئات Odoo.sh مؤسسية تم تسليمها")}</dd></div>
-        <div><dt>63</dt><dd>{T("modules migrated v17 → v19, zero data loss", "موديول نُقلت من v17 إلى v19 دون فقدان بيانات")}</dd></div>
-        <div><dt>500<span class="plus">+</span></dt><dd>{T("shipments a day through systems I built", "شحنة يوميًا عبر أنظمة من تطويري")}</dd></div>
-      </dl>
-    </section>
-
-    <section class="section wrap" id="work">
-      <header class="section__head">
-        <p class="eyebrow">N° 01</p>
-        <h2 class="title">{T("Selected work", "أبرز الأعمال")}</h2>
-        <div class="filters" role="group" aria-label="Filter projects">{chips}</div>
-      </header>
-      <div class="cards" data-cards>{''.join(cards)}
-      </div>
-
-      <details class="archive reveal">
-        <summary><span>{T("Full archive", "الأرشيف الكامل")}</span><span class="mono muted">{T(f"{len(ARCHIVE)} more modules &amp; tools", f"{len(ARCHIVE)} موديولًا وأداة إضافية".translate(AR_DIGITS))}</span><span class="archive__icon" aria-hidden="true">+</span></summary>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>{T("Year", "السنة")}</th><th>{T("Project", "المشروع")}</th><th>{T("Sector", "القطاع")}</th><th>{T("Type", "النوع")}</th><th>{T("Built with", "التقنيات")}</th></tr></thead>
-            <tbody>{rows}
-            </tbody>
-          </table>
-        </div>
-        <p class="note">{T("Client ERPs are private, so modules are listed by sector rather than by name.", "أنظمة ERP الخاصة بالعملاء سرّية، لذلك تُذكر الموديولات حسب القطاع لا باسم العميل.")}</p>
-      </details>
-    </section>
-
-    <section class="section section--ink" id="services">
       <div class="wrap">
-        <header class="section__head">
-          <p class="eyebrow">N° 02</p>
-          <h2 class="title">{T("How I can help", "كيف أساعدك")}</h2>
-          <p class="section__note">{T("Three ways to work together. Every engagement starts with a free 30-minute call.", "ثلاث طرق للعمل معًا. وكل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة.")}</p>
-        </header>
-        <div class="offers">
-          <article class="offer reveal">
-            <p class="offer__n">A</p>
+        <dl class="stats">{stats}</dl>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Sectors and integrations">
+      <div class="wrap strip__row">
+        <p class="strip__label">{T("Sectors I’ve worked in", "قطاعات عملت فيها")}</p>
+        <ul class="strip__list">
+          <li>{T("Government", "الحكومة")}</li><li>{T("Oil &amp; Gas", "النفط والغاز")}</li><li>{T("Construction", "المقاولات")}</li>
+          <li>{T("Automotive", "السيارات")}</li><li>{T("Retail &amp; POS", "التجزئة")}</li><li>{T("Logistics", "اللوجستيات")}</li>
+          <li>{T("Tourism", "السياحة")}</li><li>{T("Education", "التعليم")}</li><li>{T("Consulting", "الاستشارات")}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        {section_head("01", "Selected work", "أبرز الأعمال", ("Case studies from ERP and web projects — with screenshots, decisions and results.", "دراسات حالة من مشاريع ERP والويب — بالصور والقرارات والنتائج."), f'<div class="filters" role="group" aria-label="Filter">{chips}</div>')}
+        <div class="cards">{cards}
+        </div>
+        <details class="archive reveal">
+          <summary><span>{T("More modules &amp; tools", "موديولات وأدوات إضافية")}</span><span class="archive__count" dir="ltr">{len(ARCHIVE)}</span><span class="archive__icon" aria-hidden="true">+</span></summary>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>{T("Year", "السنة")}</th><th>{T("Module", "الموديول")}</th><th>{T("Sector", "القطاع")}</th><th>{T("Type", "النوع")}</th><th>{T("Built with", "التقنيات")}</th></tr></thead>
+              <tbody>{rows}
+              </tbody>
+            </table>
+          </div>
+          <p class="note">{T("Client ERPs are private, so modules are listed by sector rather than by client name.", "أنظمة العملاء سرّية، لذلك تُذكر الموديولات حسب القطاع لا باسم العميل.")}</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="services">
+      {PATTERN}
+      <div class="wrap">
+        {section_head("02", "How I can help", "كيف أساعدك", ("Every engagement starts with a free 30-minute call.", "كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة."))}
+        <div class="services">
+          <article class="service reveal">
+            <span class="service__icon">{ICON["erp"]}</span>
             <h3>{T("Odoo implementation &amp; custom modules", "تطبيق Odoo وموديولات مخصّصة")}</h3>
-            <p>{T("New modules, Saudi HR &amp; payroll, ZATCA, POS, approvals and integrations — scoped, estimated and delivered in weekly sprints.", "موديولات جديدة، موارد بشرية ورواتب سعودية، ZATCA، نقاط بيع، موافقات وتكاملات — بنطاق وتقدير واضحين وتسليم في سبرنتات أسبوعية.")}</p>
-            <p class="offer__how mono">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</p>
+            <p>{T("Saudi HR &amp; payroll, ZATCA e-invoicing, POS, approvals, inventory and integrations — scoped, estimated and delivered in weekly sprints.", "الموارد البشرية والرواتب السعودية، فوترة ZATCA، نقاط البيع، الموافقات، المخزون والتكاملات — بنطاق وتقدير واضحين وتسليم في سبرنتات أسبوعية.")}</p>
+            <span class="service__how">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</span>
           </article>
-          <article class="offer reveal">
-            <p class="offer__n">B</p>
+          <article class="service reveal">
+            <span class="service__icon">{ICON["upgrade"]}</span>
             <h3>{T("Upgrades, audits &amp; support", "الترقيات والمراجعة والدعم")}</h3>
-            <p>{T("Version upgrades up to v19, performance and code audits, and an ongoing retainer for fixes and enhancements.", "ترقية الإصدارات حتى v19، مراجعة الأداء والكود، وعقد دعم شهري للإصلاحات والتحسينات.")}</p>
-            <p class="offer__how mono">{T("Audit · monthly retainer", "مراجعة · عقد شهري")}</p>
+            <p>{T("Version upgrades up to Odoo 19, performance and code audits, and a monthly retainer for fixes and enhancements.", "ترقية الإصدارات حتى Odoo 19، مراجعة الأداء والكود، وعقد دعم شهري للإصلاحات والتحسينات.")}</p>
+            <span class="service__how">{T("Audit · monthly retainer", "مراجعة · عقد شهري")}</span>
           </article>
-          <article class="offer reveal">
-            <p class="offer__n">C</p>
+          <article class="service reveal">
+            <span class="service__icon">{ICON["web"]}</span>
             <h3>{T("Web platforms &amp; mobile apps", "منصّات ويب وتطبيقات جوال")}</h3>
-            <p>{T("Arabic-first websites, booking and portal platforms, dashboards and PWAs/mobile apps — connected to your ERP when needed.", "مواقع عربية أولًا، منصّات حجز وبوابات، لوحات تحكم وتطبيقات جوال — مربوطة بنظام ERP عند الحاجة.")}</p>
-            <p class="offer__how mono">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</p>
+            <p>{T("Arabic-first websites, booking and customer portals, dashboards and mobile apps — connected to your ERP when needed.", "مواقع عربية أولًا، منصّات حجز وبوابات عملاء، لوحات تحكم وتطبيقات جوال — مربوطة بنظام ERP عند الحاجة.")}</p>
+            <span class="service__how">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</span>
           </article>
         </div>
         <ol class="process">
-          <li class="reveal"><span class="mono">01</span><b>{T("Discovery call", "مكالمة تعارف")}</b><span>{T("30 minutes, free. We map the problem.", "٣٠ دقيقة مجانًا. نحدّد المشكلة.")}</span></li>
-          <li class="reveal"><span class="mono">02</span><b>{T("Scope &amp; quote", "النطاق والتسعير")}</b><span>{T("A written scope and estimate within 48 hours.", "نطاق مكتوب وتقدير خلال ٤٨ ساعة.")}</span></li>
-          <li class="reveal"><span class="mono">03</span><b>{T("Build in sprints", "البناء على مراحل")}</b><span>{T("Weekly demos on a staging environment.", "عرض أسبوعي على بيئة تجريبية.")}</span></li>
-          <li class="reveal"><span class="mono">04</span><b>{T("Launch &amp; train", "الإطلاق والتدريب")}</b><span>{T("Go-live, user training and support.", "التشغيل الفعلي وتدريب المستخدمين والدعم.")}</span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">01</span><b>{T("Discovery call", "مكالمة تعارف")}</b><span>{T("30 minutes, free.", "٣٠ دقيقة مجانًا.")}</span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">02</span><b>{T("Scope &amp; quote", "النطاق والتسعير")}</b><span>{T("Written scope within 48 hours.", "نطاق مكتوب خلال ٤٨ ساعة.")}</span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">03</span><b>{T("Build in sprints", "التنفيذ على مراحل")}</b><span>{T("Weekly demos on staging.", "عرض أسبوعي على بيئة تجريبية.")}</span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">04</span><b>{T("Launch &amp; train", "الإطلاق والتدريب")}</b><span>{T("Go-live, training and support.", "التشغيل والتدريب والدعم.")}</span></li>
         </ol>
       </div>
     </section>
 
-    <section class="section wrap" id="expertise">
-      <header class="section__head">
-        <p class="eyebrow">N° 03</p>
-        <h2 class="title">{T("What I work with", "ما أعمل به")}</h2>
-      </header>
-      <div class="columns">
-        <div class="col reveal">
-          <h3 class="col__title">{T("Odoo &amp; ERP", "Odoo وأنظمة ERP")}</h3>
-          <ul class="list">
-            <li>{T("Custom modules — Python ORM, OWL, QWeb", "موديولات مخصّصة — Python ORM وOWL وQWeb")}</li>
-            <li>{T("Version migrations, v11 through v19", "ترقية الإصدارات من v11 حتى v19")}</li>
-            <li>{T("Accounting &amp; ZATCA e-invoicing, Phase 1 &amp; 2", "المحاسبة والفوترة الإلكترونية ZATCA، المرحلة ١ و٢")}</li>
-            <li>{T("HR &amp; payroll for Saudi Labor Law", "الموارد البشرية والرواتب وفق نظام العمل السعودي")}</li>
-            <li>{T("POS, inventory, WMS &amp; manufacturing", "نقاط البيع والمخزون والمستودعات والتصنيع")}</li>
-            <li>{T("Odoo.sh staging, CI/CD &amp; automated backups", "Odoo.sh والنشر المستمر والنسخ الاحتياطي التلقائي")}</li>
-          </ul>
-        </div>
-        <div class="col reveal">
-          <h3 class="col__title">{T("Fullstack web &amp; mobile", "الويب المتكامل والجوال")}</h3>
-          <ul class="list">
-            <li>React · Next.js · TypeScript · Tailwind</li>
-            <li>Django REST · PHP REST APIs · JWT</li>
-            <li>PostgreSQL · MySQL · Supabase</li>
-            <li>{T("Arabic-first RTL interfaces", "واجهات عربية أولًا بدعم RTL")}</li>
-            <li>{T("PWAs and Android / iOS apps with Capacitor", "تطبيقات PWA وAndroid وiOS عبر Capacitor")}</li>
-            <li>{T("Headless CMS (Sanity), performance &amp; SEO", "أنظمة محتوى Headless (Sanity)، الأداء وSEO")}</li>
-          </ul>
-        </div>
-        <div class="col col--aside reveal">
-          <h3 class="col__title">{T("Integrations", "التكاملات")}</h3>
-          <p class="chips-text">ZATCA · PayTabs · Telr · Neoleap · SMSA Express · OneStock · Salla · Google Drive · OneDrive · Gemini AI</p>
-          <h3 class="col__title">{T("Languages", "اللغات")}</h3>
-          <p class="chips-text">{T("Arabic (native) · English (professional)", "العربية (الأم) · الإنجليزية (مهنية)")}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section wrap" id="experience">
-      <header class="section__head">
-        <p class="eyebrow">N° 04</p>
-        <h2 class="title">{T("Experience", "الخبرة")}</h2>
-        <p class="section__note"><a class="u" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request my full CV", "اطلب السيرة الذاتية كاملة")} ↗</a></p>
-      </header>
-      <ol class="timeline">
-        {exp_rows()}
-      </ol>
-      <div class="creds reveal">
-        <p><b>{T("B.Sc. Computer Science", "بكالوريوس علوم الحاسب")}</b>{T("New Cairo Academy, 2024", "أكاديمية القاهرة الجديدة، ٢٠٢٤")}</p>
-        <p><b>{T("Odoo Certified Professional", "شهادة Odoo المعتمدة")}</b>{T("Functional, v15 — Odoo S.A., 2024", "وظيفية، الإصدار 15 — Odoo S.A.، ٢٠٢٤")}</p>
-        <p><b>{T("Mentoring", "الإرشاد")}</b>{T("Mentored 5 junior developers; wrote the team’s Odoo 17 module standards", "إرشاد ٥ مطوّرين مبتدئين؛ وكتابة معايير موديولات Odoo 17 للفريق")}</p>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
+    <section class="section" id="expertise">
       <div class="wrap">
-        <p class="eyebrow">N° 05</p>
-        <h2 class="contact__title">{T("Let’s talk about <em>your</em> system.", "لنتحدث عن <em>نظامك</em>.")}</h2>
-        <p class="contact__lede">{T("Tell me what you’re trying to fix or build. I reply within one working day, and my hours overlap fully with Saudi business hours.", "أخبرني بما تريد إصلاحه أو بناءه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.")}</p>
-        <div class="contact__actions">
-          <a class="btn btn--paper" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call on WhatsApp", "احجز مكالمة ٣٠ دقيقة عبر واتساب")}<span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="{MAIL}">{T("Send a project brief", "أرسل وصف المشروع")}</a>
+        {section_head("03", "What I work with", "ما أعمل به")}
+        <div class="skills">
+          <div class="skill reveal">
+            <h3>{T("Odoo &amp; ERP", "Odoo وأنظمة ERP")}</h3>
+            <ul class="pills">
+              <li>Odoo 11 – 19</li><li>Python ORM</li><li>OWL</li><li>QWeb</li><li>PostgreSQL</li><li>Odoo.sh</li>
+              <li>{T("Accounting", "المحاسبة")}</li><li>ZATCA</li><li>{T("HR &amp; Payroll", "الموارد البشرية والرواتب")}</li><li>POS</li><li>{T("Inventory &amp; WMS", "المخزون والمستودعات")}</li><li>{T("Approvals", "الموافقات")}</li><li>{T("Migrations", "الترقيات")}</li>
+            </ul>
+          </div>
+          <div class="skill reveal">
+            <h3>{T("Web &amp; mobile", "الويب والجوال")}</h3>
+            <ul class="pills">
+              <li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>Tailwind CSS</li><li>Django REST</li><li>PHP</li>
+              <li>MySQL</li><li>Supabase</li><li>REST APIs</li><li>JWT</li><li>PWA</li><li>Capacitor</li><li>{T("Arabic RTL", "واجهات RTL")}</li>
+            </ul>
+          </div>
+          <div class="skill reveal">
+            <h3>{T("Integrations", "التكاملات")}</h3>
+            <ul class="pills">
+              <li>ZATCA</li><li>PayTabs</li><li>Telr</li><li>Neoleap</li><li>SMSA Express</li><li>OneStock</li><li>Salla</li><li>Google Drive</li><li>OneDrive</li><li>Gemini AI</li>
+            </ul>
+          </div>
         </div>
-        <div class="contact__links">
-          <button class="big-link" type="button" data-copy="{EMAIL}"><span class="big-link__label">{T("Email — click to copy", "البريد — اضغط للنسخ")}</span><span class="big-link__value" dir="ltr">{EMAIL}</span><span class="copied" aria-live="polite"></span></button>
-          <a class="big-link" href="{CALL}" target="_blank" rel="noopener"><span class="big-link__label">WhatsApp</span><span class="big-link__value" dir="ltr">+20 155 446 3171</span></a>
-          <a class="big-link" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="big-link__label">LinkedIn</span><span class="big-link__value" dir="ltr">in/mhefzallah</span></a>
-          <a class="big-link" href="{GITHUB}" target="_blank" rel="noopener"><span class="big-link__label">GitHub</span><span class="big-link__value" dir="ltr">@mhefzallah</span></a>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="experience">
+      <div class="wrap">
+        {section_head("04", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
+        <ol class="timeline">{exp}</ol>
+        <div class="creds">
+          <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("B.Sc. Computer Science", "بكالوريوس علوم الحاسب")}</b><span>{T("New Cairo Academy · 2024", "أكاديمية القاهرة الجديدة · ٢٠٢٤")}</span></div>
+          <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("Odoo Certified Professional", "شهادة Odoo المعتمدة")}</b><span>{T("Functional v15 · Odoo S.A. · 2024", "وظيفية الإصدار 15 · Odoo S.A. · ٢٠٢٤")}</span></div>
+          <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("Languages", "اللغات")}</b><span>{T("Arabic (native) · English (professional)", "العربية (الأم) · الإنجليزية (مهنية)")}</span></div>
         </div>
       </div>
     </section>
@@ -422,105 +368,98 @@ def home():
 
 def exp_rows():
     rows = [
-        (("2025 — now", "٢٠٢٥ — الآن"), ("Odoo Developer", "مطوّر Odoo"), "AZM Squad", ("Government ERP serving 1,000+ users across 10+ departments", "نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم في أكثر من ١٠ إدارات"), ("Saudi Arabia · remote", "السعودية · عن بُعد")),
-        (("2025 — now", "٢٠٢٥ — الآن"), ("Independent ERP &amp; Fullstack Consultant", "مستشار ERP ومطوّر ويب مستقل"), ("Self-employed", "عمل حر"), ("Odoo migrations, Saudi HR &amp; payroll, delivery operations, booking platforms and learning apps", "ترقيات Odoo، موارد بشرية ورواتب سعودية، عمليات توصيل، منصّات حجز وتطبيقات تعليمية"), ("KSA · UAE · Egypt", "السعودية · الإمارات · مصر")),
-        (("2022 — 2025", "٢٠٢٢ — ٢٠٢٥"), ("Odoo Developer", "مطوّر Odoo"), "Algoriza", ("10+ modules for Saudi logistics &amp; e-commerce", "أكثر من ١٠ موديولات للوجستيات والتجارة الإلكترونية في السعودية"), ("Remote", "عن بُعد")),
-        (("2022", "٢٠٢٢"), ("Junior Odoo Developer", "مطوّر Odoo مبتدئ"), "Algoriza", ("5 modules shipped to production as an intern", "٥ موديولات على الإنتاج خلال فترة التدريب"), ("Remote", "عن بُعد")),
+        (("Nov 2025 — now", "نوفمبر ٢٠٢٥ — الآن"), ("Odoo Developer", "مطوّر Odoo"), "AZM Squad", ("Government ERP serving 1,000+ users across 10+ departments.", "نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم في أكثر من ١٠ إدارات."), ("Saudi Arabia · remote", "السعودية · عن بُعد"), True),
+        (("2025 — now", "٢٠٢٥ — الآن"), ("Independent ERP &amp; Fullstack Consultant", "مستشار ERP ومطوّر ويب مستقل"), ("Self-employed", "عمل حر"), ("Odoo migrations, Saudi HR &amp; payroll, delivery operations, booking platforms and learning apps for clients in KSA, UAE &amp; Egypt.", "ترقيات Odoo، موارد بشرية ورواتب سعودية، عمليات توصيل، منصّات حجز وتطبيقات تعليمية لعملاء في السعودية والإمارات ومصر."), ("Remote", "عن بُعد"), True),
+        (("Jul 2022 — Nov 2025", "يوليو ٢٠٢٢ — نوفمبر ٢٠٢٥"), ("Odoo Developer", "مطوّر Odoo"), "Algoriza", ("10+ modules for Saudi logistics &amp; e-commerce; 15% faster reports; mentored 5 juniors.", "أكثر من ١٠ موديولات للوجستيات والتجارة الإلكترونية؛ تقارير أسرع ١٥٪؛ إرشاد ٥ مطوّرين."), ("Remote", "عن بُعد"), False),
+        (("Jan — Jun 2022", "يناير — يونيو ٢٠٢٢"), ("Junior Odoo Developer", "مطوّر Odoo مبتدئ"), "Algoriza", ("5 modules shipped to production as an intern.", "٥ موديولات على الإنتاج خلال فترة التدريب."), ("Remote", "عن بُعد"), False),
     ]
     out = []
-    for when, role, org, note, where in rows:
+    for when, role, org, note, where, now in rows:
         org_html = T(*org) if isinstance(org, tuple) else org
-        out.append(f'<li class="reveal"><span class="when">{T(*when)}</span><span class="what"><b>{T(*role)}</b> {org_html}<small>{T(*note)}</small></span><span class="where">{T(*where)}</span></li>')
-    return "\n        ".join(out)
+        out.append(f'''
+          <li class="tl reveal{" tl--now" if now else ""}">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <div class="tl__card">
+              <div class="tl__top"><b>{T(*role)}</b><span class="tl__when">{T(*when)}</span></div>
+              <p class="tl__org">{org_html} · <span>{T(*where)}</span></p>
+              <p class="tl__note">{T(*note)}</p>
+            </div>
+          </li>''')
+    return "".join(out)
 
 
 # ----------------------------------------------------------------------------
-# Case-study pages
+# Case studies
 # ----------------------------------------------------------------------------
 
 def case(i, p):
     pre = "../"
     nxt = PROJECTS[i % len(PROJECTS)]
-    did = "".join(f'<li class="reveal"><span class="mono">{n:02d}</span><div><h4>{T(en_h, ar_h)}</h4><p>{T(en, ar)}</p></div></li>'
-                  for n, (en_h, ar_h, en, ar) in enumerate(p["did"], 1))
+    did = "".join(f'<li class="step reveal"><span class="step__n" dir="ltr">{n:02d}</span><div><h4>{T(eh, ah)}</h4><p>{T(en, ar)}</p></div></li>'
+                  for n, (eh, ah, en, ar) in enumerate(p["did"], 1))
     decisions = ""
     if p["decisions"]:
-        decisions = f'''
-        <section class="block reveal">
-          <h2 class="block__h">{T("Key decisions", "قرارات أساسية")}</h2>
-          <ul class="decisions">{''.join(f"<li>{T(*d)}</li>" for d in p["decisions"])}</ul>
-        </section>'''
+        decisions = f'''<section class="block reveal"><h2 class="block__h">{T("Key decisions", "قرارات أساسية")}</h2>
+          <ul class="decisions">{"".join(f"<li>{ICON['check']}<span>{T(*d)}</span></li>" for d in p["decisions"])}</ul></section>'''
     results = ""
     if p["results"]:
-        results = f'''
-        <section class="block reveal">
-          <h2 class="block__h">{T("Results", "النتائج")}</h2>
-          <dl class="results">{''.join(f'<div><dt>{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in p["results"])}</dl>
-        </section>'''
+        results = f'''<section class="block reveal"><h2 class="block__h">{T("Results", "النتائج")}</h2>
+          <dl class="results">{"".join(f'<div><dt dir="ltr">{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in p["results"])}</dl></section>'''
     gallery = ""
-    if p["gallery"] or p["mobile"]:
+    figs_src = [g for g in p["gallery"] if g[0] != p.get("cover") or len(p["gallery"]) == 1]
+    if figs_src or p["mobile"]:
         figs = "".join(
             f'<figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge">{img(pre, name, en)}</button>'
-            f'<figcaption><span class="mono">Fig. {n}</span> {T(en, ar)}</figcaption></figure>'
-            for n, (name, en, ar) in enumerate([g for g in p["gallery"] if g[0] != p.get("cover") or len(p["gallery"]) == 1], 1))
+            f'<figcaption>{T(en, ar)}</figcaption></figure>' for name, en, ar in figs_src)
         phones = ""
         if p["mobile"]:
             phones = '<div class="phones reveal">' + "".join(
                 f'<figure class="phone"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge">{img(pre, m, "Mobile view")}</button></figure>'
-                for m in p["mobile"]) + f'<p class="mono muted">{T("On mobile", "على الجوال")}</p></div>'
-        gallery = f'''
-        <section class="block">
-          <h2 class="block__h reveal">{T("Gallery", "معرض الصور")}</h2>
-          <div class="gallery">{figs}</div>
-          {phones}
-        </section>'''
+                for m in p["mobile"]) + "</div>"
+        gallery = f'''<section class="gallery-wrap"><div class="wrap">
+          <h2 class="block__h">{T("Gallery", "معرض الصور")}</h2>
+          <div class="gallery">{figs}</div>{phones}</div></section>'''
     elif p.get("diagram"):
-        gallery = f'''
-        <section class="block reveal">
-          <p class="note">{T("Screens from client ERPs are confidential, so this case study uses diagrams and numbers instead of screenshots.", "شاشات أنظمة ERP الخاصة بالعملاء سرّية، لذا تعتمد دراسة الحالة هذه على المخططات والأرقام بدل الصور.")}</p>
-        </section>'''
-    links = "".join(f'<a href="{u}" target="_blank" rel="noopener">{t} ↗</a>' for t, u in p["links"])
+        gallery = f'<div class="wrap"><p class="note note--box">{T("Screens from client ERPs are confidential, so this case study uses diagrams and numbers instead of screenshots.", "شاشات أنظمة العملاء سرّية، لذا تعتمد دراسة الحالة هذه على المخططات والأرقام بدل الصور.")}</p></div>'
+    links = "".join(f'<a href="{u}" target="_blank" rel="noopener" dir="ltr">{t} ↗</a>' for t, u in p["links"])
     links_row = f'<div><dt>{T("Live", "الرابط")}</dt><dd class="links">{links}</dd></div>' if links else ""
 
     body = f'''
   <main id="main" class="casepage">
-    <div class="wrap">
-      <a class="back u" href="../index.html#work">← {T("All work", "كل الأعمال")}</a>
-      <header class="case-head">
-        <p class="strip mono"><span>{kinds_label(p)}</span><span>{T(*p["sector"])}</span><span>{p["year"]}</span></p>
+    <section class="case-hero">
+      {PATTERN}
+      <div class="wrap">
+        <a class="back" href="../index.html#work">{T("← All work", "→ كل الأعمال")}</a>
+        <div class="case-hero__tags">{kinds_label(p)}<span class="tag tag--line">{T(*p["sector"])}</span><span class="tag tag--line" dir="ltr">{p["year"]}</span></div>
         <h1 class="case-title">{T(*p["title"])}</h1>
         <p class="case-out">{T(*p["outcome"])}</p>
-      </header>
-      <div class="case-hero reveal">{cover(pre, p, lazy=False)}</div>
-
+      </div>
+    </section>
+    <div class="wrap">
+      <div class="case-cover reveal">{cover(pre, p, lazy=False)}</div>
       <div class="case-grid">
         <aside class="case-meta">
           <dl>
             <div><dt>{T("Role", "الدور")}</dt><dd>{T(*p["role"])}</dd></div>
-            <div><dt>{T("Year", "السنة")}</dt><dd>{p["year"]}</dd></div>
-            <div><dt>{T("Built with", "التقنيات")}</dt><dd class="mono stack">{p["stack"]}</dd></div>
+            <div><dt>{T("Year", "السنة")}</dt><dd dir="ltr">{p["year"]}</dd></div>
+            <div><dt>{T("Built with", "التقنيات")}</dt><dd class="stack" dir="ltr">{p["stack"]}</dd></div>
             {links_row}
           </dl>
-          <a class="btn btn--ink btn--block" href="{CALL}" target="_blank" rel="noopener">{T("Need something similar?", "تحتاج شيئًا مشابهًا؟")}<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--primary btn--block" href="{CALL}" target="_blank" rel="noopener">{T("Need something similar?", "تحتاج شيئًا مشابهًا؟")}</a>
         </aside>
         <div class="case-body">
-          <section class="block reveal">
-            <h2 class="block__h">{T("Context", "السياق")}</h2>
-            {''.join(f'<p class="prose">{T(*c)}</p>' for c in p["context"])}
-          </section>
-          <section class="block">
-            <h2 class="block__h reveal">{T("What I built", "ما الذي بنيته")}</h2>
-            <ol class="did">{did}</ol>
-          </section>
+          <section class="block reveal"><h2 class="block__h">{T("Context", "السياق")}</h2>{"".join(f'<p class="prose">{T(*c)}</p>' for c in p["context"])}</section>
+          <section class="block"><h2 class="block__h reveal">{T("What I built", "ما الذي بنيته")}</h2><ol class="steps">{did}</ol></section>
           {decisions}
           {results}
         </div>
       </div>
-      {gallery}
-
-      <a class="next reveal" href="{nxt['slug']}.html">
-        <span class="mono muted">{T("Next case study", "دراسة الحالة التالية")}</span>
-        <span class="next__title">{T(*nxt["title"])} <span class="arrow" aria-hidden="true">→</span></span>
+    </div>
+    {gallery}
+    <div class="wrap">
+      <a class="next reveal" href="{nxt["slug"]}.html">
+        <span class="kicker">{T("Next case study", "دراسة الحالة التالية")}</span>
+        <span class="next__title">{T(*nxt["title"])} {ICON["arrow"]}</span>
       </a>
     </div>
   </main>'''

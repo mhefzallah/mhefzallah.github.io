@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr" data-lang="en" data-theme="paper">
+<html lang="en" dir="ltr" data-lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mohammed Hefzallah — Odoo ERP &amp; Fullstack Engineer</title>
   <meta name="description" content="Odoo ERP developer and fullstack engineer building ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt.">
-  <meta name="theme-color" content="#F3EFE6">
+  <meta name="theme-color" content="#0B5D4B">
   <link rel="canonical" href="https://mhefzallah.github.io/">
   <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/?lang=en">
   <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/?lang=ar">
@@ -20,16 +20,15 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <script>
     (function () {
-      var r = document.documentElement, q = new URLSearchParams(location.search), s = {};
-      try { s.l = localStorage.getItem('lang'); s.t = localStorage.getItem('theme'); } catch (e) {}
-      var l = q.get('lang') || s.l || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
+      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
+      try { s = localStorage.getItem('lang'); } catch (e) {}
+      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
       if (l !== 'ar' && l !== 'en') l = 'en';
-      var t = s.t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper');
-      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l; r.dataset.theme = t;
+      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
       r.classList.add('js');
     })();
   </script>
@@ -38,79 +37,85 @@
   <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="ar">انتقل إلى المحتوى</span></a>
   <header class="masthead">
     <div class="wrap masthead__row">
-      <a class="mark" href="index.html" aria-label="Mohammed Hefzallah — home">
-        <span class="mark__mono">M<i>.</i>A</span>
-        <span class="mark__name"><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></span>
+      <a class="brand" href="index.html" aria-label="Mohammed Hefzallah — home">
+        <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
+        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Odoo ERP · Fullstack</span><span lang="ar">Odoo ERP · ويب متكامل</span></small></span>
       </a>
       <nav class="nav" aria-label="Main">
         <a href="#work"><span lang="en">Work</span><span lang="ar">الأعمال</span></a>
         <a href="#services"><span lang="en">Services</span><span lang="ar">الخدمات</span></a>
         <a href="#experience"><span lang="en">Experience</span><span lang="ar">الخبرة</span></a>
         <a href="#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
-        <span class="nav__bar" aria-hidden="true"></span>
       </nav>
       <div class="tools">
-        <span class="clock" title="Cairo time"><span class="clock__dot" aria-hidden="true"></span><span data-clock>--:--</span> <span lang="en">Cairo</span><span lang="ar">القاهرة</span></span>
-        <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>
-        </button>
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">عربي</span><span lang="ar">English</span></button>
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">العربية</span><span lang="ar">English</span></button>
+        <a class="btn btn--gold btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a call</span><span lang="ar">احجز مكالمة</span></a>
       </div>
     </div>
   </header>
   <main id="main">
-    <section class="hero wrap">
-      <div class="hero__top">
-        <p class="status"><span class="dot" aria-hidden="true"></span><span lang="en">Available for new projects</span><span lang="ar">متاح لمشاريع جديدة</span></p>
-        <p class="status status--muted"><span lang="en">Remote · KSA · UAE · Europe</span><span lang="ar">عن بُعد · السعودية · الإمارات · أوروبا</span></p>
-      </div>
-      <div class="hero__grid">
+    <section class="hero">
+      <div class="wrap hero__grid">
         <div class="hero__text">
-          <h1 class="display"><span lang="en">I build the systems businesses <em>run&nbsp;on.</em></span><span lang="ar">أبني الأنظمة التي <em>تُدار بها</em> الأعمال.</span></h1>
-          <p class="lede"><span lang="en">Odoo ERP developer and fullstack engineer. For four years I’ve designed, migrated and shipped ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law to booking sites that take live payments.</span><span lang="ar">مطوّر Odoo ERP ومهندس ويب متكامل. على مدار أربع سنوات صمّمتُ وطوّرتُ وأطلقتُ أنظمة ERP ومنصّات ويب لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي، إلى مواقع حجز تستقبل مدفوعات حقيقية.</span></p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span><span lang="en">Available for new projects</span><span lang="ar">متاح لمشاريع جديدة</span></p>
+          <h1 class="display"><span lang="en">I build the systems businesses <em>run on.</em></span><span lang="ar">أبني الأنظمة التي <em>تُدار بها</em> الأعمال.</span></h1>
+          <p class="lede"><span lang="en">Odoo ERP developer and fullstack engineer for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.</span><span lang="ar">مطوّر أنظمة Odoo ERP ومهندس ويب متكامل لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.</span></p>
           <div class="actions">
-            <a class="btn btn--ink" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span><span class="arrow" aria-hidden="true">→</span></a>
-            <a class="btn btn--line" href="#work"><span lang="en">See the work</span><span lang="ar">شاهد الأعمال</span></a>
+            <a class="btn btn--primary" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--outline" href="#work"><span lang="en">View my work</span><span lang="ar">شاهد أعمالي</span></a>
           </div>
+          <ul class="hero__points">
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">Odoo Certified Professional</span><span lang="ar">معتمد من Odoo</span></li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">Odoo 11 → 19, Community &amp; Enterprise</span><span lang="ar">Odoo من ١١ إلى ١٩، Community وEnterprise</span></li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">Arabic &amp; English</span><span lang="ar">العربية والإنجليزية</span></li>
+          </ul>
         </div>
         <figure class="portrait">
-          <div class="portrait__frame"><img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high"></div>
-          <figcaption><span><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></span><span><span lang="en">Cairo, Egypt</span><span lang="ar">القاهرة، مصر</span></span></figcaption>
+          <div class="portrait__card">
+            <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+            <img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high">
+          </div>
+          <figcaption class="portrait__tag">
+            <b><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></b>
+            <span><span lang="en">Odoo Developer at AZM Squad</span><span lang="ar">مطوّر Odoo في AZM Squad</span></span>
+          </figcaption>
+          <div class="portrait__float" aria-hidden="true"><b dir="ltr">63</b><span><span lang="en">modules moved to v19, zero data loss</span><span lang="ar">موديول تمت ترقيتها لـ v19 دون فقدان بيانات</span></span></div>
         </figure>
       </div>
-
-      <dl class="ledger">
-        <div><dt><span lang="en">Now</span><span lang="ar">حاليًا</span></dt><dd><span lang="en">Odoo Developer at AZM Squad</span><span lang="ar">مطوّر Odoo في AZM Squad</span></dd></div>
-        <div><dt><span lang="en">Certified</span><span lang="ar">معتمد</span></dt><dd><span lang="en">Odoo Certified Professional (v15)</span><span lang="ar">شهادة Odoo المعتمدة (الإصدار 15)</span></dd></div>
-        <div><dt><span lang="en">Clients in</span><span lang="ar">عملاء في</span></dt><dd><span lang="en">Saudi Arabia · UAE · Egypt</span><span lang="ar">السعودية · الإمارات · مصر</span></dd></div>
-        <div><dt><span lang="en">Sectors</span><span lang="ar">القطاعات</span></dt><dd><span lang="en">Government, oil &amp; gas, construction, automotive, retail, logistics, tourism, education</span><span lang="ar">الحكومة، النفط والغاز، المقاولات، السيارات، التجزئة، اللوجستيات، السياحة، التعليم</span></dd></div>
-      </dl>
-
-      <dl class="stats">
-        <div><dt>4<span class="plus">+</span></dt><dd><span lang="en">years building ERP &amp; web products</span><span lang="ar">سنوات في بناء أنظمة ERP ومنتجات ويب</span></dd></div>
-        <div><dt>9</dt><dd><span lang="en">enterprise Odoo.sh environments delivered</span><span lang="ar">بيئات Odoo.sh مؤسسية تم تسليمها</span></dd></div>
-        <div><dt>63</dt><dd><span lang="en">modules migrated v17 → v19, zero data loss</span><span lang="ar">موديول نُقلت من v17 إلى v19 دون فقدان بيانات</span></dd></div>
-        <div><dt>500<span class="plus">+</span></dt><dd><span lang="en">shipments a day through systems I built</span><span lang="ar">شحنة يوميًا عبر أنظمة من تطويري</span></dd></div>
-      </dl>
+      <div class="wrap">
+        <dl class="stats"><div class="stat reveal"><dt dir="ltr">17</dt><dd><span lang="en">Odoo client projects in the last 21 months</span><span lang="ar">مشروع Odoo لعملاء خلال آخر ٢١ شهرًا</span></dd></div><div class="stat reveal"><dt dir="ltr">1,900+</dt><dd><span lang="en">commits across 347 working days</span><span lang="ar">commit على مدار ٣٤٧ يوم عمل</span></dd></div><div class="stat reveal"><dt dir="ltr">120+</dt><dd><span lang="en">modules delivered — built or integrated</span><span lang="ar">موديول تم تسليمه — تطويرًا أو تكاملًا</span></dd></div><div class="stat reveal"><dt dir="ltr">11 → 19</dt><dd><span lang="en">every Odoo version from 11 to 19</span><span lang="ar">كل إصدارات Odoo من ١١ إلى ١٩</span></dd></div></dl>
+      </div>
     </section>
 
-    <section class="section wrap" id="work">
-      <header class="section__head">
-        <p class="eyebrow">N° 01</p>
-        <h2 class="title"><span lang="en">Selected work</span><span lang="ar">أبرز الأعمال</span></h2>
-        <div class="filters" role="group" aria-label="Filter projects"><button type="button" class="chip is-on" data-filter="all" aria-pressed="true"><span lang="en">All</span><span lang="ar">الكل</span><sup>7</sup></button><button type="button" class="chip" data-filter="web" aria-pressed="false"><span lang="en">Web</span><span lang="ar">ويب</span><sup>5</sup></button><button type="button" class="chip" data-filter="erp" aria-pressed="false"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span><sup>2</sup></button><button type="button" class="chip" data-filter="mobile" aria-pressed="false"><span lang="en">Mobile</span><span lang="ar">جوال</span><sup>2</sup></button></div>
-      </header>
-      <div class="cards" data-cards>
+    <section class="strip" aria-label="Sectors and integrations">
+      <div class="wrap strip__row">
+        <p class="strip__label"><span lang="en">Sectors I’ve worked in</span><span lang="ar">قطاعات عملت فيها</span></p>
+        <ul class="strip__list">
+          <li><span lang="en">Government</span><span lang="ar">الحكومة</span></li><li><span lang="en">Oil &amp; Gas</span><span lang="ar">النفط والغاز</span></li><li><span lang="en">Construction</span><span lang="ar">المقاولات</span></li>
+          <li><span lang="en">Automotive</span><span lang="ar">السيارات</span></li><li><span lang="en">Retail &amp; POS</span><span lang="ar">التجزئة</span></li><li><span lang="en">Logistics</span><span lang="ar">اللوجستيات</span></li>
+          <li><span lang="en">Tourism</span><span lang="ar">السياحة</span></li><li><span lang="en">Education</span><span lang="ar">التعليم</span></li><li><span lang="en">Consulting</span><span lang="ar">الاستشارات</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        <header class="section__head">
+          <div><p class="kicker">01</p><h2 class="title"><span lang="en">Selected work</span><span lang="ar">أبرز الأعمال</span></h2><p class="section__note"><span lang="en">Case studies from ERP and web projects — with screenshots, decisions and results.</span><span lang="ar">دراسات حالة من مشاريع ERP والويب — بالصور والقرارات والنتائج.</span></p></div><div class="filters" role="group" aria-label="Filter"><button type="button" class="chip is-on" data-filter="all" aria-pressed="true"><span lang="en">All</span><span lang="ar">الكل</span> <sup>7</sup></button><button type="button" class="chip" data-filter="erp" aria-pressed="false"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span> <sup>2</sup></button><button type="button" class="chip" data-filter="web" aria-pressed="false"><span lang="en">Web</span><span lang="ar">ويب</span> <sup>5</sup></button><button type="button" class="chip" data-filter="mobile" aria-pressed="false"><span lang="en">Mobile</span><span lang="ar">جوال</span> <sup>2</sup></button></div>
+        </header>
+        <div class="cards">
         <article class="card card--wide reveal" data-kinds="web mobile">
           <a class="card__link" href="work/booking-platforms.html">
-            <div class="cover"><img class="" src="assets/work/booking-somood-home.webp" width="1440" height="900" alt="Hotel booking platforms for the Umrah &amp; tourism market" loading="lazy" decoding="async"></div>
-            <div class="card__meta"><span class="num">N° 01</span><span><span lang="en">Web</span><span lang="ar">ويب</span> · <span lang="en">Mobile</span><span lang="ar">جوال</span></span><span>2025 — 2026</span></div>
-            <h3 class="card__title"><span lang="en">Hotel booking platforms for the Umrah & tourism market</span><span lang="ar">منصّات حجز فنادق لسوق العمرة والسياحة</span></h3>
-            <p class="card__out"><span lang="en">Three live Arabic-first booking platforms taking real SAR payments.</span><span lang="ar">ثلاث منصّات حجز عربية أولًا تعمل الآن وتستقبل مدفوعات حقيقية بالريال.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/booking-somood-home.webp" width="1440" height="900" alt="Hotel booking platforms for the Umrah &amp; tourism market" loading="lazy" decoding="async"></div>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="tag"><span lang="en">Mobile</span><span lang="ar">جوال</span></span><span class="card__year">2025 — 2026</span></div>
+              <h3 class="card__title"><span lang="en">Hotel booking platforms for the Umrah & tourism market</span><span lang="ar">منصّات حجز فنادق لسوق العمرة والسياحة</span></h3>
+              <p class="card__out"><span lang="en">Three live Arabic-first booking platforms taking real SAR payments.</span><span lang="ar">ثلاث منصّات حجز عربية أولًا تعمل الآن وتستقبل مدفوعات حقيقية بالريال.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
-        <article class="card card--wide reveal" data-kinds="erp">
+        <article class="card reveal" data-kinds="erp">
           <a class="card__link" href="work/odoo-v19-migration.html">
             <div class="cover cover--diagram"><svg class="diagram" viewBox="0 0 800 400" role="img" aria-label="Migration process: audit, rewrite, validate, release">
       <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
@@ -145,28 +150,34 @@
       </g>
       <g transform="translate(40 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">POS</text></g><g transform="translate(135 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">ZATCA</text></g><g transform="translate(230 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Telr</text></g><g transform="translate(325 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">HR</text></g><g transform="translate(420 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Website</text></g><g transform="translate(515 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Inventory</text></g><g transform="translate(610 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Accounting</text></g><g transform="translate(705 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Reports</text></g>
     </svg></div>
-            <div class="card__meta"><span class="num">N° 02</span><span><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span>2025 — 2026</span></div>
-            <h3 class="card__title"><span lang="en">A full Odoo v17 → v19 migration, as the only developer</span><span lang="ar">ترقية Odoo كاملة من v17 إلى v19، كمطوّر وحيد</span></h3>
-            <p class="card__out"><span lang="en">63 custom modules moved to Odoo 19 with zero data loss.</span><span lang="ar">٦٣ موديول مخصّص انتقلت إلى Odoo 19 دون فقدان أي بيانات.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2025 — 2026</span></div>
+              <h3 class="card__title"><span lang="en">A full Odoo v17 → v19 migration, as the only developer</span><span lang="ar">ترقية Odoo كاملة من v17 إلى v19، كمطوّر وحيد</span></h3>
+              <p class="card__out"><span lang="en">63 custom modules moved to Odoo 19 with zero data loss.</span><span lang="ar">٦٣ موديول مخصّص انتقلت إلى Odoo 19 دون فقدان أي بيانات.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
         <article class="card reveal" data-kinds="web">
           <a class="card__link" href="work/support-crm.html">
-            <div class="cover"><img class="" src="assets/work/crm-dashboard.webp" width="1440" height="900" alt="Customer support CRM with an AI co-pilot" loading="lazy" decoding="async"></div>
-            <div class="card__meta"><span class="num">N° 03</span><span><span lang="en">Web</span><span lang="ar">ويب</span></span><span>2026</span></div>
-            <h3 class="card__title"><span lang="en">Customer support CRM with an AI co-pilot</span><span lang="ar">نظام دعم فني وخدمة عملاء بمساعد ذكي</span></h3>
-            <p class="card__out"><span lang="en">A complete bilingual help desk covering a 12-part requirements brief.</span><span lang="ar">منصّة دعم فني ثنائية اللغة تغطي متطلبات من ١٢ قسمًا بالكامل.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/crm-dashboard.webp" width="1440" height="900" alt="Customer support CRM with an AI co-pilot" loading="lazy" decoding="async"></div>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2026</span></div>
+              <h3 class="card__title"><span lang="en">Customer support CRM with an AI co-pilot</span><span lang="ar">نظام دعم فني وخدمة عملاء بمساعد ذكي</span></h3>
+              <p class="card__out"><span lang="en">A complete bilingual help desk covering a 12-part requirements brief.</span><span lang="ar">منصّة دعم فني ثنائية اللغة تغطي متطلبات من ١٢ قسمًا بالكامل.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
         <article class="card reveal" data-kinds="web mobile">
           <a class="card__link" href="work/ag-academy.html">
-            <div class="cover"><img class="" src="assets/work/ag-teacher.webp" width="1440" height="900" alt="AG Academy — a learning platform with Android &amp; iOS apps" loading="lazy" decoding="async"></div>
-            <div class="card__meta"><span class="num">N° 04</span><span><span lang="en">Web</span><span lang="ar">ويب</span> · <span lang="en">Mobile</span><span lang="ar">جوال</span></span><span>2026</span></div>
-            <h3 class="card__title"><span lang="en">AG Academy — a learning platform with Android & iOS apps</span><span lang="ar">أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span></h3>
-            <p class="card__out"><span lang="en">One app for the teacher, students and parents — on the web, Android and iOS.</span><span lang="ar">تطبيق واحد للمدرّس والطلاب وأولياء الأمور — على الويب وAndroid وiOS.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/ag-teacher.webp" width="1440" height="900" alt="AG Academy — a learning platform with Android &amp; iOS apps" loading="lazy" decoding="async"></div>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="tag"><span lang="en">Mobile</span><span lang="ar">جوال</span></span><span class="card__year">2026</span></div>
+              <h3 class="card__title"><span lang="en">AG Academy — a learning platform with Android & iOS apps</span><span lang="ar">أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span></h3>
+              <p class="card__out"><span lang="en">One app for the teacher, students and parents — on the web, Android and iOS.</span><span lang="ar">تطبيق واحد للمدرّس والطلاب وأولياء الأمور — على الويب وAndroid وiOS.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
         <article class="card reveal" data-kinds="erp">
@@ -179,196 +190,210 @@
       <text x="530" y="54" text-anchor="middle" class="d-mono">SMSA</text><text x="714" y="162" text-anchor="middle" class="d-mono">OneStock</text><text x="714" y="316" text-anchor="middle" class="d-mono">Neoleap</text><text x="530" y="424" text-anchor="middle" class="d-mono">Telr</text><text x="270" y="424" text-anchor="middle" class="d-mono">PayTabs</text><text x="86" y="316" text-anchor="middle" class="d-mono">Google Drive</text><text x="86" y="162" text-anchor="middle" class="d-mono">REST · JWT</text><text x="270" y="54" text-anchor="middle" class="d-mono">ZATCA</text>
       <text x="24" y="28" class="d-mono">FIG. — MODULES &amp; INTEGRATIONS</text>
     </svg></div>
-            <div class="card__meta"><span class="num">N° 05</span><span><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span>2022 — 2026</span></div>
-            <h3 class="card__title"><span lang="en">ERP systems for Saudi operations</span><span lang="ar">أنظمة ERP لعمليات سعودية</span></h3>
-            <p class="card__out"><span lang="en">Odoo systems that run payroll, deliveries, dealerships and government departments.</span><span lang="ar">أنظمة Odoo تدير الرواتب والتوصيل ووكالات السيارات وإدارات حكومية.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2022 — 2026</span></div>
+              <h3 class="card__title"><span lang="en">ERP systems for Saudi operations</span><span lang="ar">أنظمة ERP لعمليات سعودية</span></h3>
+              <p class="card__out"><span lang="en">Odoo systems that run payroll, deliveries, dealerships and government departments.</span><span lang="ar">أنظمة Odoo تدير الرواتب والتوصيل ووكالات السيارات وإدارات حكومية.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
         <article class="card reveal" data-kinds="web">
           <a class="card__link" href="work/covera-solutions.html">
-            <div class="cover"><img class="" src="assets/work/covera-home.webp" width="1440" height="900" alt="Covera Solutions — corporate website" loading="lazy" decoding="async"></div>
-            <div class="card__meta"><span class="num">N° 06</span><span><span lang="en">Web</span><span lang="ar">ويب</span></span><span>2026</span></div>
-            <h3 class="card__title"><span lang="en">Covera Solutions — corporate website</span><span lang="ar">Covera Solutions — موقع شركة</span></h3>
-            <p class="card__out"><span lang="en">A bilingual company site with scroll-driven motion and a light/dark identity.</span><span lang="ar">موقع شركة ثنائي اللغة بحركة مرتبطة بالتمرير وهوية فاتحة وداكنة.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/covera-home.webp" width="1440" height="900" alt="Covera Solutions — corporate website" loading="lazy" decoding="async"></div>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2026</span></div>
+              <h3 class="card__title"><span lang="en">Covera Solutions — corporate website</span><span lang="ar">Covera Solutions — موقع شركة</span></h3>
+              <p class="card__out"><span lang="en">A bilingual company site with scroll-driven motion and a light/dark identity.</span><span lang="ar">موقع شركة ثنائي اللغة بحركة مرتبطة بالتمرير وهوية فاتحة وداكنة.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
         <article class="card reveal" data-kinds="web">
           <a class="card__link" href="work/development-standards.html">
-            <div class="cover"><img class="" src="assets/work/ds-home.webp" width="1440" height="900" alt="Development Standards — corporate site &amp; product catalogue" loading="lazy" decoding="async"></div>
-            <div class="card__meta"><span class="num">N° 07</span><span><span lang="en">Web</span><span lang="ar">ويب</span></span><span>2025</span></div>
-            <h3 class="card__title"><span lang="en">Development Standards — corporate site & product catalogue</span><span lang="ar">Development Standards — موقع شركة وكتالوج منتجات</span></h3>
-            <p class="card__out"><span lang="en">A catalogue the client edits themselves through a headless CMS.</span><span lang="ar">كتالوج يعدّله العميل بنفسه عبر نظام محتوى Headless.</span></p>
-            <span class="card__more"><span lang="en">Read case study</span><span lang="ar">اقرأ دراسة الحالة</span> <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/ds-home.webp" width="1440" height="900" alt="Development Standards — corporate site &amp; product catalogue" loading="lazy" decoding="async"></div>
+            <div class="card__body">
+              <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2025</span></div>
+              <h3 class="card__title"><span lang="en">Development Standards — corporate site & product catalogue</span><span lang="ar">Development Standards — موقع شركة وكتالوج منتجات</span></h3>
+              <p class="card__out"><span lang="en">A catalogue the client edits themselves through a headless CMS.</span><span lang="ar">كتالوج يعدّله العميل بنفسه عبر نظام محتوى Headless.</span></p>
+              <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
           </a>
         </article>
-      </div>
-
-      <details class="archive reveal">
-        <summary><span><span lang="en">Full archive</span><span lang="ar">الأرشيف الكامل</span></span><span class="mono muted"><span lang="en">16 more modules &amp; tools</span><span lang="ar">١٦ موديولًا وأداة إضافية</span></span><span class="archive__icon" aria-hidden="true">+</span></summary>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th><span lang="en">Year</span><span lang="ar">السنة</span></th><th><span lang="en">Project</span><span lang="ar">المشروع</span></th><th><span lang="en">Sector</span><span lang="ar">القطاع</span></th><th><span lang="en">Type</span><span lang="ar">النوع</span></th><th><span lang="en">Built with</span><span lang="ar">التقنيات</span></th></tr></thead>
-            <tbody>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Telr payment gateway</span><span lang="ar">بوابة دفع Telr</span></td><td class="muted"><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 19 · Python</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Purchase approval flow & stock demand lock</span><span lang="ar">مسار موافقات الشراء وقفل طلبات المخزون</span></td><td class="muted"><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 19</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Demand-based re-order report (Excel)</span><span lang="ar">تقرير إعادة الطلب حسب الطلب الفعلي (Excel)</span></td><td class="muted"><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 19 · report_xlsx</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Vehicle inspections: PDI & port receiving (VRI)</span><span lang="ar">فحص المركبات: PDI والاستلام من الميناء (VRI)</span></td><td class="muted"><span lang="en">Automotive · KSA</span><span lang="ar">سيارات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">B2B dealer credit limits & document checks</span><span lang="ar">حدود ائتمان الموزّعين والتحقق من المستندات</span></td><td class="muted"><span lang="en">Automotive · KSA</span><span lang="ar">سيارات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Probation assessment automation</span><span lang="ar">أتمتة تقييم فترة التجربة</span></td><td class="muted"><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Org chart export to PowerPoint</span><span lang="ar">تصدير الهيكل التنظيمي إلى PowerPoint</span></td><td class="muted"><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18 · python-pptx</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Revenue projections & transaction dashboard</span><span lang="ar">توقعات الإيرادات ولوحة المعاملات</span></td><td class="muted"><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18 · OWL</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Mobile app REST API, JWT auth & license activation</span><span lang="ar">REST API لتطبيق جوال مع JWT وتفعيل التراخيص</span></td><td class="muted"><span lang="en">Retail tech · KSA</span><span lang="ar">تقنية تجزئة · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 18 · JWT</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Multi-level approvals & POS for fuel stations</span><span lang="ar">موافقات متعددة المستويات ونقاط بيع لمحطات وقود</span></td><td class="muted"><span lang="en">Oil & gas · KSA</span><span lang="ar">نفط وغاز · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 19 · Neoleap</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Advance & retention amounts on invoices</span><span lang="ar">الدفعات المقدّمة والمحتجزات في الفواتير</span></td><td class="muted"><span lang="en">Construction · KSA</span><span lang="ar">مقاولات · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 17</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Delivery agent management & shipping labels</span><span lang="ar">إدارة المندوبين وبوالص الشحن</span></td><td class="muted"><span lang="en">Logistics · UAE</span><span lang="ar">لوجستيات · الإمارات</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 17 · SMSA · OneStock</td></tr>
-          <tr data-kinds="erp"><td class="mono">2026</td><td><span lang="en">Auto backup to Google Drive & OneDrive</span><span lang="ar">نسخ احتياطي تلقائي إلى Google Drive وOneDrive</span></td><td class="muted"><span lang="en">Logistics · UAE</span><span lang="ar">لوجستيات · الإمارات</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 17 · Google API</td></tr>
-          <tr data-kinds="web"><td class="mono">2026</td><td><span lang="en">Salla store catalogue automation</span><span lang="ar">أتمتة كتالوج متجر سلة</span></td><td class="muted"><span lang="en">E-commerce · KSA</span><span lang="ar">تجارة إلكترونية · السعودية</span></td><td class="mono tag">Automation</td><td class="mono muted">Python · Salla API</td></tr>
-          <tr data-kinds="erp"><td class="mono">2025 — 26</td><td><span lang="en">Government ERP upgrades & data migrations</span><span lang="ar">ترقيات ونقل بيانات لنظام ERP حكومي</span></td><td class="muted"><span lang="en">Government · KSA</span><span lang="ar">حكومة · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 11 EE</td></tr>
-          <tr data-kinds="erp"><td class="mono">2022 — 25</td><td><span lang="en">Bulk-scanner WMS for warehouse returns</span><span lang="ar">نظام مسح جماعي لمرتجعات المستودعات</span></td><td class="muted"><span lang="en">Logistics & e-commerce · KSA</span><span lang="ar">لوجستيات وتجارة إلكترونية · السعودية</span></td><td class="mono tag">Odoo</td><td class="mono muted">Odoo 14 – 17</td></tr>
-            </tbody>
-          </table>
         </div>
-        <p class="note"><span lang="en">Client ERPs are private, so modules are listed by sector rather than by name.</span><span lang="ar">أنظمة ERP الخاصة بالعملاء سرّية، لذلك تُذكر الموديولات حسب القطاع لا باسم العميل.</span></p>
-      </details>
+        <details class="archive reveal">
+          <summary><span><span lang="en">More modules &amp; tools</span><span lang="ar">موديولات وأدوات إضافية</span></span><span class="archive__count" dir="ltr">16</span><span class="archive__icon" aria-hidden="true">+</span></summary>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th><span lang="en">Year</span><span lang="ar">السنة</span></th><th><span lang="en">Module</span><span lang="ar">الموديول</span></th><th><span lang="en">Sector</span><span lang="ar">القطاع</span></th><th><span lang="en">Type</span><span lang="ar">النوع</span></th><th><span lang="en">Built with</span><span lang="ar">التقنيات</span></th></tr></thead>
+              <tbody>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Telr payment gateway</span><span lang="ar">بوابة دفع Telr</span></b></td><td><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 19 · Python</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Purchase approval flow & stock demand lock</span><span lang="ar">مسار موافقات الشراء وقفل طلبات المخزون</span></b></td><td><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 19</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Demand-based re-order report (Excel)</span><span lang="ar">تقرير إعادة الطلب حسب الطلب الفعلي (Excel)</span></b></td><td><span lang="en">Retail · KSA</span><span lang="ar">تجزئة · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 19 · report_xlsx</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Vehicle inspections: PDI & port receiving (VRI)</span><span lang="ar">فحص المركبات: PDI والاستلام من الميناء (VRI)</span></b></td><td><span lang="en">Automotive · KSA</span><span lang="ar">سيارات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">B2B dealer credit limits & document checks</span><span lang="ar">حدود ائتمان الموزّعين والتحقق من المستندات</span></b></td><td><span lang="en">Automotive · KSA</span><span lang="ar">سيارات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Probation assessment automation</span><span lang="ar">أتمتة تقييم فترة التجربة</span></b></td><td><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Org chart export to PowerPoint</span><span lang="ar">تصدير الهيكل التنظيمي إلى PowerPoint</span></b></td><td><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18 · python-pptx</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Revenue projections & transaction dashboard</span><span lang="ar">توقعات الإيرادات ولوحة المعاملات</span></b></td><td><span lang="en">Consulting · KSA</span><span lang="ar">استشارات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18 · OWL</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Mobile app REST API, JWT auth & license activation</span><span lang="ar">REST API لتطبيق جوال مع JWT وتفعيل التراخيص</span></b></td><td><span lang="en">Retail tech · KSA</span><span lang="ar">تقنية تجزئة · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 18 · JWT</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Multi-level approvals & POS for fuel stations</span><span lang="ar">موافقات متعددة المستويات ونقاط بيع لمحطات وقود</span></b></td><td><span lang="en">Oil & gas · KSA</span><span lang="ar">نفط وغاز · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 19 · Neoleap</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Advance & retention amounts on invoices</span><span lang="ar">الدفعات المقدّمة والمحتجزات في الفواتير</span></b></td><td><span lang="en">Construction · KSA</span><span lang="ar">مقاولات · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 17</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Delivery agent management & shipping labels</span><span lang="ar">إدارة المندوبين وبوالص الشحن</span></b></td><td><span lang="en">Logistics · UAE</span><span lang="ar">لوجستيات · الإمارات</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 17 · SMSA · OneStock</td></tr>
+            <tr data-kinds="erp"><td class="num">2026</td><td><b><span lang="en">Auto backup to Google Drive & OneDrive</span><span lang="ar">نسخ احتياطي تلقائي إلى Google Drive وOneDrive</span></b></td><td><span lang="en">Logistics · UAE</span><span lang="ar">لوجستيات · الإمارات</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 17 · Google API</td></tr>
+            <tr data-kinds="web"><td class="num">2026</td><td><b><span lang="en">Salla store catalogue automation</span><span lang="ar">أتمتة كتالوج متجر سلة</span></b></td><td><span lang="en">E-commerce · KSA</span><span lang="ar">تجارة إلكترونية · السعودية</span></td><td><span class="tag tag--soft">Automation</span></td><td class="muted" dir="ltr">Python · Salla API</td></tr>
+            <tr data-kinds="erp"><td class="num">2025 — 26</td><td><b><span lang="en">Government ERP upgrades & data migrations</span><span lang="ar">ترقيات ونقل بيانات لنظام ERP حكومي</span></b></td><td><span lang="en">Government · KSA</span><span lang="ar">حكومة · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 11 EE</td></tr>
+            <tr data-kinds="erp"><td class="num">2022 — 25</td><td><b><span lang="en">Bulk-scanner WMS for warehouse returns</span><span lang="ar">نظام مسح جماعي لمرتجعات المستودعات</span></b></td><td><span lang="en">Logistics & e-commerce · KSA</span><span lang="ar">لوجستيات وتجارة إلكترونية · السعودية</span></td><td><span class="tag tag--soft">Odoo</span></td><td class="muted" dir="ltr">Odoo 14 – 17</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note"><span lang="en">Client ERPs are private, so modules are listed by sector rather than by client name.</span><span lang="ar">أنظمة العملاء سرّية، لذلك تُذكر الموديولات حسب القطاع لا باسم العميل.</span></p>
+        </details>
+      </div>
     </section>
 
-    <section class="section section--ink" id="services">
+    <section class="section section--dark" id="services">
+      <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
       <div class="wrap">
         <header class="section__head">
-          <p class="eyebrow">N° 02</p>
-          <h2 class="title"><span lang="en">How I can help</span><span lang="ar">كيف أساعدك</span></h2>
-          <p class="section__note"><span lang="en">Three ways to work together. Every engagement starts with a free 30-minute call.</span><span lang="ar">ثلاث طرق للعمل معًا. وكل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة.</span></p>
+          <div><p class="kicker">02</p><h2 class="title"><span lang="en">How I can help</span><span lang="ar">كيف أساعدك</span></h2><p class="section__note"><span lang="en">Every engagement starts with a free 30-minute call.</span><span lang="ar">كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة.</span></p></div>
         </header>
-        <div class="offers">
-          <article class="offer reveal">
-            <p class="offer__n">A</p>
+        <div class="services">
+          <article class="service reveal">
+            <span class="service__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span>
             <h3><span lang="en">Odoo implementation &amp; custom modules</span><span lang="ar">تطبيق Odoo وموديولات مخصّصة</span></h3>
-            <p><span lang="en">New modules, Saudi HR &amp; payroll, ZATCA, POS, approvals and integrations — scoped, estimated and delivered in weekly sprints.</span><span lang="ar">موديولات جديدة، موارد بشرية ورواتب سعودية، ZATCA، نقاط بيع، موافقات وتكاملات — بنطاق وتقدير واضحين وتسليم في سبرنتات أسبوعية.</span></p>
-            <p class="offer__how mono"><span lang="en">Fixed-scope project</span><span lang="ar">مشروع بنطاق محدّد</span></p>
+            <p><span lang="en">Saudi HR &amp; payroll, ZATCA e-invoicing, POS, approvals, inventory and integrations — scoped, estimated and delivered in weekly sprints.</span><span lang="ar">الموارد البشرية والرواتب السعودية، فوترة ZATCA، نقاط البيع، الموافقات، المخزون والتكاملات — بنطاق وتقدير واضحين وتسليم في سبرنتات أسبوعية.</span></p>
+            <span class="service__how"><span lang="en">Fixed-scope project</span><span lang="ar">مشروع بنطاق محدّد</span></span>
           </article>
-          <article class="offer reveal">
-            <p class="offer__n">B</p>
+          <article class="service reveal">
+            <span class="service__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/><path d="M5 21h14"/></svg></span>
             <h3><span lang="en">Upgrades, audits &amp; support</span><span lang="ar">الترقيات والمراجعة والدعم</span></h3>
-            <p><span lang="en">Version upgrades up to v19, performance and code audits, and an ongoing retainer for fixes and enhancements.</span><span lang="ar">ترقية الإصدارات حتى v19، مراجعة الأداء والكود، وعقد دعم شهري للإصلاحات والتحسينات.</span></p>
-            <p class="offer__how mono"><span lang="en">Audit · monthly retainer</span><span lang="ar">مراجعة · عقد شهري</span></p>
+            <p><span lang="en">Version upgrades up to Odoo 19, performance and code audits, and a monthly retainer for fixes and enhancements.</span><span lang="ar">ترقية الإصدارات حتى Odoo 19، مراجعة الأداء والكود، وعقد دعم شهري للإصلاحات والتحسينات.</span></p>
+            <span class="service__how"><span lang="en">Audit · monthly retainer</span><span lang="ar">مراجعة · عقد شهري</span></span>
           </article>
-          <article class="offer reveal">
-            <p class="offer__n">C</p>
+          <article class="service reveal">
+            <span class="service__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
             <h3><span lang="en">Web platforms &amp; mobile apps</span><span lang="ar">منصّات ويب وتطبيقات جوال</span></h3>
-            <p><span lang="en">Arabic-first websites, booking and portal platforms, dashboards and PWAs/mobile apps — connected to your ERP when needed.</span><span lang="ar">مواقع عربية أولًا، منصّات حجز وبوابات، لوحات تحكم وتطبيقات جوال — مربوطة بنظام ERP عند الحاجة.</span></p>
-            <p class="offer__how mono"><span lang="en">Fixed-scope project</span><span lang="ar">مشروع بنطاق محدّد</span></p>
+            <p><span lang="en">Arabic-first websites, booking and customer portals, dashboards and mobile apps — connected to your ERP when needed.</span><span lang="ar">مواقع عربية أولًا، منصّات حجز وبوابات عملاء، لوحات تحكم وتطبيقات جوال — مربوطة بنظام ERP عند الحاجة.</span></p>
+            <span class="service__how"><span lang="en">Fixed-scope project</span><span lang="ar">مشروع بنطاق محدّد</span></span>
           </article>
         </div>
         <ol class="process">
-          <li class="reveal"><span class="mono">01</span><b><span lang="en">Discovery call</span><span lang="ar">مكالمة تعارف</span></b><span><span lang="en">30 minutes, free. We map the problem.</span><span lang="ar">٣٠ دقيقة مجانًا. نحدّد المشكلة.</span></span></li>
-          <li class="reveal"><span class="mono">02</span><b><span lang="en">Scope &amp; quote</span><span lang="ar">النطاق والتسعير</span></b><span><span lang="en">A written scope and estimate within 48 hours.</span><span lang="ar">نطاق مكتوب وتقدير خلال ٤٨ ساعة.</span></span></li>
-          <li class="reveal"><span class="mono">03</span><b><span lang="en">Build in sprints</span><span lang="ar">البناء على مراحل</span></b><span><span lang="en">Weekly demos on a staging environment.</span><span lang="ar">عرض أسبوعي على بيئة تجريبية.</span></span></li>
-          <li class="reveal"><span class="mono">04</span><b><span lang="en">Launch &amp; train</span><span lang="ar">الإطلاق والتدريب</span></b><span><span lang="en">Go-live, user training and support.</span><span lang="ar">التشغيل الفعلي وتدريب المستخدمين والدعم.</span></span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">01</span><b><span lang="en">Discovery call</span><span lang="ar">مكالمة تعارف</span></b><span><span lang="en">30 minutes, free.</span><span lang="ar">٣٠ دقيقة مجانًا.</span></span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">02</span><b><span lang="en">Scope &amp; quote</span><span lang="ar">النطاق والتسعير</span></b><span><span lang="en">Written scope within 48 hours.</span><span lang="ar">نطاق مكتوب خلال ٤٨ ساعة.</span></span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">03</span><b><span lang="en">Build in sprints</span><span lang="ar">التنفيذ على مراحل</span></b><span><span lang="en">Weekly demos on staging.</span><span lang="ar">عرض أسبوعي على بيئة تجريبية.</span></span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">04</span><b><span lang="en">Launch &amp; train</span><span lang="ar">الإطلاق والتدريب</span></b><span><span lang="en">Go-live, training and support.</span><span lang="ar">التشغيل والتدريب والدعم.</span></span></li>
         </ol>
       </div>
     </section>
 
-    <section class="section wrap" id="expertise">
-      <header class="section__head">
-        <p class="eyebrow">N° 03</p>
-        <h2 class="title"><span lang="en">What I work with</span><span lang="ar">ما أعمل به</span></h2>
-      </header>
-      <div class="columns">
-        <div class="col reveal">
-          <h3 class="col__title"><span lang="en">Odoo &amp; ERP</span><span lang="ar">Odoo وأنظمة ERP</span></h3>
-          <ul class="list">
-            <li><span lang="en">Custom modules — Python ORM, OWL, QWeb</span><span lang="ar">موديولات مخصّصة — Python ORM وOWL وQWeb</span></li>
-            <li><span lang="en">Version migrations, v11 through v19</span><span lang="ar">ترقية الإصدارات من v11 حتى v19</span></li>
-            <li><span lang="en">Accounting &amp; ZATCA e-invoicing, Phase 1 &amp; 2</span><span lang="ar">المحاسبة والفوترة الإلكترونية ZATCA، المرحلة ١ و٢</span></li>
-            <li><span lang="en">HR &amp; payroll for Saudi Labor Law</span><span lang="ar">الموارد البشرية والرواتب وفق نظام العمل السعودي</span></li>
-            <li><span lang="en">POS, inventory, WMS &amp; manufacturing</span><span lang="ar">نقاط البيع والمخزون والمستودعات والتصنيع</span></li>
-            <li><span lang="en">Odoo.sh staging, CI/CD &amp; automated backups</span><span lang="ar">Odoo.sh والنشر المستمر والنسخ الاحتياطي التلقائي</span></li>
-          </ul>
-        </div>
-        <div class="col reveal">
-          <h3 class="col__title"><span lang="en">Fullstack web &amp; mobile</span><span lang="ar">الويب المتكامل والجوال</span></h3>
-          <ul class="list">
-            <li>React · Next.js · TypeScript · Tailwind</li>
-            <li>Django REST · PHP REST APIs · JWT</li>
-            <li>PostgreSQL · MySQL · Supabase</li>
-            <li><span lang="en">Arabic-first RTL interfaces</span><span lang="ar">واجهات عربية أولًا بدعم RTL</span></li>
-            <li><span lang="en">PWAs and Android / iOS apps with Capacitor</span><span lang="ar">تطبيقات PWA وAndroid وiOS عبر Capacitor</span></li>
-            <li><span lang="en">Headless CMS (Sanity), performance &amp; SEO</span><span lang="ar">أنظمة محتوى Headless (Sanity)، الأداء وSEO</span></li>
-          </ul>
-        </div>
-        <div class="col col--aside reveal">
-          <h3 class="col__title"><span lang="en">Integrations</span><span lang="ar">التكاملات</span></h3>
-          <p class="chips-text">ZATCA · PayTabs · Telr · Neoleap · SMSA Express · OneStock · Salla · Google Drive · OneDrive · Gemini AI</p>
-          <h3 class="col__title"><span lang="en">Languages</span><span lang="ar">اللغات</span></h3>
-          <p class="chips-text"><span lang="en">Arabic (native) · English (professional)</span><span lang="ar">العربية (الأم) · الإنجليزية (مهنية)</span></p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section wrap" id="experience">
-      <header class="section__head">
-        <p class="eyebrow">N° 04</p>
-        <h2 class="title"><span lang="en">Experience</span><span lang="ar">الخبرة</span></h2>
-        <p class="section__note"><a class="u" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request my full CV</span><span lang="ar">اطلب السيرة الذاتية كاملة</span> ↗</a></p>
-      </header>
-      <ol class="timeline">
-        <li class="reveal"><span class="when"><span lang="en">2025 — now</span><span lang="ar">٢٠٢٥ — الآن</span></span><span class="what"><b><span lang="en">Odoo Developer</span><span lang="ar">مطوّر Odoo</span></b> AZM Squad<small><span lang="en">Government ERP serving 1,000+ users across 10+ departments</span><span lang="ar">نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم في أكثر من ١٠ إدارات</span></small></span><span class="where"><span lang="en">Saudi Arabia · remote</span><span lang="ar">السعودية · عن بُعد</span></span></li>
-        <li class="reveal"><span class="when"><span lang="en">2025 — now</span><span lang="ar">٢٠٢٥ — الآن</span></span><span class="what"><b><span lang="en">Independent ERP &amp; Fullstack Consultant</span><span lang="ar">مستشار ERP ومطوّر ويب مستقل</span></b> <span lang="en">Self-employed</span><span lang="ar">عمل حر</span><small><span lang="en">Odoo migrations, Saudi HR &amp; payroll, delivery operations, booking platforms and learning apps</span><span lang="ar">ترقيات Odoo، موارد بشرية ورواتب سعودية، عمليات توصيل، منصّات حجز وتطبيقات تعليمية</span></small></span><span class="where"><span lang="en">KSA · UAE · Egypt</span><span lang="ar">السعودية · الإمارات · مصر</span></span></li>
-        <li class="reveal"><span class="when"><span lang="en">2022 — 2025</span><span lang="ar">٢٠٢٢ — ٢٠٢٥</span></span><span class="what"><b><span lang="en">Odoo Developer</span><span lang="ar">مطوّر Odoo</span></b> Algoriza<small><span lang="en">10+ modules for Saudi logistics &amp; e-commerce</span><span lang="ar">أكثر من ١٠ موديولات للوجستيات والتجارة الإلكترونية في السعودية</span></small></span><span class="where"><span lang="en">Remote</span><span lang="ar">عن بُعد</span></span></li>
-        <li class="reveal"><span class="when"><span lang="en">2022</span><span lang="ar">٢٠٢٢</span></span><span class="what"><b><span lang="en">Junior Odoo Developer</span><span lang="ar">مطوّر Odoo مبتدئ</span></b> Algoriza<small><span lang="en">5 modules shipped to production as an intern</span><span lang="ar">٥ موديولات على الإنتاج خلال فترة التدريب</span></small></span><span class="where"><span lang="en">Remote</span><span lang="ar">عن بُعد</span></span></li>
-      </ol>
-      <div class="creds reveal">
-        <p><b><span lang="en">B.Sc. Computer Science</span><span lang="ar">بكالوريوس علوم الحاسب</span></b><span lang="en">New Cairo Academy, 2024</span><span lang="ar">أكاديمية القاهرة الجديدة، ٢٠٢٤</span></p>
-        <p><b><span lang="en">Odoo Certified Professional</span><span lang="ar">شهادة Odoo المعتمدة</span></b><span lang="en">Functional, v15 — Odoo S.A., 2024</span><span lang="ar">وظيفية، الإصدار 15 — Odoo S.A.، ٢٠٢٤</span></p>
-        <p><b><span lang="en">Mentoring</span><span lang="ar">الإرشاد</span></b><span lang="en">Mentored 5 junior developers; wrote the team’s Odoo 17 module standards</span><span lang="ar">إرشاد ٥ مطوّرين مبتدئين؛ وكتابة معايير موديولات Odoo 17 للفريق</span></p>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
+    <section class="section" id="expertise">
       <div class="wrap">
-        <p class="eyebrow">N° 05</p>
-        <h2 class="contact__title"><span lang="en">Let’s talk about <em>your</em> system.</span><span lang="ar">لنتحدث عن <em>نظامك</em>.</span></h2>
-        <p class="contact__lede"><span lang="en">Tell me what you’re trying to fix or build. I reply within one working day, and my hours overlap fully with Saudi business hours.</span><span lang="ar">أخبرني بما تريد إصلاحه أو بناءه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
-        <div class="contact__actions">
-          <a class="btn btn--paper" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call on WhatsApp</span><span lang="ar">احجز مكالمة ٣٠ دقيقة عبر واتساب</span><span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><span lang="en">Send a project brief</span><span lang="ar">أرسل وصف المشروع</span></a>
+        <header class="section__head">
+          <div><p class="kicker">03</p><h2 class="title"><span lang="en">What I work with</span><span lang="ar">ما أعمل به</span></h2></div>
+        </header>
+        <div class="skills">
+          <div class="skill reveal">
+            <h3><span lang="en">Odoo &amp; ERP</span><span lang="ar">Odoo وأنظمة ERP</span></h3>
+            <ul class="pills">
+              <li>Odoo 11 – 19</li><li>Python ORM</li><li>OWL</li><li>QWeb</li><li>PostgreSQL</li><li>Odoo.sh</li>
+              <li><span lang="en">Accounting</span><span lang="ar">المحاسبة</span></li><li>ZATCA</li><li><span lang="en">HR &amp; Payroll</span><span lang="ar">الموارد البشرية والرواتب</span></li><li>POS</li><li><span lang="en">Inventory &amp; WMS</span><span lang="ar">المخزون والمستودعات</span></li><li><span lang="en">Approvals</span><span lang="ar">الموافقات</span></li><li><span lang="en">Migrations</span><span lang="ar">الترقيات</span></li>
+            </ul>
+          </div>
+          <div class="skill reveal">
+            <h3><span lang="en">Web &amp; mobile</span><span lang="ar">الويب والجوال</span></h3>
+            <ul class="pills">
+              <li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>Tailwind CSS</li><li>Django REST</li><li>PHP</li>
+              <li>MySQL</li><li>Supabase</li><li>REST APIs</li><li>JWT</li><li>PWA</li><li>Capacitor</li><li><span lang="en">Arabic RTL</span><span lang="ar">واجهات RTL</span></li>
+            </ul>
+          </div>
+          <div class="skill reveal">
+            <h3><span lang="en">Integrations</span><span lang="ar">التكاملات</span></h3>
+            <ul class="pills">
+              <li>ZATCA</li><li>PayTabs</li><li>Telr</li><li>Neoleap</li><li>SMSA Express</li><li>OneStock</li><li>Salla</li><li>Google Drive</li><li>OneDrive</li><li>Gemini AI</li>
+            </ul>
+          </div>
         </div>
-        <div class="contact__links">
-          <button class="big-link" type="button" data-copy="mohammed.hefzallah@gmail.com"><span class="big-link__label"><span lang="en">Email — click to copy</span><span lang="ar">البريد — اضغط للنسخ</span></span><span class="big-link__value" dir="ltr">mohammed.hefzallah@gmail.com</span><span class="copied" aria-live="polite"></span></button>
-          <a class="big-link" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span class="big-link__label">WhatsApp</span><span class="big-link__value" dir="ltr">+20 155 446 3171</span></a>
-          <a class="big-link" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><span class="big-link__label">LinkedIn</span><span class="big-link__value" dir="ltr">in/mhefzallah</span></a>
-          <a class="big-link" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><span class="big-link__label">GitHub</span><span class="big-link__value" dir="ltr">@mhefzallah</span></a>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="experience">
+      <div class="wrap">
+        <header class="section__head">
+          <div><p class="kicker">04</p><h2 class="title"><span lang="en">Experience</span><span lang="ar">الخبرة</span></h2></div><a class="btn btn--outline btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request full CV</span><span lang="ar">اطلب السيرة الذاتية</span></a>
+        </header>
+        <ol class="timeline">
+          <li class="tl reveal tl--now">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <div class="tl__card">
+              <div class="tl__top"><b><span lang="en">Odoo Developer</span><span lang="ar">مطوّر Odoo</span></b><span class="tl__when"><span lang="en">Nov 2025 — now</span><span lang="ar">نوفمبر ٢٠٢٥ — الآن</span></span></div>
+              <p class="tl__org">AZM Squad · <span><span lang="en">Saudi Arabia · remote</span><span lang="ar">السعودية · عن بُعد</span></span></p>
+              <p class="tl__note"><span lang="en">Government ERP serving 1,000+ users across 10+ departments.</span><span lang="ar">نظام ERP حكومي يخدم أكثر من ١٠٠٠ مستخدم في أكثر من ١٠ إدارات.</span></p>
+            </div>
+          </li>
+          <li class="tl reveal tl--now">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <div class="tl__card">
+              <div class="tl__top"><b><span lang="en">Independent ERP &amp; Fullstack Consultant</span><span lang="ar">مستشار ERP ومطوّر ويب مستقل</span></b><span class="tl__when"><span lang="en">2025 — now</span><span lang="ar">٢٠٢٥ — الآن</span></span></div>
+              <p class="tl__org"><span lang="en">Self-employed</span><span lang="ar">عمل حر</span> · <span><span lang="en">Remote</span><span lang="ar">عن بُعد</span></span></p>
+              <p class="tl__note"><span lang="en">Odoo migrations, Saudi HR &amp; payroll, delivery operations, booking platforms and learning apps for clients in KSA, UAE &amp; Egypt.</span><span lang="ar">ترقيات Odoo، موارد بشرية ورواتب سعودية، عمليات توصيل، منصّات حجز وتطبيقات تعليمية لعملاء في السعودية والإمارات ومصر.</span></p>
+            </div>
+          </li>
+          <li class="tl reveal">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <div class="tl__card">
+              <div class="tl__top"><b><span lang="en">Odoo Developer</span><span lang="ar">مطوّر Odoo</span></b><span class="tl__when"><span lang="en">Jul 2022 — Nov 2025</span><span lang="ar">يوليو ٢٠٢٢ — نوفمبر ٢٠٢٥</span></span></div>
+              <p class="tl__org">Algoriza · <span><span lang="en">Remote</span><span lang="ar">عن بُعد</span></span></p>
+              <p class="tl__note"><span lang="en">10+ modules for Saudi logistics &amp; e-commerce; 15% faster reports; mentored 5 juniors.</span><span lang="ar">أكثر من ١٠ موديولات للوجستيات والتجارة الإلكترونية؛ تقارير أسرع ١٥٪؛ إرشاد ٥ مطوّرين.</span></p>
+            </div>
+          </li>
+          <li class="tl reveal">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <div class="tl__card">
+              <div class="tl__top"><b><span lang="en">Junior Odoo Developer</span><span lang="ar">مطوّر Odoo مبتدئ</span></b><span class="tl__when"><span lang="en">Jan — Jun 2022</span><span lang="ar">يناير — يونيو ٢٠٢٢</span></span></div>
+              <p class="tl__org">Algoriza · <span><span lang="en">Remote</span><span lang="ar">عن بُعد</span></span></p>
+              <p class="tl__note"><span lang="en">5 modules shipped to production as an intern.</span><span lang="ar">٥ موديولات على الإنتاج خلال فترة التدريب.</span></p>
+            </div>
+          </li></ol>
+        <div class="creds">
+          <div class="cred reveal"><span class="cred__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b><span lang="en">B.Sc. Computer Science</span><span lang="ar">بكالوريوس علوم الحاسب</span></b><span><span lang="en">New Cairo Academy · 2024</span><span lang="ar">أكاديمية القاهرة الجديدة · ٢٠٢٤</span></span></div>
+          <div class="cred reveal"><span class="cred__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b><span lang="en">Odoo Certified Professional</span><span lang="ar">شهادة Odoo المعتمدة</span></b><span><span lang="en">Functional v15 · Odoo S.A. · 2024</span><span lang="ar">وظيفية الإصدار 15 · Odoo S.A. · ٢٠٢٤</span></span></div>
+          <div class="cred reveal"><span class="cred__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b><span lang="en">Languages</span><span lang="ar">اللغات</span></b><span><span lang="en">Arabic (native) · English (professional)</span><span lang="ar">العربية (الأم) · الإنجليزية (مهنية)</span></span></div>
         </div>
       </div>
     </section>
   </main>
-  <footer class="footer">
-    <div class="wrap footer__grid">
+  <section class="cta" id="contact">
+    <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+    <div class="wrap cta__grid">
       <div>
-        <p class="footer__big"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه — أو إصلاحه؟</span></p>
-        <a class="btn btn--ink" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span><span class="arrow" aria-hidden="true">→</span></a>
+        <p class="kicker kicker--gold"><span lang="en">Let’s work together</span><span lang="ar">لنعمل معًا</span></p>
+        <h2 class="cta__title"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه أو تطويره؟</span></h2>
+        <p class="cta__lede"><span lang="en">Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.</span><span lang="ar">أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
+        <div class="cta__actions">
+          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
+          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span lang="en">Send a project brief</span><span lang="ar">أرسل وصف المشروع</span></a>
+        </div>
       </div>
-      <ul class="footer__links">
-        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener">WhatsApp</a></li>
-        <li><a href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><span lang="en">Email</span><span lang="ar">البريد</span></a></li>
-        <li><a href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/mhefzallah" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request my CV</span><span lang="ar">اطلب السيرة الذاتية</span></a></li>
+      <ul class="contact-list">
+        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span lang="en">Email · click to copy</span><span lang="ar">البريد · اضغط للنسخ</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><a class="contact-item" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
+        <li><a class="contact-item" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
+        <li><a class="contact-item" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
       </ul>
     </div>
-    <div class="wrap footer__base">
-      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span> · <span lang="en">2026 Edition</span><span lang="ar">إصدار ٢٠٢٦</span></p>
-      <p class="colophon"><span lang="en">Set in Fraunces &amp; IBM Plex. Built with plain HTML, CSS and a little JavaScript.</span><span lang="ar">بخطوط Fraunces وIBM Plex. مبني بـ HTML وCSS وقليل من JavaScript.</span></p>
-      <p><a class="u" href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
+  </section>
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></p>
+      <p><span lang="en">Cairo · Working with KSA, UAE &amp; Europe</span><span lang="ar">القاهرة · أعمل مع السعودية والإمارات وأوروبا</span> · <span data-clock>--:--</span></p>
+      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request CV</span><span lang="ar">اطلب السيرة الذاتية</span></a> · <a href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>
     <button class="lightbox__close" type="button" aria-label="Close">×</button>
-    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">←</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">‹</button>
     <figure><img alt=""><figcaption></figcaption></figure>
-    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">→</button>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">›</button>
   </div>
   <script src="assets/main.js" defer></script>
 </body>
