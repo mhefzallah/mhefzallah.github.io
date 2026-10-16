@@ -94,7 +94,7 @@ def diagram(name):
 # Shared chrome
 # ----------------------------------------------------------------------------
 
-def head(title_en, desc, path, prefix):
+def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
     url = SITE + "/" + path
     return f'''<!doctype html>
 <html lang="en" dir="ltr" data-lang="en" data-theme="paper">
@@ -111,7 +111,9 @@ def head(title_en, desc, path, prefix):
   <meta property="og:title" content="{escape(title_en)}">
   <meta property="og:description" content="{escape(desc)}">
   <meta property="og:url" content="{url}">
-  <meta property="og:image" content="{SITE}/assets/img/og.jpg">
+  <meta property="og:image" content="{SITE}/{og}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -523,7 +525,7 @@ def case(i, p):
     </div>
   </main>'''
     title = f'{p["title"][0]} — Mohammed Hefzallah'
-    return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre) + masthead(pre, False) + body + footer(pre)
+    return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg') + masthead(pre, False) + body + footer(pre)
 
 
 def main():
