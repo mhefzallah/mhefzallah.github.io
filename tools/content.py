@@ -329,3 +329,83 @@ ARCHIVE = [
     ("2025 — 26", "Odoo", ("Government ERP upgrades & data migrations", "ترقيات ونقل بيانات لنظام ERP حكومي"), ("Government · KSA", "حكومة · السعودية"), "Odoo 11 EE"),
     ("2022 — 25", "Odoo", ("Bulk-scanner WMS for warehouse returns", "نظام مسح جماعي لمرتجعات المستودعات"), ("Logistics & e-commerce · KSA", "لوجستيات وتجارة إلكترونية · السعودية"), "Odoo 14 – 17"),
 ]
+
+
+# --------------------------------------------------------------------------
+# v4 — technical card per project. These tags drive the section pages and filters.
+# areas: erp | web | backend | mobile
+# --------------------------------------------------------------------------
+STACKS = {
+    "booking-platforms": {"areas": ["web", "backend", "mobile"], "platform": [],
+        "frontend": ["React", "TypeScript", "Vite", "Tailwind CSS"], "backend": ["PHP MVC"], "database": ["MySQL"],
+        "mobile": ["PWA"], "integrations": ["PayTabs", "SSO", "Gemini AI", "Leaflet"], "hosting": "Hostinger"},
+    "odoo-v19-migration": {"areas": ["erp"], "platform": ["Odoo"],
+        "frontend": ["OWL", "QWeb"], "backend": ["Python (Odoo ORM)"], "database": ["PostgreSQL"],
+        "mobile": [], "integrations": ["ZATCA", "Telr"], "hosting": "Odoo.sh"},
+    "support-crm": {"areas": ["web", "backend"], "platform": [],
+        "frontend": ["React", "TypeScript", "Vite", "Tailwind CSS"], "backend": ["Django REST Framework"], "database": ["PostgreSQL"],
+        "mobile": [], "integrations": ["JWT", "OpenAPI", "AI"], "hosting": ""},
+    "ag-academy": {"areas": ["web", "backend", "mobile"], "platform": [],
+        "frontend": ["React", "Vite"], "backend": ["Supabase"], "database": ["PostgreSQL"],
+        "mobile": ["Capacitor", "PWA"], "integrations": ["Supabase Auth", "Storage"], "hosting": ""},
+    "odoo-erp-systems": {"areas": ["erp", "backend"], "platform": ["Odoo"],
+        "frontend": ["OWL", "QWeb"], "backend": ["Python (Odoo ORM)", "Odoo REST / JWT"], "database": ["PostgreSQL"],
+        "mobile": [], "integrations": ["SMSA", "OneStock", "Neoleap", "Google Drive API"], "hosting": "Odoo.sh"},
+    "covera-solutions": {"areas": ["web"], "platform": [],
+        "frontend": ["Vanilla JS", "Vite", "GSAP"], "backend": [], "database": [],
+        "mobile": [], "integrations": [], "hosting": "Hostinger"},
+    "development-standards": {"areas": ["web"], "platform": [],
+        "frontend": ["Next.js", "React", "MUI", "Tailwind CSS"], "backend": ["Sanity CMS"], "database": ["Sanity Content Lake"],
+        "mobile": [], "integrations": ["WhatsApp"], "hosting": ""},
+}
+
+# Section pages. Each group lists the tag it matches (in the given stack field).
+# A group with no matching project renders as "coming soon".
+SECTIONS = [
+    {"slug": "erp", "icon": "odoo", "title": ("ERP & Business Platforms", "أنظمة ERP ومنصّات الأعمال"),
+     "lede": ("Business systems that run operations — implementation, custom modules, migrations and integrations.",
+              "أنظمة الأعمال التي تدير العمليات — تطبيق وتطوير موديولات وترقيات وتكاملات."),
+     "groups": [
+        {"key": "odoo", "field": "platform", "tag": "Odoo", "logo": "odoo", "name": "Odoo",
+         "desc": ("Odoo 11 → 19, Community & Enterprise: HR & payroll, ZATCA, POS, inventory, approvals and migrations.",
+                  "Odoo من ١١ إلى ١٩، Community وEnterprise: موارد بشرية ورواتب، ZATCA، نقاط بيع، مخزون، موافقات وترقيات.")},
+        {"key": "servicenow", "field": "platform", "tag": "ServiceNow", "logo": "servicenow", "name": "ServiceNow",
+         "desc": ("ITSM workflows, service catalogue and platform development.", "مسارات ITSM وكتالوج الخدمات وتطوير المنصّة.")},
+        {"key": "zoho", "field": "platform", "tag": "Zoho", "logo": "zoho", "name": "Zoho",
+         "desc": ("Zoho CRM, Books and Creator — setup, automation and integrations.", "Zoho CRM وBooks وCreator — إعداد وأتمتة وتكاملات.")},
+     ]},
+    {"slug": "web", "icon": "react", "title": ("Fullstack Web — Frontend", "تطوير الويب — الواجهات"),
+     "lede": ("Websites and web apps, grouped by the framework they’re built with.", "مواقع وتطبيقات ويب، مقسّمة حسب الـ framework المستخدم."),
+     "groups": [
+        {"key": "react", "field": "frontend", "tag": "React", "logo": "react", "name": "React", "exclude": "Next.js",
+         "desc": ("SPAs and dashboards with React, TypeScript, Vite and Tailwind.", "تطبيقات ولوحات تحكم بـ React وTypeScript وVite وTailwind.")},
+        {"key": "nextjs", "field": "frontend", "tag": "Next.js", "logo": "nextdotjs", "name": "Next.js",
+         "desc": ("SEO-first sites with server rendering and a headless CMS.", "مواقع محسّنة لمحركات البحث مع Server Rendering ونظام محتوى Headless.")},
+        {"key": "vanilla", "field": "frontend", "tag": "Vanilla JS", "logo": "javascript", "name": "Vanilla JS + GSAP",
+         "desc": ("Fast static sites with scroll-driven motion.", "مواقع سريعة بحركة مرتبطة بالتمرير.")},
+     ]},
+    {"slug": "backend", "icon": "django", "title": ("Fullstack Web — Backend & APIs", "تطوير الويب — الباك إند والـ APIs"),
+     "lede": ("APIs, business logic and data — grouped by backend technology and database.", "واجهات برمجية ومنطق أعمال وبيانات — مقسّمة حسب تقنية الباك إند وقاعدة البيانات."),
+     "groups": [
+        {"key": "django", "field": "backend", "tag": "Django REST Framework", "logo": "django", "name": "Python · Django REST",
+         "desc": ("REST APIs with JWT auth and OpenAPI docs.", "واجهات REST مع مصادقة JWT وتوثيق OpenAPI.")},
+        {"key": "odoo-python", "field": "backend", "tag": "Python (Odoo ORM)", "logo": "python", "name": "Python · Odoo ORM & REST",
+         "desc": ("Business logic, REST/JWT endpoints for mobile apps and integrations.", "منطق الأعمال وواجهات REST/JWT لتطبيقات الجوال والتكاملات.")},
+        {"key": "php", "field": "backend", "tag": "PHP MVC", "logo": "php", "name": "PHP · MVC REST API",
+         "desc": ("Custom MVC REST APIs over MySQL with payments and auth.", "واجهات REST مبنية بنمط MVC فوق MySQL مع الدفع والمصادقة.")},
+        {"key": "supabase", "field": "backend", "tag": "Supabase", "logo": "supabase", "name": "Supabase (BaaS)",
+         "desc": ("Postgres, auth and storage without running servers.", "Postgres ومصادقة وتخزين دون إدارة خوادم.")},
+        {"key": "sanity", "field": "backend", "tag": "Sanity CMS", "logo": "sanity", "name": "Headless CMS · Sanity",
+         "desc": ("Content models the client edits without a developer.", "نماذج محتوى يعدّلها العميل دون مطوّر.")},
+     ]},
+    {"slug": "mobile", "icon": "flutter", "title": ("Mobile Apps", "تطبيقات الجوال"),
+     "lede": ("Android and iOS apps — native-feel cross-platform builds.", "تطبيقات Android وiOS — تطوير متعدد المنصّات بإحساس التطبيقات الأصلية."),
+     "groups": [
+        {"key": "flutter", "field": "mobile", "tag": "Flutter", "logo": "flutter", "name": "Flutter",
+         "desc": ("Cross-platform apps in Dart, connected to ERP back-ends.", "تطبيقات متعددة المنصّات بلغة Dart مربوطة بأنظمة ERP.")},
+        {"key": "capacitor", "field": "mobile", "tag": "Capacitor", "logo": "capacitor", "name": "Capacitor",
+         "desc": ("One React codebase shipped to Android and iOS.", "قاعدة كود React واحدة منشورة على Android وiOS.")},
+        {"key": "pwa", "field": "mobile", "tag": "PWA", "logo": "pwa", "name": "PWA",
+         "desc": ("Installable web apps that work offline.", "تطبيقات ويب قابلة للتثبيت وتعمل دون اتصال.")},
+     ]},
+]

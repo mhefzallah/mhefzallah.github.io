@@ -133,4 +133,31 @@
       if (e.key === 'ArrowLeft') show(idx + (rtl ? 1 : -1));
     });
   }
+
+  /* projects index: area chips + stack selects */
+  var pf = $('[data-project-filters]');
+  if (pf) {
+    var area = 'all', grid = $('[data-project-grid]');
+    function apply() {
+      var sel = {}; $$('select[data-field]', pf).forEach(function (s) { sel[s.dataset.field] = s.value; });
+      var n = 0;
+      $$('.pcard', grid).forEach(function (c) {
+        var ok = (area === 'all' || c.dataset.areas.split(' ').indexOf(area) > -1);
+        Object.keys(sel).forEach(function (f) { if (sel[f] && (c.dataset[f] || '').split('|').indexOf(sel[f]) < 0) ok = false; });
+        c.classList.toggle('is-hidden', !ok); if (ok) { n++; c.classList.add('in'); }
+      });
+      $('[data-count]').textContent = n; $('[data-empty]').hidden = n > 0;
+    }
+    $$('[data-area]', pf).forEach(function (b) {
+      b.addEventListener('click', function () {
+        area = b.dataset.area;
+        $$('[data-area]', pf).forEach(function (x) { x.classList.toggle('is-on', x === b); });
+        apply();
+      });
+    });
+    $$('select[data-field]', pf).forEach(function (s) { s.addEventListener('change', apply); });
+    var q = new URLSearchParams(location.search);
+    ['frontend', 'backend', 'database'].forEach(function (f) { var v = q.get(f), s = $('select[data-field="' + f + '"]', pf); if (v && s) s.value = v; });
+    if (q.get('area')) { var b = $('[data-area="' + q.get('area') + '"]', pf); if (b) b.click(); else apply(); } else apply();
+  }
 })();

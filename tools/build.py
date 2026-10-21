@@ -8,7 +8,7 @@ import os
 from html import escape
 from urllib.parse import quote
 
-from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE
+from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE, STACKS, SECTIONS
 from diagrams import diagram
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -50,10 +50,10 @@ PATTERN = ('<svg class="pattern" aria-hidden="true"><defs><pattern id="star" wid
            '</pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>')
 
 STATS = [
-    ("17", "Odoo client projects in the last 21 months", "مشروع Odoo لعملاء خلال آخر ٢١ شهرًا"),
-    ("1,900+", "commits across 347 working days", "commit على مدار ٣٤٧ يوم عمل"),
-    ("120+", "modules delivered — built or integrated", "موديول تم تسليمه — تطويرًا أو تكاملًا"),
-    ("11 → 19", "every Odoo version from 11 to 19", "كل إصدارات Odoo من ١١ إلى ١٩"),
+    ("24+", "projects across ERP, web and mobile", "مشروعًا في ERP والويب والجوال"),
+    ("1,900+", "commits in the last 21 months", "commit خلال آخر ٢١ شهرًا"),
+    ("120+", "Odoo modules delivered", "موديول Odoo تم تسليمه"),
+    ("4+", "years of professional experience", "سنوات خبرة مهنية"),
 ]
 
 
@@ -100,8 +100,12 @@ def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
 </head>'''
 
 
-def masthead(prefix, home):
-    h = "" if home else prefix + "index.html"
+NAV = [("index.html", ("Home", "الرئيسية")), ("erp.html", ("ERP", "ERP")), ("web.html", ("Web", "الويب")),
+       ("backend.html", ("Backend", "الباك إند")), ("mobile.html", ("Mobile", "الجوال")), ("projects.html", ("All projects", "كل المشاريع"))]
+
+
+def masthead(prefix, active="index.html"):
+    links = "".join(f'<a href="{prefix}{href}"{" class=\"is-active\" aria-current=\"page\"" if href == active else ""}>{T(*lab)}</a>' for href, lab in NAV)
     return f'''
 <body>
   <a class="skip" href="#main">{T("Skip to content", "انتقل إلى المحتوى")}</a>
@@ -109,17 +113,12 @@ def masthead(prefix, home):
     <div class="wrap masthead__row">
       <a class="brand" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
         <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
-        <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Odoo ERP · Fullstack", "Odoo ERP · ويب متكامل")}</small></span>
+        <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Software Engineer", "مهندس برمجيات")}</small></span>
       </a>
-      <nav class="nav" aria-label="Main">
-        <a href="{h}#work">{T("Work", "الأعمال")}</a>
-        <a href="{h}#services">{T("Services", "الخدمات")}</a>
-        <a href="{h}#experience">{T("Experience", "الخبرة")}</a>
-        <a href="{h}#contact">{T("Contact", "تواصل")}</a>
-      </nav>
+      <nav class="nav" aria-label="Main">{links}</nav>
       <div class="tools">
         <button class="lang" type="button" data-lang-toggle aria-label="Switch language">{T("العربية", "English")}</button>
-        <a class="btn btn--gold btn--sm" href="{CALL}" target="_blank" rel="noopener">{T("Book a call", "احجز مكالمة")}</a>
+        <a class="btn btn--gold btn--sm" href="#contact">{T("Contact", "تواصل")}</a>
       </div>
     </div>
   </header>'''
@@ -193,34 +192,180 @@ def section_head(n, en, ar, note=None, extra=""):
 # Home
 # ----------------------------------------------------------------------------
 
+# ----------------------------------------------------------------------------
+# v4 building blocks: tech cards, sections, projects index
+# ----------------------------------------------------------------------------
+
+LOGO_FOR = {"React": "react", "Next.js": "nextdotjs", "TypeScript": "typescript", "Vite": "vite", "Tailwind CSS": "tailwindcss",
+            "Vanilla JS": "javascript", "GSAP": "gsap", "Django REST Framework": "django", "Python (Odoo ORM)": "python",
+            "PHP MVC": "php", "Supabase": "supabase", "Sanity CMS": "sanity", "PostgreSQL": "postgresql", "MySQL": "mysql",
+            "Capacitor": "capacitor", "PWA": "pwa", "Flutter": "flutter", "Odoo": "odoo"}
+
+
+def logo(prefix, name, cls="logo"):
+    return f'<img class="{cls}" src="{prefix}assets/logos/{name}.svg" alt="" width="20" height="20" loading="lazy">'
+
+
+def by_slug(slug):
+    return next(p for p in PROJECTS if p["slug"] == slug)
+
+
+def matches(stack, g):
+    vals = stack.get(g["field"], [])
+    return g["tag"] in vals and not (g.get("exclude") and g["exclude"] in vals)
+
+
+def group_projects(g):
+    return [p for p in PROJECTS if matches(STACKS[p["slug"]], g)]
+
+
+def stack_rows(prefix, p, compact=True):
+    st = STACKS[p["slug"]]
+    rows = [("Frontend", "الواجهة", st["frontend"]), ("Backend", "الباك إند", st["backend"]),
+            ("Database", "قاعدة البيانات", st["database"]), ("Mobile", "الجوال", st["mobile"])]
+    if not compact:
+        rows += [("Integrations", "التكاملات", st["integrations"]), ("Platform", "المنصّة", st["platform"]),
+                 ("Hosting", "الاستضافة", [st["hosting"]] if st["hosting"] else [])]
+    out = []
+    for en, ar, vals in rows:
+        if not vals:
+            continue
+        chips = "".join(f'<span class="tech">{logo(prefix, LOGO_FOR[v], "tech__logo") if v in LOGO_FOR else ""}{v}</span>' for v in vals)
+        out.append(f'<div class="stackrow"><dt>{T(en, ar)}</dt><dd dir="ltr">{chips}</dd></div>')
+    return f'<dl class="stackcard{" stackcard--full" if not compact else ""}">{"".join(out)}</dl>'
+
+
+def project_card(prefix, p, extra_attrs=""):
+    return f'''
+          <article class="card pcard reveal" {extra_attrs}>
+            <a class="card__link" href="{prefix}work/{p["slug"]}.html">
+              {cover(prefix, p)}
+              <div class="card__body">
+                <div class="card__tags">{kinds_label(p)}<span class="card__year">{p["year"]}</span></div>
+                <h3 class="card__title">{T(*p["title"])}</h3>
+                <p class="card__out">{T(*p["outcome"])}</p>
+                {stack_rows(prefix, p)}
+                <span class="card__more">{T("View case study", "عرض دراسة الحالة")} {ICON["arrow"]}</span>
+              </div>
+            </a>
+          </article>'''
+
+
+def coming_soon(prefix, g):
+    return f'''
+          <div class="soon reveal">
+            <span class="soon__logo">{logo(prefix, g["logo"], "soon__img")}</span>
+            <div>
+              <p class="soon__badge">{T("Coming soon", "قريبًا")}</p>
+              <h4>{T(f'{g["name"]} case studies are on the way', f'دراسات حالة {g["name"]} قيد الإعداد')}</h4>
+              <p>{T("I’m preparing projects for this track. Want to discuss a " + g["name"] + " requirement now?", "أعمل حاليًا على مشاريع في هذا المسار. تريد مناقشة متطلبات " + g["name"] + " الآن؟")}</p>
+            </div>
+            <a class="btn btn--outline btn--sm" href="#contact">{T("Get in touch", "تواصل معي")}</a>
+          </div>'''
+
+
+def section_page(sec):
+    pre = ""
+    nav = "".join(f'<a class="subnav__item" href="#{g["key"]}">{logo(pre, g["logo"], "subnav__logo")}{g["name"]}<sup dir="ltr">{len(group_projects(g)) or "—"}</sup></a>'
+                  for g in sec["groups"])
+    groups = []
+    for g in sec["groups"]:
+        ps = group_projects(g)
+        content = ('<div class="cards cards--2">' + "".join(project_card(pre, p) for p in ps) + '</div>') if ps else coming_soon(pre, g)
+        groups.append(f'''
+      <section class="group" id="{g["key"]}">
+        <header class="group__head reveal">
+          <span class="group__logo">{logo(pre, g["logo"], "group__img")}</span>
+          <div><h2 class="group__title">{g["name"]}</h2><p>{T(*g["desc"])}</p></div>
+          {f'<span class="group__count" dir="ltr">{len(ps)} ' + T("projects" if len(ps) != 1 else "project", "مشاريع" if len(ps) != 1 else "مشروع") + '</span>' if ps else '<span class="group__count group__count--soon">' + T("Coming soon", "قريبًا") + '</span>'}
+        </header>
+        {content}
+      </section>''')
+    body = f'''
+  <main id="main">
+    <section class="page-hero">
+      {PATTERN}
+      <div class="wrap">
+        <p class="kicker kicker--gold">{T("Software Engineering", "هندسة البرمجيات")}</p>
+        <h1 class="page-title">{T(*sec["title"])}</h1>
+        <p class="page-lede">{T(*sec["lede"])}</p>
+        <nav class="subnav" aria-label="Sections">{nav}</nav>
+      </div>
+    </section>
+    <div class="wrap groups">{"".join(groups)}
+    </div>
+  </main>'''
+    title = f'{sec["title"][0]} — Mohammed Hefzallah'
+    return head(title, sec["lede"][0], f'{sec["slug"]}.html', pre) + masthead(pre, f'{sec["slug"]}.html') + body + footer(pre)
+
+
+def projects_page():
+    pre = ""
+    def opts(field):
+        vals = sorted({v for s in STACKS.values() for v in s[field]})
+        return "".join(f'<option value="{escape(v)}">{escape(v)}</option>' for v in vals)
+    areas = [("all", ("All", "الكل")), ("erp", ("ERP", "ERP")), ("web", ("Web", "الويب")), ("backend", ("Backend", "الباك إند")), ("mobile", ("Mobile", "الجوال"))]
+    chips = "".join(f'<button type="button" class="chip{" is-on" if k == "all" else ""}" data-area="{k}">{T(*l)}</button>' for k, l in areas)
+    cards = "".join(project_card(pre, p, 'data-areas="{}" data-frontend="{}" data-backend="{}" data-database="{}"'.format(
+        " ".join(STACKS[p["slug"]]["areas"]), escape("|".join(STACKS[p["slug"]]["frontend"])),
+        escape("|".join(STACKS[p["slug"]]["backend"])), escape("|".join(STACKS[p["slug"]]["database"])))) for p in PROJECTS)
+    body = f'''
+  <main id="main">
+    <section class="page-hero page-hero--short">
+      {PATTERN}
+      <div class="wrap">
+        <p class="kicker kicker--gold">{T("Portfolio", "الأعمال")}</p>
+        <h1 class="page-title">{T("All projects", "كل المشاريع")}</h1>
+        <p class="page-lede">{T("Filter by area, framework, backend or database.", "فلتر حسب المجال أو الـ framework أو الباك إند أو قاعدة البيانات.")}</p>
+      </div>
+    </section>
+    <div class="wrap">
+      <div class="toolbar reveal" data-project-filters>
+        <div class="filters" role="group" aria-label="Area">{chips}</div>
+        <label class="select"><span>{T("Frontend", "الواجهة")}</span><select data-field="frontend"><option value="">—</option>{opts("frontend")}</select></label>
+        <label class="select"><span>{T("Backend", "الباك إند")}</span><select data-field="backend"><option value="">—</option>{opts("backend")}</select></label>
+        <label class="select"><span>{T("Database", "قاعدة البيانات")}</span><select data-field="database"><option value="">—</option>{opts("database")}</select></label>
+        <p class="toolbar__count" aria-live="polite"><b data-count>{len(PROJECTS)}</b> {T("projects", "مشروع")}</p>
+      </div>
+      <div class="cards cards--3" data-project-grid>{cards}
+      </div>
+      <p class="empty" data-empty hidden>{T("No project matches these filters yet.", "لا يوجد مشروع يطابق هذه الفلاتر حاليًا.")}</p>
+    </div>
+  </main>'''
+    return head("All projects — Mohammed Hefzallah", "All projects by Mohammed Hefzallah, filterable by area, framework, backend and database.", "projects.html", pre) + masthead(pre, "projects.html") + body + footer(pre)
+
+
 def home():
     pre = ""
-    counts = {k: sum(k in p["kinds"] for p in PROJECTS) for k in KIND_LABEL}
-    filters = [("all", ("All", "الكل"), len(PROJECTS))] + [(k, KIND_LABEL[k], counts[k]) for k in ("erp", "web", "mobile")]
-    chips = "".join(
-        f'<button type="button" class="chip{" is-on" if k == "all" else ""}" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{T(*lab)} <sup>{n}</sup></button>'
-        for k, lab, n in filters)
-
-    cards = "".join(f'''
-        <article class="card{" card--wide" if i == 1 else ""} reveal" data-kinds="{" ".join(p["kinds"])}">
-          <a class="card__link" href="work/{p["slug"]}.html">
-            {cover(pre, p)}
-            <div class="card__body">
-              <div class="card__tags">{kinds_label(p)}<span class="card__year">{p["year"]}</span></div>
-              <h3 class="card__title">{T(*p["title"])}</h3>
-              <p class="card__out">{T(*p["outcome"])}</p>
-              <span class="card__more">{T("View case study", "عرض دراسة الحالة")} {ICON["arrow"]}</span>
-            </div>
-          </a>
-        </article>''' for i, p in enumerate(PROJECTS, 1))
-
-    rows = "".join(f'''
-            <tr data-kinds="{'erp' if t == 'Odoo' else 'web'}"><td class="num">{y}</td><td><b>{T(*name)}</b></td><td>{T(*sector)}</td><td><span class="tag tag--soft">{t}</span></td><td class="muted" dir="ltr">{stack}</td></tr>'''
-                   for y, t, name, sector, stack in ARCHIVE)
-
     stats = "".join(f'<div class="stat reveal"><dt dir="ltr">{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in STATS)
-
-    exp = exp_rows()
+    pillars = []
+    for sec in SECTIONS:
+        total = len({p["slug"] for g in sec["groups"] for p in group_projects(g)})
+        gl = "".join(f'<li>{logo(pre, g["logo"], "pillar__logo")}<span>{g["name"]}</span>{"" if group_projects(g) else "<em>" + T("soon", "قريبًا") + "</em>"}</li>' for g in sec["groups"])
+        pillars.append(f'''
+          <a class="pillar reveal" href="{sec["slug"]}.html">
+            <span class="pillar__icon">{logo(pre, sec["icon"], "pillar__big")}</span>
+            <h3>{T(*sec["title"])}</h3>
+            <p>{T(*sec["lede"])}</p>
+            <ul>{gl}</ul>
+            <span class="pillar__more"><b dir="ltr">{total}</b> {T("projects", "مشاريع")} · {T("Explore", "استكشف")} {ICON["arrow"]}</span>
+          </a>''')
+    featured = "".join(project_card(pre, by_slug(s)) for s in ("booking-platforms", "odoo-v19-migration", "support-crm"))
+    # stack matrix: every tech with the number of projects using it
+    cols = [("Frontend", "الواجهة", "frontend"), ("Backend", "الباك إند", "backend"), ("Database", "قاعدة البيانات", "database"),
+            ("Mobile", "الجوال", "mobile"), ("Platforms", "المنصّات", "platform")]
+    mcols = []
+    for en, ar, f in cols:
+        counts = {}
+        for st in STACKS.values():
+            for v in st[f]:
+                counts[v] = counts.get(v, 0) + 1
+        items = "".join(f'<li>{logo(pre, LOGO_FOR[v], "tech__logo") if v in LOGO_FOR else ""}<span>{v}</span><b dir="ltr">{n}</b></li>' for v, n in sorted(counts.items(), key=lambda x: -x[1]))
+        if f == "platform":
+            items += f'<li>{logo(pre, "servicenow", "tech__logo")}<span>ServiceNow</span><em>{T("soon", "قريبًا")}</em></li><li>{logo(pre, "zoho", "tech__logo")}<span>Zoho</span><em>{T("soon", "قريبًا")}</em></li>'
+        if f == "mobile":
+            items += f'<li>{logo(pre, "flutter", "tech__logo")}<span>Flutter</span><em>{T("soon", "قريبًا")}</em></li>'
+        mcols.append(f'<div class="matrix__col reveal"><h3>{T(en, ar)}</h3><ul dir="ltr">{items}</ul></div>')
 
     body = f'''
   <main id="main">
@@ -228,16 +373,17 @@ def home():
       <div class="wrap hero__grid">
         <div class="hero__text">
           <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Available for new projects", "متاح لمشاريع جديدة")}</p>
-          <h1 class="display">{T("I build the systems businesses <em>run on.</em>", "أبني الأنظمة التي <em>تُدار بها</em> الأعمال.")}</h1>
-          <p class="lede">{T("Odoo ERP developer and fullstack engineer for companies in Saudi Arabia, the UAE and Egypt — from payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.",
-                             "مطوّر أنظمة Odoo ERP ومهندس ويب متكامل لشركات في السعودية والإمارات ومصر — من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.")}</p>
+          <h1 class="display">{T("Software <em>Engineer</em>", "مهندس <em>برمجيات</em>")}</h1>
+          <p class="tagline">{T("I build the systems businesses run on — ERP, web and mobile.", "أبني الأنظمة التي تُدار بها الأعمال — ERP والويب والجوال.")}</p>
+          <p class="lede">{T("ERP and business platforms, fullstack web and mobile — for companies in Saudi Arabia, the UAE and Egypt. From payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.",
+                             "أنظمة ERP ومنصّات أعمال، تطوير ويب متكامل وتطبيقات جوال — لشركات في السعودية والإمارات ومصر. من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.")}</p>
           <div class="actions">
-            <a class="btn btn--primary" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")} {ICON["arrow"]}</a>
-            <a class="btn btn--outline" href="#work">{T("View my work", "شاهد أعمالي")}</a>
+            <a class="btn btn--primary" href="projects.html">{T("Browse projects", "تصفّح المشاريع")} {ICON["arrow"]}</a>
+            <a class="btn btn--outline" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}</a>
           </div>
           <ul class="hero__points">
+            <li>{ICON["check"]}{T("ERP · Web · Backend · Mobile", "ERP · ويب · باك إند · جوال")}</li>
             <li>{ICON["check"]}{T("Odoo Certified Professional", "معتمد من Odoo")}</li>
-            <li>{ICON["check"]}{T("Odoo 11 → 19, Community &amp; Enterprise", "Odoo من ١١ إلى ١٩، Community وEnterprise")}</li>
             <li>{ICON["check"]}{T("Arabic &amp; English", "العربية والإنجليزية")}</li>
           </ul>
         </div>
@@ -248,17 +394,15 @@ def home():
           </div>
           <figcaption class="portrait__tag">
             <b>{T("Mohammed Hefzallah", "محمد حفظ الله")}</b>
-            <span>{T("Odoo Developer at AZM Squad", "مطوّر Odoo في AZM Squad")}</span>
+            <span>{T("Software Engineer · Odoo Developer at AZM Squad", "مهندس برمجيات · مطوّر Odoo في AZM Squad")}</span>
           </figcaption>
-          <div class="portrait__float" aria-hidden="true"><b dir="ltr">63</b><span>{T("modules moved to v19, zero data loss", "موديول تمت ترقيتها لـ v19 دون فقدان بيانات")}</span></div>
+          <div class="portrait__float" aria-hidden="true"><b dir="ltr">1,900+</b><span>{T("commits in 21 months", "commit خلال ٢١ شهرًا")}</span></div>
         </figure>
       </div>
-      <div class="wrap">
-        <dl class="stats">{stats}</dl>
-      </div>
+      <div class="wrap"><dl class="stats">{stats}</dl></div>
     </section>
 
-    <section class="strip" aria-label="Sectors and integrations">
+    <section class="strip" aria-label="Sectors">
       <div class="wrap strip__row">
         <p class="strip__label">{T("Sectors I’ve worked in", "قطاعات عملت فيها")}</p>
         <ul class="strip__list">
@@ -269,90 +413,44 @@ def home():
       </div>
     </section>
 
-    <section class="section" id="work">
+    <section class="section" id="areas">
       <div class="wrap">
-        {section_head("01", "Selected work", "أبرز الأعمال", ("Case studies from ERP and web projects — with screenshots, decisions and results.", "دراسات حالة من مشاريع ERP والويب — بالصور والقرارات والنتائج."), f'<div class="filters" role="group" aria-label="Filter">{chips}</div>')}
-        <div class="cards">{cards}
-        </div>
-        <details class="archive reveal">
-          <summary><span>{T("More modules &amp; tools", "موديولات وأدوات إضافية")}</span><span class="archive__count" dir="ltr">{len(ARCHIVE)}</span><span class="archive__icon" aria-hidden="true">+</span></summary>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>{T("Year", "السنة")}</th><th>{T("Module", "الموديول")}</th><th>{T("Sector", "القطاع")}</th><th>{T("Type", "النوع")}</th><th>{T("Built with", "التقنيات")}</th></tr></thead>
-              <tbody>{rows}
-              </tbody>
-            </table>
-          </div>
-          <p class="note">{T("Client ERPs are private, so modules are listed by sector rather than by client name.", "أنظمة العملاء سرّية، لذلك تُذكر الموديولات حسب القطاع لا باسم العميل.")}</p>
-        </details>
+        {section_head("01", "What I build", "ما الذي أبنيه", ("Four tracks — each with its own page, grouped by platform and framework.", "أربعة مسارات — لكلٍّ منها صفحته، مقسّمة حسب المنصّة والـ framework."))}
+        <div class="pillars">{"".join(pillars)}</div>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="work">
+      <div class="wrap">
+        {section_head("02", "Featured projects", "مشاريع مختارة", None, f'<a class="btn btn--outline btn--sm" href="projects.html">{T("All projects", "كل المشاريع")} {ICON["arrow"]}</a>')}
+        <div class="cards cards--3">{featured}</div>
+      </div>
+    </section>
+
+    <section class="section" id="stack">
+      <div class="wrap">
+        {section_head("03", "Tech stack", "التقنيات", ("Every technology I’ve shipped with, and how many projects use it.", "كل تقنية استخدمتها في مشاريع حقيقية، وعدد المشاريع التي تستخدمها."))}
+        <div class="matrix">{"".join(mcols)}</div>
       </div>
     </section>
 
     <section class="section section--dark" id="services">
       {PATTERN}
       <div class="wrap">
-        {section_head("02", "How I can help", "كيف أساعدك", ("Every engagement starts with a free 30-minute call.", "كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة."))}
-        <div class="services">
-          <article class="service reveal">
-            <span class="service__icon">{ICON["erp"]}</span>
-            <h3>{T("Odoo implementation &amp; custom modules", "تطبيق Odoo وموديولات مخصّصة")}</h3>
-            <p>{T("Saudi HR &amp; payroll, ZATCA e-invoicing, POS, approvals, inventory and integrations — scoped, estimated and delivered in weekly sprints.", "الموارد البشرية والرواتب السعودية، فوترة ZATCA، نقاط البيع، الموافقات، المخزون والتكاملات — بنطاق وتقدير واضحين وتسليم في سبرنتات أسبوعية.")}</p>
-            <span class="service__how">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</span>
-          </article>
-          <article class="service reveal">
-            <span class="service__icon">{ICON["upgrade"]}</span>
-            <h3>{T("Upgrades, audits &amp; support", "الترقيات والمراجعة والدعم")}</h3>
-            <p>{T("Version upgrades up to Odoo 19, performance and code audits, and a monthly retainer for fixes and enhancements.", "ترقية الإصدارات حتى Odoo 19، مراجعة الأداء والكود، وعقد دعم شهري للإصلاحات والتحسينات.")}</p>
-            <span class="service__how">{T("Audit · monthly retainer", "مراجعة · عقد شهري")}</span>
-          </article>
-          <article class="service reveal">
-            <span class="service__icon">{ICON["web"]}</span>
-            <h3>{T("Web platforms &amp; mobile apps", "منصّات ويب وتطبيقات جوال")}</h3>
-            <p>{T("Arabic-first websites, booking and customer portals, dashboards and mobile apps — connected to your ERP when needed.", "مواقع عربية أولًا، منصّات حجز وبوابات عملاء، لوحات تحكم وتطبيقات جوال — مربوطة بنظام ERP عند الحاجة.")}</p>
-            <span class="service__how">{T("Fixed-scope project", "مشروع بنطاق محدّد")}</span>
-          </article>
-        </div>
+        {section_head("04", "How we can work together", "كيف نعمل معًا", ("Every engagement starts with a free 30-minute call.", "كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة."))}
         <ol class="process">
           <li class="reveal"><span class="process__n" dir="ltr">01</span><b>{T("Discovery call", "مكالمة تعارف")}</b><span>{T("30 minutes, free.", "٣٠ دقيقة مجانًا.")}</span></li>
           <li class="reveal"><span class="process__n" dir="ltr">02</span><b>{T("Scope &amp; quote", "النطاق والتسعير")}</b><span>{T("Written scope within 48 hours.", "نطاق مكتوب خلال ٤٨ ساعة.")}</span></li>
           <li class="reveal"><span class="process__n" dir="ltr">03</span><b>{T("Build in sprints", "التنفيذ على مراحل")}</b><span>{T("Weekly demos on staging.", "عرض أسبوعي على بيئة تجريبية.")}</span></li>
-          <li class="reveal"><span class="process__n" dir="ltr">04</span><b>{T("Launch &amp; train", "الإطلاق والتدريب")}</b><span>{T("Go-live, training and support.", "التشغيل والتدريب والدعم.")}</span></li>
+          <li class="reveal"><span class="process__n" dir="ltr">04</span><b>{T("Launch &amp; support", "الإطلاق والدعم")}</b><span>{T("Go-live, training and support.", "التشغيل والتدريب والدعم.")}</span></li>
         </ol>
-      </div>
-    </section>
-
-    <section class="section" id="expertise">
-      <div class="wrap">
-        {section_head("03", "What I work with", "ما أعمل به")}
-        <div class="skills">
-          <div class="skill reveal">
-            <h3>{T("Odoo &amp; ERP", "Odoo وأنظمة ERP")}</h3>
-            <ul class="pills">
-              <li>Odoo 11 – 19</li><li>Python ORM</li><li>OWL</li><li>QWeb</li><li>PostgreSQL</li><li>Odoo.sh</li>
-              <li>{T("Accounting", "المحاسبة")}</li><li>ZATCA</li><li>{T("HR &amp; Payroll", "الموارد البشرية والرواتب")}</li><li>POS</li><li>{T("Inventory &amp; WMS", "المخزون والمستودعات")}</li><li>{T("Approvals", "الموافقات")}</li><li>{T("Migrations", "الترقيات")}</li>
-            </ul>
-          </div>
-          <div class="skill reveal">
-            <h3>{T("Web &amp; mobile", "الويب والجوال")}</h3>
-            <ul class="pills">
-              <li>React</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li><li>Tailwind CSS</li><li>Django REST</li><li>PHP</li>
-              <li>MySQL</li><li>Supabase</li><li>REST APIs</li><li>JWT</li><li>PWA</li><li>Capacitor</li><li>{T("Arabic RTL", "واجهات RTL")}</li>
-            </ul>
-          </div>
-          <div class="skill reveal">
-            <h3>{T("Integrations", "التكاملات")}</h3>
-            <ul class="pills">
-              <li>ZATCA</li><li>PayTabs</li><li>Telr</li><li>Neoleap</li><li>SMSA Express</li><li>OneStock</li><li>Salla</li><li>Google Drive</li><li>OneDrive</li><li>Gemini AI</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
 
     <section class="section section--soft" id="experience">
       <div class="wrap">
-        {section_head("04", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
-        <ol class="timeline">{exp}</ol>
+        {section_head("05", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
+        <ol class="timeline">{exp_rows()}</ol>
         <div class="creds">
           <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("B.Sc. Computer Science", "بكالوريوس علوم الحاسب")}</b><span>{T("New Cairo Academy · 2024", "أكاديمية القاهرة الجديدة · ٢٠٢٤")}</span></div>
           <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("Odoo Certified Professional", "شهادة Odoo المعتمدة")}</b><span>{T("Functional v15 · Odoo S.A. · 2024", "وظيفية الإصدار 15 · Odoo S.A. · ٢٠٢٤")}</span></div>
@@ -361,9 +459,10 @@ def home():
       </div>
     </section>
   </main>'''
-    title = "Mohammed Hefzallah — Odoo ERP & Fullstack Engineer"
-    desc = "Odoo ERP developer and fullstack engineer building ERP systems and web platforms for companies in Saudi Arabia, the UAE and Egypt."
-    return head(title, desc, "", "") + masthead("", True) + body + footer("")
+    title = "Mohammed Hefzallah — Software Engineer · ERP, Fullstack & Mobile"
+    desc = "Software engineer building ERP systems (Odoo), fullstack web platforms and mobile apps for companies in Saudi Arabia, the UAE and Egypt."
+    return head(title, desc, "", "") + masthead("", "index.html") + body + footer("")
+
 
 
 def exp_rows():
@@ -445,6 +544,8 @@ def case(i, p):
             <div><dt>{T("Built with", "التقنيات")}</dt><dd class="stack" dir="ltr">{p["stack"]}</dd></div>
             {links_row}
           </dl>
+          <h3 class="case-meta__h">{T("Technical card", "البطاقة التقنية")}</h3>
+          {stack_rows(pre, p, compact=False)}
           <a class="btn btn--primary btn--block" href="{CALL}" target="_blank" rel="noopener">{T("Need something similar?", "تحتاج شيئًا مشابهًا؟")}</a>
         </aside>
         <div class="case-body">
@@ -464,7 +565,7 @@ def case(i, p):
     </div>
   </main>'''
     title = f'{p["title"][0]} — Mohammed Hefzallah'
-    return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg') + masthead(pre, False) + body + footer(pre)
+    return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg') + masthead(pre, "") + body + footer(pre)
 
 
 def main():
@@ -474,7 +575,12 @@ def main():
     for i, p in enumerate(PROJECTS, 1):
         with open(os.path.join(ROOT, "work", p["slug"] + ".html"), "w", encoding="utf-8") as f:
             f.write(case(i, p))
-    print("built index.html +", len(PROJECTS), "case studies")
+    for sec in SECTIONS:
+        with open(os.path.join(ROOT, sec["slug"] + ".html"), "w", encoding="utf-8") as f:
+            f.write(section_page(sec))
+    with open(os.path.join(ROOT, "projects.html"), "w", encoding="utf-8") as f:
+        f.write(projects_page())
+    print("built index + projects +", len(SECTIONS), "sections +", len(PROJECTS), "case studies")
 
 
 if __name__ == "__main__":

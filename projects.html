@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All projects — Mohammed Hefzallah</title>
+  <meta name="description" content="All projects by Mohammed Hefzallah, filterable by area, framework, backend and database.">
+  <meta name="theme-color" content="#0B5D4B">
+  <link rel="canonical" href="https://mhefzallah.github.io/projects.html">
+  <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/projects.html?lang=en">
+  <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/projects.html?lang=ar">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="All projects — Mohammed Hefzallah">
+  <meta property="og:description" content="All projects by Mohammed Hefzallah, filterable by area, framework, backend and database.">
+  <meta property="og:url" content="https://mhefzallah.github.io/projects.html">
+  <meta property="og:image" content="https://mhefzallah.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+    (function () {
+      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
+      try { s = localStorage.getItem('lang'); } catch (e) {}
+      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
+      if (l !== 'ar' && l !== 'en') l = 'en';
+      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
+      r.classList.add('js');
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="ar">انتقل إلى المحتوى</span></a>
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <a class="brand" href="index.html" aria-label="Mohammed Hefzallah — home">
+        <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
+        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Software Engineer</span><span lang="ar">مهندس برمجيات</span></small></span>
+      </a>
+      <nav class="nav" aria-label="Main"><a href="index.html"><span lang="en">Home</span><span lang="ar">الرئيسية</span></a><a href="erp.html"><span lang="en">ERP</span><span lang="ar">ERP</span></a><a href="web.html"><span lang="en">Web</span><span lang="ar">الويب</span></a><a href="backend.html"><span lang="en">Backend</span><span lang="ar">الباك إند</span></a><a href="mobile.html"><span lang="en">Mobile</span><span lang="ar">الجوال</span></a><a href="projects.html" class="is-active" aria-current="page"><span lang="en">All projects</span><span lang="ar">كل المشاريع</span></a></nav>
+      <div class="tools">
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">العربية</span><span lang="ar">English</span></button>
+        <a class="btn btn--gold btn--sm" href="#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero page-hero--short">
+      <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+      <div class="wrap">
+        <p class="kicker kicker--gold"><span lang="en">Portfolio</span><span lang="ar">الأعمال</span></p>
+        <h1 class="page-title"><span lang="en">All projects</span><span lang="ar">كل المشاريع</span></h1>
+        <p class="page-lede"><span lang="en">Filter by area, framework, backend or database.</span><span lang="ar">فلتر حسب المجال أو الـ framework أو الباك إند أو قاعدة البيانات.</span></p>
+      </div>
+    </section>
+    <div class="wrap">
+      <div class="toolbar reveal" data-project-filters>
+        <div class="filters" role="group" aria-label="Area"><button type="button" class="chip is-on" data-area="all"><span lang="en">All</span><span lang="ar">الكل</span></button><button type="button" class="chip" data-area="erp"><span lang="en">ERP</span><span lang="ar">ERP</span></button><button type="button" class="chip" data-area="web"><span lang="en">Web</span><span lang="ar">الويب</span></button><button type="button" class="chip" data-area="backend"><span lang="en">Backend</span><span lang="ar">الباك إند</span></button><button type="button" class="chip" data-area="mobile"><span lang="en">Mobile</span><span lang="ar">الجوال</span></button></div>
+        <label class="select"><span><span lang="en">Frontend</span><span lang="ar">الواجهة</span></span><select data-field="frontend"><option value="">—</option><option value="GSAP">GSAP</option><option value="MUI">MUI</option><option value="Next.js">Next.js</option><option value="OWL">OWL</option><option value="QWeb">QWeb</option><option value="React">React</option><option value="Tailwind CSS">Tailwind CSS</option><option value="TypeScript">TypeScript</option><option value="Vanilla JS">Vanilla JS</option><option value="Vite">Vite</option></select></label>
+        <label class="select"><span><span lang="en">Backend</span><span lang="ar">الباك إند</span></span><select data-field="backend"><option value="">—</option><option value="Django REST Framework">Django REST Framework</option><option value="Odoo REST / JWT">Odoo REST / JWT</option><option value="PHP MVC">PHP MVC</option><option value="Python (Odoo ORM)">Python (Odoo ORM)</option><option value="Sanity CMS">Sanity CMS</option><option value="Supabase">Supabase</option></select></label>
+        <label class="select"><span><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></span><select data-field="database"><option value="">—</option><option value="MySQL">MySQL</option><option value="PostgreSQL">PostgreSQL</option><option value="Sanity Content Lake">Sanity Content Lake</option></select></label>
+        <p class="toolbar__count" aria-live="polite"><b data-count>7</b> <span lang="en">projects</span><span lang="ar">مشروع</span></p>
+      </div>
+      <div class="cards cards--3" data-project-grid>
+          <article class="card pcard reveal" data-areas="web backend mobile" data-frontend="React|TypeScript|Vite|Tailwind CSS" data-backend="PHP MVC" data-database="MySQL">
+            <a class="card__link" href="work/booking-platforms.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/booking-somood-home.webp" width="1440" height="900" alt="Hotel booking platforms for the Umrah &amp; tourism market" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="tag"><span lang="en">Mobile</span><span lang="ar">جوال</span></span><span class="card__year">2025 — 2026</span></div>
+                <h3 class="card__title"><span lang="en">Hotel booking platforms for the Umrah & tourism market</span><span lang="ar">منصّات حجز فنادق لسوق العمرة والسياحة</span></h3>
+                <p class="card__out"><span lang="en">Three live Arabic-first booking platforms taking real SAR payments.</span><span lang="ar">ثلاث منصّات حجز عربية أولًا تعمل الآن وتستقبل مدفوعات حقيقية بالريال.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="assets/logos/typescript.svg" alt="" width="20" height="20" loading="lazy">TypeScript</span><span class="tech"><img class="tech__logo" src="assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span><span class="tech"><img class="tech__logo" src="assets/logos/tailwindcss.svg" alt="" width="20" height="20" loading="lazy">Tailwind CSS</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/php.svg" alt="" width="20" height="20" loading="lazy">PHP MVC</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/mysql.svg" alt="" width="20" height="20" loading="lazy">MySQL</span></dd></div><div class="stackrow"><dt><span lang="en">Mobile</span><span lang="ar">الجوال</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="erp" data-frontend="OWL|QWeb" data-backend="Python (Odoo ORM)" data-database="PostgreSQL">
+            <a class="card__link" href="work/odoo-v19-migration.html">
+              <div class="cover cover--diagram"><svg class="diagram" viewBox="0 0 800 400" role="img" aria-label="Migration process: audit, rewrite, validate, release">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="d-arrow"/></marker></defs>
+      <text x="40" y="70" class="d-big">v17</text>
+      <path d="M150 58 h110" class="d-line" marker-end="url(#arr)"/>
+      <text x="280" y="70" class="d-big d-accent">v19</text>
+      <text x="40" y="110" class="d-mono">FIG. — MIGRATION PIPELINE</text>
+      
+      <g transform="translate(40 150)">
+        <rect width="160" height="120" class="d-box"/>
+        <text x="14" y="26" class="d-mono">01</text>
+        <text x="14" y="70" class="d-title"><tspan lang="en">Audit</tspan><tspan lang="ar">مراجعة</tspan></text>
+        <text x="14" y="98" class="d-mono">63 modules</text>
+      </g><path d="M206 210 h18" class="d-line" marker-end="url(#arr)"/>
+      <g transform="translate(230 150)">
+        <rect width="160" height="120" class="d-box"/>
+        <text x="14" y="26" class="d-mono">02</text>
+        <text x="14" y="70" class="d-title"><tspan lang="en">Rewrite</tspan><tspan lang="ar">إعادة كتابة</tspan></text>
+        <text x="14" y="98" class="d-mono">ORM · XML · OWL</text>
+      </g><path d="M396 210 h18" class="d-line" marker-end="url(#arr)"/>
+      <g transform="translate(420 150)">
+        <rect width="160" height="120" class="d-box"/>
+        <text x="14" y="26" class="d-mono">03</text>
+        <text x="14" y="70" class="d-title"><tspan lang="en">Validate</tspan><tspan lang="ar">تحقق</tspan></text>
+        <text x="14" y="98" class="d-mono">Odoo.sh staging</text>
+      </g><path d="M586 210 h18" class="d-line" marker-end="url(#arr)"/>
+      <g transform="translate(610 150)">
+        <rect width="160" height="120" class="d-box d-box--accent"/>
+        <text x="14" y="26" class="d-mono">04</text>
+        <text x="14" y="70" class="d-title"><tspan lang="en">Release</tspan><tspan lang="ar">إطلاق</tspan></text>
+        <text x="14" y="98" class="d-mono">Zero data loss</text>
+      </g>
+      <g transform="translate(40 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">POS</text></g><g transform="translate(135 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">ZATCA</text></g><g transform="translate(230 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Telr</text></g><g transform="translate(325 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">HR</text></g><g transform="translate(420 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Website</text></g><g transform="translate(515 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Inventory</text></g><g transform="translate(610 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Accounting</text></g><g transform="translate(705 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Reports</text></g>
+    </svg></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2025 — 2026</span></div>
+                <h3 class="card__title"><span lang="en">A full Odoo v17 → v19 migration, as the only developer</span><span lang="ar">ترقية Odoo كاملة من v17 إلى v19، كمطوّر وحيد</span></h3>
+                <p class="card__out"><span lang="en">63 custom modules moved to Odoo 19 with zero data loss.</span><span lang="ar">٦٣ موديول مخصّص انتقلت إلى Odoo 19 دون فقدان أي بيانات.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="web backend" data-frontend="React|TypeScript|Vite|Tailwind CSS" data-backend="Django REST Framework" data-database="PostgreSQL">
+            <a class="card__link" href="work/support-crm.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/crm-dashboard.webp" width="1440" height="900" alt="Customer support CRM with an AI co-pilot" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2026</span></div>
+                <h3 class="card__title"><span lang="en">Customer support CRM with an AI co-pilot</span><span lang="ar">نظام دعم فني وخدمة عملاء بمساعد ذكي</span></h3>
+                <p class="card__out"><span lang="en">A complete bilingual help desk covering a 12-part requirements brief.</span><span lang="ar">منصّة دعم فني ثنائية اللغة تغطي متطلبات من ١٢ قسمًا بالكامل.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="assets/logos/typescript.svg" alt="" width="20" height="20" loading="lazy">TypeScript</span><span class="tech"><img class="tech__logo" src="assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span><span class="tech"><img class="tech__logo" src="assets/logos/tailwindcss.svg" alt="" width="20" height="20" loading="lazy">Tailwind CSS</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy">Django REST Framework</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="web backend mobile" data-frontend="React|Vite" data-backend="Supabase" data-database="PostgreSQL">
+            <a class="card__link" href="work/ag-academy.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/ag-teacher.webp" width="1440" height="900" alt="AG Academy — a learning platform with Android &amp; iOS apps" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="tag"><span lang="en">Mobile</span><span lang="ar">جوال</span></span><span class="card__year">2026</span></div>
+                <h3 class="card__title"><span lang="en">AG Academy — a learning platform with Android & iOS apps</span><span lang="ar">أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span></h3>
+                <p class="card__out"><span lang="en">One app for the teacher, students and parents — on the web, Android and iOS.</span><span lang="ar">تطبيق واحد للمدرّس والطلاب وأولياء الأمور — على الويب وAndroid وiOS.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy">Supabase</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div><div class="stackrow"><dt><span lang="en">Mobile</span><span lang="ar">الجوال</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy">Capacitor</span><span class="tech"><img class="tech__logo" src="assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="erp backend" data-frontend="OWL|QWeb" data-backend="Python (Odoo ORM)|Odoo REST / JWT" data-database="PostgreSQL">
+            <a class="card__link" href="work/odoo-erp-systems.html">
+              <div class="cover cover--diagram"><svg class="diagram" viewBox="0 0 800 470" role="img" aria-label="Odoo core with HR, accounting, POS, inventory, automotive and approvals modules, plus integrations">
+      <ellipse cx="400" cy="235" rx="340" ry="200" class="d-ring"/>
+      <path d="M400 235 L400 115" class="d-line d-line--thin"/><g transform="translate(320 98)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">HR & Payroll</tspan><tspan lang="ar">الموارد البشرية</tspan></text></g><path d="M400 235 L552 175" class="d-line d-line--thin"/><g transform="translate(472 158)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">Accounting · ZATCA</tspan><tspan lang="ar">المحاسبة · ZATCA</tspan></text></g><path d="M400 235 L552 295" class="d-line d-line--thin"/><g transform="translate(472 278)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">POS & Retail</tspan><tspan lang="ar">نقاط البيع</tspan></text></g><path d="M400 235 L400 355" class="d-line d-line--thin"/><g transform="translate(320 338)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">Inventory · WMS</tspan><tspan lang="ar">المخزون</tspan></text></g><path d="M400 235 L248 295" class="d-line d-line--thin"/><g transform="translate(168 278)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">Fleet · Automotive</tspan><tspan lang="ar">السيارات</tspan></text></g><path d="M400 235 L248 175" class="d-line d-line--thin"/><g transform="translate(168 158)"><rect width="160" height="34" class="d-chip d-chip--solid"/><text x="80" y="22" text-anchor="middle" class="d-small"><tspan lang="en">Approvals · Purchase</tspan><tspan lang="ar">الموافقات</tspan></text></g>
+      <circle cx="400" cy="235" r="46" class="d-core"/>
+      <text x="400" y="243" text-anchor="middle" class="d-core-t">odoo</text>
+      <text x="530" y="54" text-anchor="middle" class="d-mono">SMSA</text><text x="714" y="162" text-anchor="middle" class="d-mono">OneStock</text><text x="714" y="316" text-anchor="middle" class="d-mono">Neoleap</text><text x="530" y="424" text-anchor="middle" class="d-mono">Telr</text><text x="270" y="424" text-anchor="middle" class="d-mono">PayTabs</text><text x="86" y="316" text-anchor="middle" class="d-mono">Google Drive</text><text x="86" y="162" text-anchor="middle" class="d-mono">REST · JWT</text><text x="270" y="54" text-anchor="middle" class="d-mono">ZATCA</text>
+      <text x="24" y="28" class="d-mono">FIG. — MODULES &amp; INTEGRATIONS</text>
+    </svg></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2022 — 2026</span></div>
+                <h3 class="card__title"><span lang="en">ERP systems for Saudi operations</span><span lang="ar">أنظمة ERP لعمليات سعودية</span></h3>
+                <p class="card__out"><span lang="en">Odoo systems that run payroll, deliveries, dealerships and government departments.</span><span lang="ar">أنظمة Odoo تدير الرواتب والتوصيل ووكالات السيارات وإدارات حكومية.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span><span class="tech">Odoo REST / JWT</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="web" data-frontend="Vanilla JS|Vite|GSAP" data-backend="" data-database="">
+            <a class="card__link" href="work/covera-solutions.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/covera-home.webp" width="1440" height="900" alt="Covera Solutions — corporate website" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2026</span></div>
+                <h3 class="card__title"><span lang="en">Covera Solutions — corporate website</span><span lang="ar">Covera Solutions — موقع شركة</span></h3>
+                <p class="card__out"><span lang="en">A bilingual company site with scroll-driven motion and a light/dark identity.</span><span lang="ar">موقع شركة ثنائي اللغة بحركة مرتبطة بالتمرير وهوية فاتحة وداكنة.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/javascript.svg" alt="" width="20" height="20" loading="lazy">Vanilla JS</span><span class="tech"><img class="tech__logo" src="assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span><span class="tech"><img class="tech__logo" src="assets/logos/gsap.svg" alt="" width="20" height="20" loading="lazy">GSAP</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" data-areas="web" data-frontend="Next.js|React|MUI|Tailwind CSS" data-backend="Sanity CMS" data-database="Sanity Content Lake">
+            <a class="card__link" href="work/development-standards.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/work/ds-home.webp" width="1440" height="900" alt="Development Standards — corporate site &amp; product catalogue" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span lang="en">Web</span><span lang="ar">ويب</span></span><span class="card__year">2025</span></div>
+                <h3 class="card__title"><span lang="en">Development Standards — corporate site & product catalogue</span><span lang="ar">Development Standards — موقع شركة وكتالوج منتجات</span></h3>
+                <p class="card__out"><span lang="en">A catalogue the client edits themselves through a headless CMS.</span><span lang="ar">كتالوج يعدّله العميل بنفسه عبر نظام محتوى Headless.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/nextdotjs.svg" alt="" width="20" height="20" loading="lazy">Next.js</span><span class="tech"><img class="tech__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech">MUI</span><span class="tech"><img class="tech__logo" src="assets/logos/tailwindcss.svg" alt="" width="20" height="20" loading="lazy">Tailwind CSS</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/sanity.svg" alt="" width="20" height="20" loading="lazy">Sanity CMS</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech">Sanity Content Lake</span></dd></div></dl>
+                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+      </div>
+      <p class="empty" data-empty hidden><span lang="en">No project matches these filters yet.</span><span lang="ar">لا يوجد مشروع يطابق هذه الفلاتر حاليًا.</span></p>
+    </div>
+  </main>
+  <section class="cta" id="contact">
+    <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+    <div class="wrap cta__grid">
+      <div>
+        <p class="kicker kicker--gold"><span lang="en">Let’s work together</span><span lang="ar">لنعمل معًا</span></p>
+        <h2 class="cta__title"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه أو تطويره؟</span></h2>
+        <p class="cta__lede"><span lang="en">Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.</span><span lang="ar">أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
+        <div class="cta__actions">
+          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
+          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span lang="en">Send a project brief</span><span lang="ar">أرسل وصف المشروع</span></a>
+        </div>
+      </div>
+      <ul class="contact-list">
+        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span lang="en">Email · click to copy</span><span lang="ar">البريد · اضغط للنسخ</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><a class="contact-item" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
+        <li><a class="contact-item" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
+        <li><a class="contact-item" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
+      </ul>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="wrap footer__row">
+      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></p>
+      <p><span lang="en">Cairo · Working with KSA, UAE &amp; Europe</span><span lang="ar">القاهرة · أعمل مع السعودية والإمارات وأوروبا</span> · <span data-clock>--:--</span></p>
+      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request CV</span><span lang="ar">اطلب السيرة الذاتية</span></a> · <a href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
+    </div>
+  </footer>
+  <div class="lightbox" data-lightbox hidden>
+    <button class="lightbox__close" type="button" aria-label="Close">×</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">‹</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">›</button>
+  </div>
+  <script src="assets/main.js" defer></script>
+</body>
+</html>
