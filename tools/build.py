@@ -423,7 +423,7 @@ def home():
     <section class="section section--soft" id="work">
       <div class="wrap">
         {section_head("02", "Featured projects", "مشاريع مختارة", None, f'<a class="btn btn--outline btn--sm" href="projects.html">{T("All projects", "كل المشاريع")} {ICON["arrow"]}</a>')}
-        <div class="cards cards--3">{featured}</div>
+        <div class="cards cards--featured">{featured}</div>
       </div>
     </section>
 

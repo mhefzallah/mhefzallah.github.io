@@ -22,8 +22,8 @@
   --head: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --body: "IBM Plex Sans Arabic", system-ui, sans-serif;
 
-  --wrap: 1200px;
-  --gutter: clamp(16px, 4vw, 32px);
+  --wrap: 100%;
+  --gutter: clamp(16px, 4.5vw, 96px);
   --r-sm: 10px;
   --r: 18px;
   --r-lg: 28px;
@@ -539,3 +539,25 @@ tbody tr:hover { background: #FAFBFA; }
 
 .tagline { font: 600 clamp(20px, 2.2vw, 28px)/1.4 var(--head); color: var(--ink-2); margin: -6px 0 18px; max-width: 24em; }
 .group__count--soon { color: #8A6A1F; background: var(--gold-50); }
+
+/* ================= full-width layout ================= */
+.wrap { max-width: var(--wrap); }
+@media (min-width: 1440px) {
+  .cards--3 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cards--2 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+  .portrait { max-width: 620px; justify-self: end; width: 100%; }
+  .services { grid-template-columns: repeat(3, 1fr); }
+  .skills { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1800px) {
+  body { font-size: 18px; }
+  .cards--3 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .cards--2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .matrix { gap: 24px; }
+}
+.cards--featured { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.stackcard { width: 100%; align-self: stretch; }
+.card__body > * { max-width: 100%; }
+@media (max-width: 1080px) { .cards--featured { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .cards--featured { grid-template-columns: 1fr; } }
