@@ -746,3 +746,21 @@ tbody tr:hover { background: #FAFBFA; }
 .cap { padding: 22px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--gold); box-shadow: var(--shadow); }
 .cap b { display: block; font: 700 17px/1.4 var(--head); color: var(--ink); margin-bottom: 6px; }
 .cap span { color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+/* Odoo clients directory */
+.clients { margin-top: clamp(32px, 4vw, 56px); }
+.clients__head h3 { font: 800 clamp(22px, 2vw, 28px)/1.3 var(--head); margin: 0 0 6px; }
+.clients__head p { margin: 0 0 22px; color: var(--muted); max-width: 52em; }
+.clients__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.client { display: flex; flex-direction: column; gap: 12px; padding: 22px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.client--core { border-top: 3px solid var(--gold); }
+.client__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.client__name { font: 700 18px/1.35 var(--head); margin: 0; }
+.client__sector { margin: 2px 0 0; font-size: 14px; color: var(--muted); }
+.client__ver { flex: none; font: 600 12px/1 var(--head); padding: 6px 10px; border-radius: 999px; background: var(--emerald-50); color: var(--emerald); }
+.client__role { margin: 0; font: 600 13px/1 var(--head); color: #8A6A1F; }
+.client--team .client__role { color: var(--muted); }
+.client__feats { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.client__feats li { padding: 6px 10px; border-radius: 10px; background: var(--soft); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; color: var(--ink-2); }
+.client__link { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font: 600 14px/1 var(--head); color: var(--emerald); text-decoration: none; }
+:root[dir="rtl"] .client__link .i { transform: scaleX(-1); }

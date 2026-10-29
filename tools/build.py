@@ -10,7 +10,7 @@ import re
 from html import escape
 from urllib.parse import quote
 
-from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE, STACKS, SECTIONS
+from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE, STACKS, SECTIONS, ODOO_CLIENTS
 from diagrams import diagram
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -382,6 +382,37 @@ def coming_soon(prefix, g):
           </div>'''
 
 
+def odoo_clients():
+    cards = []
+    for c in ODOO_CLIENTS:
+        role = (T("Core developer", "المطوّر الأساسي") if c["role"] == "core"
+                else T("Development &amp; support team", "فريق التطوير والدعم"))
+        feats = "".join(f"<li>{T(*f)}</li>" for f in c["features"])
+        link = (f'<a class="client__link" href="{c["url"]}" target="_blank" rel="noopener" dir="ltr">'
+                f'{escape(c["url"].split("//")[-1].strip("/"))} {ICON["arrow"]}</a>') if c["url"] else ""
+        cards.append(f'''
+          <article class="client client--{c["role"]} reveal">
+            <header class="client__head">
+              <div><h3 class="client__name">{T(*c["name"])}</h3><p class="client__sector">{T(*c["sector"])}</p></div>
+              <span class="client__ver" dir="ltr">Odoo {c["version"]}</span>
+            </header>
+            <p class="client__role">{role}</p>
+            <ul class="client__feats">{feats}</ul>
+            {link}
+          </article>''')
+    core = sum(c["role"] == "core" for c in ODOO_CLIENTS)
+    return f'''
+        <div class="clients">
+          <header class="clients__head reveal">
+            <h3>{T("Odoo clients in production", "عملاء Odoo في بيئة التشغيل")}</h3>
+            <p>{T(f"{len(ODOO_CLIENTS)} live Odoo.sh projects on versions 17 to 19 — lead developer on {core} of them, part of the development and support team on the rest.",
+                  f"{len(ODOO_CLIENTS)} مشروعًا شغّالًا على Odoo.sh بالإصدارات من ١٧ إلى ١٩ — المطوّر الأساسي في {core} منها، وضمن فريق التطوير والدعم في الباقي.")}</p>
+          </header>
+          <div class="clients__grid">{"".join(cards)}
+          </div>
+        </div>'''
+
+
 def section_page(sec):
     pre = ""
     nav = "".join(f'<a class="subnav__item" href="#{g["key"]}">{logo(pre, g["logo"], "subnav__logo")}{g["name"]}<sup dir="ltr">{len(group_projects(g)) or "—"}</sup></a>'
@@ -390,6 +421,8 @@ def section_page(sec):
     for g in sec["groups"]:
         ps = group_projects(g)
         content = ('<div class="cards cards--2">' + "".join(project_card(pre, p) for p in ps) + '</div>') if ps else coming_soon(pre, g)
+        if g["key"] == "odoo":
+            content += odoo_clients()
         groups.append(f'''
       <section class="group" id="{g["key"]}">
         <header class="group__head reveal">
