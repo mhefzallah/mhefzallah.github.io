@@ -382,6 +382,18 @@ def coming_soon(prefix, g):
           </div>'''
 
 
+DARK_LOGOS = {"fadenwood"}
+
+
+def client_mark(c):
+    if os.path.exists(os.path.join(ROOT, "assets", "clients", c["key"] + ".webp")):
+        dark = " client__mark--dark" if c["key"] in DARK_LOGOS else ""
+        return (f'<div class="client__mark{dark}"><img src="assets/clients/{c["key"]}.webp" '
+                f'alt="{escape(c["name"][0])} logo" loading="lazy" decoding="async"></div>')
+    initials = "".join(w[0] for w in c["name"][0].replace("·", " ").split()[:2]).upper()
+    return f'<div class="client__mark client__mark--mono" aria-hidden="true"><span dir="ltr">{initials}</span></div>'
+
+
 def odoo_clients():
     cards = []
     for c in ODOO_CLIENTS:
@@ -392,6 +404,7 @@ def odoo_clients():
                 f'{escape(c["url"].split("//")[-1].strip("/"))} {ICON["arrow"]}</a>') if c["url"] else ""
         cards.append(f'''
           <article class="client client--{c["role"]} reveal">
+            {client_mark(c)}
             <header class="client__head">
               <div><h3 class="client__name">{T(*c["name"])}</h3><p class="client__sector">{T(*c["sector"])}</p></div>
               <span class="client__ver" dir="ltr">Odoo {c["version"]}</span>
