@@ -160,4 +160,32 @@
     ['frontend', 'backend', 'database'].forEach(function (f) { var v = q.get(f), s = $('select[data-field="' + f + '"]', pf); if (v && s) s.value = v; });
     if (q.get('area')) { var b = $('[data-area="' + q.get('area') + '"]', pf); if (b) b.click(); else apply(); } else apply();
   }
+
+  /* masthead shadow on scroll */
+  var mh = $('[data-masthead]');
+  if (mh) { var onS = function () { mh.classList.toggle('is-scrolled', window.scrollY > 40); }; onS(); window.addEventListener('scroll', onS, { passive: true }); }
+
+  /* Expertise dropdown */
+  $$('[data-drop]').forEach(function (d) {
+    var b = $('[data-drop-btn]', d), t;
+    function set(o) { d.classList.toggle('is-open', o); b.setAttribute('aria-expanded', o); }
+    b.addEventListener('click', function (e) { e.stopPropagation(); set(!d.classList.contains('is-open')); });
+    d.addEventListener('mouseenter', function () { clearTimeout(t); if (matchMedia('(hover:hover)').matches) set(true); });
+    d.addEventListener('mouseleave', function () { t = setTimeout(function () { set(false); }, 160); });
+    document.addEventListener('click', function (e) { if (!d.contains(e.target)) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+  });
+
+  /* rotating roles (per visible language) */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    $$('.roles__track').forEach(function (track) {
+      setInterval(function () {
+        var items = $$('.roles__item', track).filter(function (x) { return x.offsetParent !== null || getComputedStyle(x).display !== 'none'; });
+        var lang = root.dataset.lang;
+        items = $$('.roles__item', track);
+        var i = items.findIndex(function (x) { return x.classList.contains('is-on'); });
+        items[i].classList.remove('is-on'); items[(i + 1) % items.length].classList.add('is-on');
+      }, 2600);
+    });
+  }
 })();

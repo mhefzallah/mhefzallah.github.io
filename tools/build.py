@@ -105,20 +105,48 @@ NAV = [("index.html", ("Home", "الرئيسية")), ("erp.html", ("ERP", "ERP")
 
 
 def masthead(prefix, active="index.html"):
-    links = "".join(f'<a href="{prefix}{href}"{" class=\"is-active\" aria-current=\"page\"" if href == active else ""}>{T(*lab)}</a>' for href, lab in NAV)
+    def nl(href, lab):
+        cur = ' class="is-active" aria-current="page"' if href == active else ""
+        return f'<a href="{prefix}{href}"{cur}>{T(*lab)}</a>'
+    mega = "".join(f'''
+              <a class="mega__item" href="{prefix}{sec["slug"]}.html">
+                <span class="mega__icon"><img src="{prefix}assets/logos/{sec["icon"]}.svg" alt="" width="22" height="22"></span>
+                <span><b>{T(*sec["title"])}</b><small>{" · ".join(g["name"] for g in sec["groups"])}</small></span>
+              </a>''' for sec in SECTIONS)
+    exp_active = " is-active" if active in [s_["slug"] + ".html" for s_ in SECTIONS] else ""
     return f'''
 <body>
   <a class="skip" href="#main">{T("Skip to content", "انتقل إلى المحتوى")}</a>
-  <header class="masthead">
+  <div class="topbar">
+    <div class="wrap topbar__row">
+      <p class="topbar__status"><span class="dot" aria-hidden="true"></span>{T("Available for new projects · replies within one working day", "متاح لمشاريع جديدة · أردّ خلال يوم عمل")}</p>
+      <ul class="topbar__links">
+        <li><a href="mailto:{EMAIL}" dir="ltr">{ICON["mail"]}{EMAIL}</a></li>
+        <li><a href="{CALL}" target="_blank" rel="noopener" dir="ltr">{ICON["wa"]}+20 155 446 3171</a></li>
+        <li class="topbar__clock">{T("Cairo", "القاهرة")} · <span data-clock>--:--</span></li>
+      </ul>
+    </div>
+  </div>
+  <header class="masthead" data-masthead>
     <div class="wrap masthead__row">
       <a class="brand" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
         <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
-        <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Software Engineer", "مهندس برمجيات")}</small></span>
+        <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Software Engineer · ERP · Web · Mobile", "مهندس برمجيات · ERP · ويب · جوال")}</small></span>
       </a>
-      <nav class="nav" aria-label="Main">{links}</nav>
+      <nav class="nav" aria-label="Main">
+        {nl("index.html", ("Home", "الرئيسية"))}
+        <div class="nav__drop" data-drop>
+          <button type="button" class="nav__btn{exp_active}" aria-expanded="false" data-drop-btn>{T("Expertise", "الخبرات")}<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="mega" data-drop-panel>{mega}
+          </div>
+        </div>
+        {nl("projects.html", ("Projects", "المشاريع"))}
+        <a href="{prefix}index.html#experience">{T("Experience", "الخبرة")}</a>
+        <a href="#contact">{T("Contact", "تواصل")}</a>
+      </nav>
       <div class="tools">
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language">{T("العربية", "English")}</button>
-        <a class="btn btn--gold btn--sm" href="#contact">{T("Contact", "تواصل")}</a>
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>{T("العربية", "English")}</button>
+        <a class="btn btn--primary btn--sm" href="{CALL}" target="_blank" rel="noopener">{T("Book a call", "احجز مكالمة")}</a>
       </div>
     </div>
   </header>'''
@@ -337,19 +365,18 @@ def projects_page():
 
 def home():
     pre = ""
-    stats = "".join(f'<div class="stat reveal"><dt dir="ltr">{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in STATS)
+    stats = "".join(f'<div><dt dir="ltr">{v}</dt><dd>{T(en, ar)}</dd></div>' for v, en, ar in STATS)
     pillars = []
     for sec in SECTIONS:
         total = len({p["slug"] for g in sec["groups"] for p in group_projects(g)})
-        gl = "".join(f'<li>{logo(pre, g["logo"], "pillar__logo")}<span>{g["name"]}</span>{"" if group_projects(g) else "<em>" + T("soon", "قريبًا") + "</em>"}</li>' for g in sec["groups"])
+        gl = "".join(f'<li class="{"" if group_projects(g) else "is-soon"}">{logo(pre, g["logo"], "track__logo")}<span>{g["name"]}</span>{"" if group_projects(g) else "<em>" + T("soon", "قريبًا") + "</em>"}</li>' for g in sec["groups"])
         pillars.append(f'''
-          <a class="pillar reveal" href="{sec["slug"]}.html">
-            <span class="pillar__icon">{logo(pre, sec["icon"], "pillar__big")}</span>
-            <h3>{T(*sec["title"])}</h3>
-            <p>{T(*sec["lede"])}</p>
-            <ul>{gl}</ul>
-            <span class="pillar__more"><b dir="ltr">{total}</b> {T("projects", "مشاريع")} · {T("Explore", "استكشف")} {ICON["arrow"]}</span>
-          </a>''')
+            <a class="track" href="{sec["slug"]}.html">
+              <span class="track__top"><span class="track__icon">{logo(pre, sec["icon"], "track__big")}</span><span class="track__count"><b dir="ltr">{total}</b> {T("projects", "مشاريع")}</span></span>
+              <h3>{T(*sec["title"])}</h3>
+              <ul class="track__techs">{gl}</ul>
+              <span class="track__more">{T("Explore", "استكشف")} {ICON["arrow"]}</span>
+            </a>''')
     featured = "".join(project_card(pre, by_slug(s)) for s in ("booking-platforms", "odoo-v19-migration", "support-crm"))
     # stack matrix: every tech with the number of projects using it
     cols = [("Frontend", "الواجهة", "frontend"), ("Backend", "الباك إند", "backend"), ("Database", "قاعدة البيانات", "database"),
@@ -370,36 +397,35 @@ def home():
     body = f'''
   <main id="main">
     <section class="hero">
+      {PATTERN}
       <div class="wrap hero__grid">
         <div class="hero__text">
-          <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Available for new projects", "متاح لمشاريع جديدة")}</p>
-          <h1 class="display">{T("Software <em>Engineer</em>", "مهندس <em>برمجيات</em>")}</h1>
-          <p class="tagline">{T("I build the systems businesses run on — ERP, web and mobile.", "أبني الأنظمة التي تُدار بها الأعمال — ERP والويب والجوال.")}</p>
-          <p class="lede">{T("ERP and business platforms, fullstack web and mobile — for companies in Saudi Arabia, the UAE and Egypt. From payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.",
-                             "أنظمة ERP ومنصّات أعمال، تطوير ويب متكامل وتطبيقات جوال — لشركات في السعودية والإمارات ومصر. من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.")}</p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Software Engineer · 4+ years", "مهندس برمجيات · أكثر من ٤ سنوات خبرة")}</p>
+          <h1 class="display">{T("Hi, I’m Mohammed.<br>I build <em>software</em> businesses run on.", "أنا محمد،<br>أبني <em>أنظمة</em> تُدار بها الأعمال.")}</h1>
+          <p class="roles" aria-live="polite">{T("Specialised in", "متخصص في")} <span class="roles__track"><span class="roles__item is-on">{T("Odoo ERP systems", "أنظمة Odoo ERP")}</span><span class="roles__item">{T("fullstack web platforms", "منصّات الويب المتكاملة")}</span><span class="roles__item">{T("backend &amp; APIs", "الباك إند والـ APIs")}</span><span class="roles__item">{T("mobile apps", "تطبيقات الجوال")}</span></span></p>
+          <p class="lede">{T("I design, build and migrate business systems for companies in Saudi Arabia, the UAE and Egypt — Odoo ERPs with Saudi payroll and ZATCA e-invoicing, web platforms in React, Next.js, Django and PHP, and mobile apps that connect to them.",
+                             "أصمّم وأطوّر وأرقّي أنظمة أعمال لشركات في السعودية والإمارات ومصر — أنظمة Odoo ERP برواتب سعودية وفوترة ZATCA، ومنصّات ويب بـ React وNext.js وDjango وPHP، وتطبيقات جوال مربوطة بها.")}</p>
           <div class="actions">
-            <a class="btn btn--primary" href="projects.html">{T("Browse projects", "تصفّح المشاريع")} {ICON["arrow"]}</a>
-            <a class="btn btn--outline" href="{CALL}" target="_blank" rel="noopener">{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}</a>
+            <a class="btn btn--primary" href="projects.html">{T("Explore my work", "استكشف أعمالي")} {ICON["arrow"]}</a>
+            <a class="btn btn--outline" href="{CALL}" target="_blank" rel="noopener">{ICON["wa"]}{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}</a>
           </div>
-          <ul class="hero__points">
-            <li>{ICON["check"]}{T("ERP · Web · Backend · Mobile", "ERP · ويب · باك إند · جوال")}</li>
-            <li>{ICON["check"]}{T("Odoo Certified Professional", "معتمد من Odoo")}</li>
-            <li>{ICON["check"]}{T("Arabic &amp; English", "العربية والإنجليزية")}</li>
-          </ul>
+          <dl class="hero__stats">{stats}</dl>
         </div>
         <figure class="portrait">
           <div class="portrait__card">
             {PATTERN}
             <img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high">
           </div>
-          <figcaption class="portrait__tag">
-            <b>{T("Mohammed Hefzallah", "محمد حفظ الله")}</b>
-            <span>{T("Software Engineer · Odoo Developer at AZM Squad", "مهندس برمجيات · مطوّر Odoo في AZM Squad")}</span>
-          </figcaption>
-          <div class="portrait__float" aria-hidden="true"><b dir="ltr">1,900+</b><span>{T("commits in 21 months", "commit خلال ٢١ شهرًا")}</span></div>
+          <div class="float float--a"><span class="float__icon">{ICON["check"]}</span><span><b>{T("Odoo Certified", "معتمد من Odoo")}</b><small>{T("Professional · v15", "محترف · الإصدار 15")}</small></span></div>
+          <div class="float float--b"><b dir="ltr">17</b><small>{T("Odoo projects · 11 → 19", "مشروع Odoo · من ١١ إلى ١٩")}</small></div>
+          <div class="float float--c"><span class="float__logos">{logo(pre, "odoo", "float__logo")}{logo(pre, "react", "float__logo")}{logo(pre, "python", "float__logo")}{logo(pre, "nextdotjs", "float__logo")}</span><small>{T("ERP · Web · Mobile", "ERP · ويب · جوال")}</small></div>
         </figure>
       </div>
-      <div class="wrap"><dl class="stats">{stats}</dl></div>
+      <div class="wrap tracks">
+        <p class="tracks__label">{T("Choose a track", "اختر مسارًا")}</p>
+        <div class="tracks__grid">{"".join(pillars)}</div>
+      </div>
+      <a class="scroll-cue" href="#work" aria-label="Scroll">{T("Featured work", "أعمال مختارة")} <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </section>
 
     <section class="strip" aria-label="Sectors">
@@ -413,23 +439,16 @@ def home():
       </div>
     </section>
 
-    <section class="section" id="areas">
-      <div class="wrap">
-        {section_head("01", "What I build", "ما الذي أبنيه", ("Four tracks — each with its own page, grouped by platform and framework.", "أربعة مسارات — لكلٍّ منها صفحته، مقسّمة حسب المنصّة والـ framework."))}
-        <div class="pillars">{"".join(pillars)}</div>
-      </div>
-    </section>
-
     <section class="section section--soft" id="work">
       <div class="wrap">
-        {section_head("02", "Featured projects", "مشاريع مختارة", None, f'<a class="btn btn--outline btn--sm" href="projects.html">{T("All projects", "كل المشاريع")} {ICON["arrow"]}</a>')}
+        {section_head("01", "Featured projects", "مشاريع مختارة", None, f'<a class="btn btn--outline btn--sm" href="projects.html">{T("All projects", "كل المشاريع")} {ICON["arrow"]}</a>')}
         <div class="cards cards--featured">{featured}</div>
       </div>
     </section>
 
     <section class="section" id="stack">
       <div class="wrap">
-        {section_head("03", "Tech stack", "التقنيات", ("Every technology I’ve shipped with, and how many projects use it.", "كل تقنية استخدمتها في مشاريع حقيقية، وعدد المشاريع التي تستخدمها."))}
+        {section_head("02", "Tech stack", "التقنيات", ("Every technology I’ve shipped with, and how many projects use it.", "كل تقنية استخدمتها في مشاريع حقيقية، وعدد المشاريع التي تستخدمها."))}
         <div class="matrix">{"".join(mcols)}</div>
       </div>
     </section>
@@ -437,7 +456,7 @@ def home():
     <section class="section section--dark" id="services">
       {PATTERN}
       <div class="wrap">
-        {section_head("04", "How we can work together", "كيف نعمل معًا", ("Every engagement starts with a free 30-minute call.", "كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة."))}
+        {section_head("03", "How we can work together", "كيف نعمل معًا", ("Every engagement starts with a free 30-minute call.", "كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة."))}
         <ol class="process">
           <li class="reveal"><span class="process__n" dir="ltr">01</span><b>{T("Discovery call", "مكالمة تعارف")}</b><span>{T("30 minutes, free.", "٣٠ دقيقة مجانًا.")}</span></li>
           <li class="reveal"><span class="process__n" dir="ltr">02</span><b>{T("Scope &amp; quote", "النطاق والتسعير")}</b><span>{T("Written scope within 48 hours.", "نطاق مكتوب خلال ٤٨ ساعة.")}</span></li>
@@ -449,7 +468,7 @@ def home():
 
     <section class="section section--soft" id="experience">
       <div class="wrap">
-        {section_head("05", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
+        {section_head("04", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
         <ol class="timeline">{exp_rows()}</ol>
         <div class="creds">
           <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("B.Sc. Computer Science", "بكالوريوس علوم الحاسب")}</b><span>{T("New Cairo Academy · 2024", "أكاديمية القاهرة الجديدة · ٢٠٢٤")}</span></div>

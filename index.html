@@ -35,50 +35,109 @@
 </head>
 <body>
   <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="ar">انتقل إلى المحتوى</span></a>
-  <header class="masthead">
+  <div class="topbar">
+    <div class="wrap topbar__row">
+      <p class="topbar__status"><span class="dot" aria-hidden="true"></span><span lang="en">Available for new projects · replies within one working day</span><span lang="ar">متاح لمشاريع جديدة · أردّ خلال يوم عمل</span></p>
+      <ul class="topbar__links">
+        <li><a href="mailto:mohammed.hefzallah@gmail.com" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>mohammed.hefzallah@gmail.com</a></li>
+        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg>+20 155 446 3171</a></li>
+        <li class="topbar__clock"><span lang="en">Cairo</span><span lang="ar">القاهرة</span> · <span data-clock>--:--</span></li>
+      </ul>
+    </div>
+  </div>
+  <header class="masthead" data-masthead>
     <div class="wrap masthead__row">
       <a class="brand" href="index.html" aria-label="Mohammed Hefzallah — home">
         <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
-        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Software Engineer</span><span lang="ar">مهندس برمجيات</span></small></span>
+        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Software Engineer · ERP · Web · Mobile</span><span lang="ar">مهندس برمجيات · ERP · ويب · جوال</span></small></span>
       </a>
-      <nav class="nav" aria-label="Main"><a href="index.html" class="is-active" aria-current="page"><span lang="en">Home</span><span lang="ar">الرئيسية</span></a><a href="erp.html"><span lang="en">ERP</span><span lang="ar">ERP</span></a><a href="web.html"><span lang="en">Web</span><span lang="ar">الويب</span></a><a href="backend.html"><span lang="en">Backend</span><span lang="ar">الباك إند</span></a><a href="mobile.html"><span lang="en">Mobile</span><span lang="ar">الجوال</span></a><a href="projects.html"><span lang="en">All projects</span><span lang="ar">كل المشاريع</span></a></nav>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html" class="is-active" aria-current="page"><span lang="en">Home</span><span lang="ar">الرئيسية</span></a>
+        <div class="nav__drop" data-drop>
+          <button type="button" class="nav__btn" aria-expanded="false" data-drop-btn><span lang="en">Expertise</span><span lang="ar">الخبرات</span><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="mega" data-drop-panel>
+              <a class="mega__item" href="erp.html">
+                <span class="mega__icon"><img src="assets/logos/odoo.svg" alt="" width="22" height="22"></span>
+                <span><b><span lang="en">ERP & Business Platforms</span><span lang="ar">أنظمة ERP ومنصّات الأعمال</span></b><small>Odoo · ServiceNow · Zoho</small></span>
+              </a>
+              <a class="mega__item" href="web.html">
+                <span class="mega__icon"><img src="assets/logos/react.svg" alt="" width="22" height="22"></span>
+                <span><b><span lang="en">Fullstack Web — Frontend</span><span lang="ar">تطوير الويب — الواجهات</span></b><small>React · Next.js · Vanilla JS + GSAP</small></span>
+              </a>
+              <a class="mega__item" href="backend.html">
+                <span class="mega__icon"><img src="assets/logos/django.svg" alt="" width="22" height="22"></span>
+                <span><b><span lang="en">Fullstack Web — Backend & APIs</span><span lang="ar">تطوير الويب — الباك إند والـ APIs</span></b><small>Python · Django REST · Python · Odoo ORM & REST · PHP · MVC REST API · Supabase (BaaS) · Headless CMS · Sanity</small></span>
+              </a>
+              <a class="mega__item" href="mobile.html">
+                <span class="mega__icon"><img src="assets/logos/flutter.svg" alt="" width="22" height="22"></span>
+                <span><b><span lang="en">Mobile Apps</span><span lang="ar">تطبيقات الجوال</span></b><small>Flutter · Capacitor · PWA</small></span>
+              </a>
+          </div>
+        </div>
+        <a href="projects.html"><span lang="en">Projects</span><span lang="ar">المشاريع</span></a>
+        <a href="index.html#experience"><span lang="en">Experience</span><span lang="ar">الخبرة</span></a>
+        <a href="#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
+      </nav>
       <div class="tools">
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><span lang="en">العربية</span><span lang="ar">English</span></button>
-        <a class="btn btn--gold btn--sm" href="#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
+        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span lang="en">العربية</span><span lang="ar">English</span></button>
+        <a class="btn btn--primary btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a call</span><span lang="ar">احجز مكالمة</span></a>
       </div>
     </div>
   </header>
   <main id="main">
     <section class="hero">
+      <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
       <div class="wrap hero__grid">
         <div class="hero__text">
-          <p class="badge"><span class="dot" aria-hidden="true"></span><span lang="en">Available for new projects</span><span lang="ar">متاح لمشاريع جديدة</span></p>
-          <h1 class="display"><span lang="en">Software <em>Engineer</em></span><span lang="ar">مهندس <em>برمجيات</em></span></h1>
-          <p class="tagline"><span lang="en">I build the systems businesses run on — ERP, web and mobile.</span><span lang="ar">أبني الأنظمة التي تُدار بها الأعمال — ERP والويب والجوال.</span></p>
-          <p class="lede"><span lang="en">ERP and business platforms, fullstack web and mobile — for companies in Saudi Arabia, the UAE and Egypt. From payroll that follows Saudi Labor Law and ZATCA e-invoicing to web platforms that take live payments.</span><span lang="ar">أنظمة ERP ومنصّات أعمال، تطوير ويب متكامل وتطبيقات جوال — لشركات في السعودية والإمارات ومصر. من رواتب متوافقة مع نظام العمل السعودي وفوترة ZATCA، إلى منصّات ويب تستقبل مدفوعات حقيقية.</span></p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span><span lang="en">Software Engineer · 4+ years</span><span lang="ar">مهندس برمجيات · أكثر من ٤ سنوات خبرة</span></p>
+          <h1 class="display"><span lang="en">Hi, I’m Mohammed.<br>I build <em>software</em> businesses run on.</span><span lang="ar">أنا محمد،<br>أبني <em>أنظمة</em> تُدار بها الأعمال.</span></h1>
+          <p class="roles" aria-live="polite"><span lang="en">Specialised in</span><span lang="ar">متخصص في</span> <span class="roles__track"><span class="roles__item is-on"><span lang="en">Odoo ERP systems</span><span lang="ar">أنظمة Odoo ERP</span></span><span class="roles__item"><span lang="en">fullstack web platforms</span><span lang="ar">منصّات الويب المتكاملة</span></span><span class="roles__item"><span lang="en">backend &amp; APIs</span><span lang="ar">الباك إند والـ APIs</span></span><span class="roles__item"><span lang="en">mobile apps</span><span lang="ar">تطبيقات الجوال</span></span></span></p>
+          <p class="lede"><span lang="en">I design, build and migrate business systems for companies in Saudi Arabia, the UAE and Egypt — Odoo ERPs with Saudi payroll and ZATCA e-invoicing, web platforms in React, Next.js, Django and PHP, and mobile apps that connect to them.</span><span lang="ar">أصمّم وأطوّر وأرقّي أنظمة أعمال لشركات في السعودية والإمارات ومصر — أنظمة Odoo ERP برواتب سعودية وفوترة ZATCA، ومنصّات ويب بـ React وNext.js وDjango وPHP، وتطبيقات جوال مربوطة بها.</span></p>
           <div class="actions">
-            <a class="btn btn--primary" href="projects.html"><span lang="en">Browse projects</span><span lang="ar">تصفّح المشاريع</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            <a class="btn btn--outline" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
+            <a class="btn btn--primary" href="projects.html"><span lang="en">Explore my work</span><span lang="ar">استكشف أعمالي</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--outline" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
           </div>
-          <ul class="hero__points">
-            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">ERP · Web · Backend · Mobile</span><span lang="ar">ERP · ويب · باك إند · جوال</span></li>
-            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">Odoo Certified Professional</span><span lang="ar">معتمد من Odoo</span></li>
-            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span lang="en">Arabic &amp; English</span><span lang="ar">العربية والإنجليزية</span></li>
-          </ul>
+          <dl class="hero__stats"><div><dt dir="ltr">24+</dt><dd><span lang="en">projects across ERP, web and mobile</span><span lang="ar">مشروعًا في ERP والويب والجوال</span></dd></div><div><dt dir="ltr">1,900+</dt><dd><span lang="en">commits in the last 21 months</span><span lang="ar">commit خلال آخر ٢١ شهرًا</span></dd></div><div><dt dir="ltr">120+</dt><dd><span lang="en">Odoo modules delivered</span><span lang="ar">موديول Odoo تم تسليمه</span></dd></div><div><dt dir="ltr">4+</dt><dd><span lang="en">years of professional experience</span><span lang="ar">سنوات خبرة مهنية</span></dd></div></dl>
         </div>
         <figure class="portrait">
           <div class="portrait__card">
             <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
             <img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high">
           </div>
-          <figcaption class="portrait__tag">
-            <b><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></b>
-            <span><span lang="en">Software Engineer · Odoo Developer at AZM Squad</span><span lang="ar">مهندس برمجيات · مطوّر Odoo في AZM Squad</span></span>
-          </figcaption>
-          <div class="portrait__float" aria-hidden="true"><b dir="ltr">1,900+</b><span><span lang="en">commits in 21 months</span><span lang="ar">commit خلال ٢١ شهرًا</span></span></div>
+          <div class="float float--a"><span class="float__icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><b><span lang="en">Odoo Certified</span><span lang="ar">معتمد من Odoo</span></b><small><span lang="en">Professional · v15</span><span lang="ar">محترف · الإصدار 15</span></small></span></div>
+          <div class="float float--b"><b dir="ltr">17</b><small><span lang="en">Odoo projects · 11 → 19</span><span lang="ar">مشروع Odoo · من ١١ إلى ١٩</span></small></div>
+          <div class="float float--c"><span class="float__logos"><img class="float__logo" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"><img class="float__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"><img class="float__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy"><img class="float__logo" src="assets/logos/nextdotjs.svg" alt="" width="20" height="20" loading="lazy"></span><small><span lang="en">ERP · Web · Mobile</span><span lang="ar">ERP · ويب · جوال</span></small></div>
         </figure>
       </div>
-      <div class="wrap"><dl class="stats"><div class="stat reveal"><dt dir="ltr">24+</dt><dd><span lang="en">projects across ERP, web and mobile</span><span lang="ar">مشروعًا في ERP والويب والجوال</span></dd></div><div class="stat reveal"><dt dir="ltr">1,900+</dt><dd><span lang="en">commits in the last 21 months</span><span lang="ar">commit خلال آخر ٢١ شهرًا</span></dd></div><div class="stat reveal"><dt dir="ltr">120+</dt><dd><span lang="en">Odoo modules delivered</span><span lang="ar">موديول Odoo تم تسليمه</span></dd></div><div class="stat reveal"><dt dir="ltr">4+</dt><dd><span lang="en">years of professional experience</span><span lang="ar">سنوات خبرة مهنية</span></dd></div></dl></div>
+      <div class="wrap tracks">
+        <p class="tracks__label"><span lang="en">Choose a track</span><span lang="ar">اختر مسارًا</span></p>
+        <div class="tracks__grid">
+            <a class="track" href="erp.html">
+              <span class="track__top"><span class="track__icon"><img class="track__big" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"></span><span class="track__count"><b dir="ltr">2</b> <span lang="en">projects</span><span lang="ar">مشاريع</span></span></span>
+              <h3><span lang="en">ERP & Business Platforms</span><span lang="ar">أنظمة ERP ومنصّات الأعمال</span></h3>
+              <ul class="track__techs"><li class=""><img class="track__logo" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"><span>Odoo</span></li><li class="is-soon"><img class="track__logo" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy"><span>ServiceNow</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li><li class="is-soon"><img class="track__logo" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy"><span>Zoho</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li></ul>
+              <span class="track__more"><span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="track" href="web.html">
+              <span class="track__top"><span class="track__icon"><img class="track__big" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"></span><span class="track__count"><b dir="ltr">5</b> <span lang="en">projects</span><span lang="ar">مشاريع</span></span></span>
+              <h3><span lang="en">Fullstack Web — Frontend</span><span lang="ar">تطوير الويب — الواجهات</span></h3>
+              <ul class="track__techs"><li class=""><img class="track__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"><span>React</span></li><li class=""><img class="track__logo" src="assets/logos/nextdotjs.svg" alt="" width="20" height="20" loading="lazy"><span>Next.js</span></li><li class=""><img class="track__logo" src="assets/logos/javascript.svg" alt="" width="20" height="20" loading="lazy"><span>Vanilla JS + GSAP</span></li></ul>
+              <span class="track__more"><span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="track" href="backend.html">
+              <span class="track__top"><span class="track__icon"><img class="track__big" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy"></span><span class="track__count"><b dir="ltr">6</b> <span lang="en">projects</span><span lang="ar">مشاريع</span></span></span>
+              <h3><span lang="en">Fullstack Web — Backend & APIs</span><span lang="ar">تطوير الويب — الباك إند والـ APIs</span></h3>
+              <ul class="track__techs"><li class=""><img class="track__logo" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy"><span>Python · Django REST</span></li><li class=""><img class="track__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy"><span>Python · Odoo ORM & REST</span></li><li class=""><img class="track__logo" src="assets/logos/php.svg" alt="" width="20" height="20" loading="lazy"><span>PHP · MVC REST API</span></li><li class=""><img class="track__logo" src="assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy"><span>Supabase (BaaS)</span></li><li class=""><img class="track__logo" src="assets/logos/sanity.svg" alt="" width="20" height="20" loading="lazy"><span>Headless CMS · Sanity</span></li></ul>
+              <span class="track__more"><span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="track" href="mobile.html">
+              <span class="track__top"><span class="track__icon"><img class="track__big" src="assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"></span><span class="track__count"><b dir="ltr">2</b> <span lang="en">projects</span><span lang="ar">مشاريع</span></span></span>
+              <h3><span lang="en">Mobile Apps</span><span lang="ar">تطبيقات الجوال</span></h3>
+              <ul class="track__techs"><li class="is-soon"><img class="track__logo" src="assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"><span>Flutter</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li><li class=""><img class="track__logo" src="assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy"><span>Capacitor</span></li><li class=""><img class="track__logo" src="assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy"><span>PWA</span></li></ul>
+              <span class="track__more"><span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a></div>
+      </div>
+      <a class="scroll-cue" href="#work" aria-label="Scroll"><span lang="en">Featured work</span><span lang="ar">أعمال مختارة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </section>
 
     <section class="strip" aria-label="Sectors">
@@ -92,47 +151,10 @@
       </div>
     </section>
 
-    <section class="section" id="areas">
-      <div class="wrap">
-        <header class="section__head">
-          <div><p class="kicker">01</p><h2 class="title"><span lang="en">What I build</span><span lang="ar">ما الذي أبنيه</span></h2><p class="section__note"><span lang="en">Four tracks — each with its own page, grouped by platform and framework.</span><span lang="ar">أربعة مسارات — لكلٍّ منها صفحته، مقسّمة حسب المنصّة والـ framework.</span></p></div>
-        </header>
-        <div class="pillars">
-          <a class="pillar reveal" href="erp.html">
-            <span class="pillar__icon"><img class="pillar__big" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"></span>
-            <h3><span lang="en">ERP & Business Platforms</span><span lang="ar">أنظمة ERP ومنصّات الأعمال</span></h3>
-            <p><span lang="en">Business systems that run operations — implementation, custom modules, migrations and integrations.</span><span lang="ar">أنظمة الأعمال التي تدير العمليات — تطبيق وتطوير موديولات وترقيات وتكاملات.</span></p>
-            <ul><li><img class="pillar__logo" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"><span>Odoo</span></li><li><img class="pillar__logo" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy"><span>ServiceNow</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li><li><img class="pillar__logo" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy"><span>Zoho</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li></ul>
-            <span class="pillar__more"><b dir="ltr">2</b> <span lang="en">projects</span><span lang="ar">مشاريع</span> · <span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a class="pillar reveal" href="web.html">
-            <span class="pillar__icon"><img class="pillar__big" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"></span>
-            <h3><span lang="en">Fullstack Web — Frontend</span><span lang="ar">تطوير الويب — الواجهات</span></h3>
-            <p><span lang="en">Websites and web apps, grouped by the framework they’re built with.</span><span lang="ar">مواقع وتطبيقات ويب، مقسّمة حسب الـ framework المستخدم.</span></p>
-            <ul><li><img class="pillar__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"><span>React</span></li><li><img class="pillar__logo" src="assets/logos/nextdotjs.svg" alt="" width="20" height="20" loading="lazy"><span>Next.js</span></li><li><img class="pillar__logo" src="assets/logos/javascript.svg" alt="" width="20" height="20" loading="lazy"><span>Vanilla JS + GSAP</span></li></ul>
-            <span class="pillar__more"><b dir="ltr">5</b> <span lang="en">projects</span><span lang="ar">مشاريع</span> · <span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a class="pillar reveal" href="backend.html">
-            <span class="pillar__icon"><img class="pillar__big" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy"></span>
-            <h3><span lang="en">Fullstack Web — Backend & APIs</span><span lang="ar">تطوير الويب — الباك إند والـ APIs</span></h3>
-            <p><span lang="en">APIs, business logic and data — grouped by backend technology and database.</span><span lang="ar">واجهات برمجية ومنطق أعمال وبيانات — مقسّمة حسب تقنية الباك إند وقاعدة البيانات.</span></p>
-            <ul><li><img class="pillar__logo" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy"><span>Python · Django REST</span></li><li><img class="pillar__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy"><span>Python · Odoo ORM & REST</span></li><li><img class="pillar__logo" src="assets/logos/php.svg" alt="" width="20" height="20" loading="lazy"><span>PHP · MVC REST API</span></li><li><img class="pillar__logo" src="assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy"><span>Supabase (BaaS)</span></li><li><img class="pillar__logo" src="assets/logos/sanity.svg" alt="" width="20" height="20" loading="lazy"><span>Headless CMS · Sanity</span></li></ul>
-            <span class="pillar__more"><b dir="ltr">6</b> <span lang="en">projects</span><span lang="ar">مشاريع</span> · <span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a class="pillar reveal" href="mobile.html">
-            <span class="pillar__icon"><img class="pillar__big" src="assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"></span>
-            <h3><span lang="en">Mobile Apps</span><span lang="ar">تطبيقات الجوال</span></h3>
-            <p><span lang="en">Android and iOS apps — native-feel cross-platform builds.</span><span lang="ar">تطبيقات Android وiOS — تطوير متعدد المنصّات بإحساس التطبيقات الأصلية.</span></p>
-            <ul><li><img class="pillar__logo" src="assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"><span>Flutter</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li><li><img class="pillar__logo" src="assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy"><span>Capacitor</span></li><li><img class="pillar__logo" src="assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy"><span>PWA</span></li></ul>
-            <span class="pillar__more"><b dir="ltr">2</b> <span lang="en">projects</span><span lang="ar">مشاريع</span> · <span lang="en">Explore</span><span lang="ar">استكشف</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a></div>
-      </div>
-    </section>
-
     <section class="section section--soft" id="work">
       <div class="wrap">
         <header class="section__head">
-          <div><p class="kicker">02</p><h2 class="title"><span lang="en">Featured projects</span><span lang="ar">مشاريع مختارة</span></h2></div><a class="btn btn--outline btn--sm" href="projects.html"><span lang="en">All projects</span><span lang="ar">كل المشاريع</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div><p class="kicker">01</p><h2 class="title"><span lang="en">Featured projects</span><span lang="ar">مشاريع مختارة</span></h2></div><a class="btn btn--outline btn--sm" href="projects.html"><span lang="en">All projects</span><span lang="ar">كل المشاريع</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </header>
         <div class="cards cards--featured">
           <article class="card pcard reveal" >
@@ -209,7 +231,7 @@
     <section class="section" id="stack">
       <div class="wrap">
         <header class="section__head">
-          <div><p class="kicker">03</p><h2 class="title"><span lang="en">Tech stack</span><span lang="ar">التقنيات</span></h2><p class="section__note"><span lang="en">Every technology I’ve shipped with, and how many projects use it.</span><span lang="ar">كل تقنية استخدمتها في مشاريع حقيقية، وعدد المشاريع التي تستخدمها.</span></p></div>
+          <div><p class="kicker">02</p><h2 class="title"><span lang="en">Tech stack</span><span lang="ar">التقنيات</span></h2><p class="section__note"><span lang="en">Every technology I’ve shipped with, and how many projects use it.</span><span lang="ar">كل تقنية استخدمتها في مشاريع حقيقية، وعدد المشاريع التي تستخدمها.</span></p></div>
         </header>
         <div class="matrix"><div class="matrix__col reveal"><h3><span lang="en">Frontend</span><span lang="ar">الواجهة</span></h3><ul dir="ltr"><li><img class="tech__logo" src="assets/logos/react.svg" alt="" width="20" height="20" loading="lazy"><span>React</span><b dir="ltr">4</b></li><li><img class="tech__logo" src="assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy"><span>Vite</span><b dir="ltr">4</b></li><li><img class="tech__logo" src="assets/logos/tailwindcss.svg" alt="" width="20" height="20" loading="lazy"><span>Tailwind CSS</span><b dir="ltr">3</b></li><li><img class="tech__logo" src="assets/logos/typescript.svg" alt="" width="20" height="20" loading="lazy"><span>TypeScript</span><b dir="ltr">2</b></li><li><span>OWL</span><b dir="ltr">2</b></li><li><span>QWeb</span><b dir="ltr">2</b></li><li><img class="tech__logo" src="assets/logos/javascript.svg" alt="" width="20" height="20" loading="lazy"><span>Vanilla JS</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/gsap.svg" alt="" width="20" height="20" loading="lazy"><span>GSAP</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/nextdotjs.svg" alt="" width="20" height="20" loading="lazy"><span>Next.js</span><b dir="ltr">1</b></li><li><span>MUI</span><b dir="ltr">1</b></li></ul></div><div class="matrix__col reveal"><h3><span lang="en">Backend</span><span lang="ar">الباك إند</span></h3><ul dir="ltr"><li><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy"><span>Python (Odoo ORM)</span><b dir="ltr">2</b></li><li><img class="tech__logo" src="assets/logos/php.svg" alt="" width="20" height="20" loading="lazy"><span>PHP MVC</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/django.svg" alt="" width="20" height="20" loading="lazy"><span>Django REST Framework</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy"><span>Supabase</span><b dir="ltr">1</b></li><li><span>Odoo REST / JWT</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/sanity.svg" alt="" width="20" height="20" loading="lazy"><span>Sanity CMS</span><b dir="ltr">1</b></li></ul></div><div class="matrix__col reveal"><h3><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></h3><ul dir="ltr"><li><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy"><span>PostgreSQL</span><b dir="ltr">4</b></li><li><img class="tech__logo" src="assets/logos/mysql.svg" alt="" width="20" height="20" loading="lazy"><span>MySQL</span><b dir="ltr">1</b></li><li><span>Sanity Content Lake</span><b dir="ltr">1</b></li></ul></div><div class="matrix__col reveal"><h3><span lang="en">Mobile</span><span lang="ar">الجوال</span></h3><ul dir="ltr"><li><img class="tech__logo" src="assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy"><span>PWA</span><b dir="ltr">2</b></li><li><img class="tech__logo" src="assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy"><span>Capacitor</span><b dir="ltr">1</b></li><li><img class="tech__logo" src="assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"><span>Flutter</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li></ul></div><div class="matrix__col reveal"><h3><span lang="en">Platforms</span><span lang="ar">المنصّات</span></h3><ul dir="ltr"><li><img class="tech__logo" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"><span>Odoo</span><b dir="ltr">2</b></li><li><img class="tech__logo" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy"><span>ServiceNow</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li><li><img class="tech__logo" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy"><span>Zoho</span><em><span lang="en">soon</span><span lang="ar">قريبًا</span></em></li></ul></div></div>
       </div>
@@ -219,7 +241,7 @@
       <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
       <div class="wrap">
         <header class="section__head">
-          <div><p class="kicker">04</p><h2 class="title"><span lang="en">How we can work together</span><span lang="ar">كيف نعمل معًا</span></h2><p class="section__note"><span lang="en">Every engagement starts with a free 30-minute call.</span><span lang="ar">كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة.</span></p></div>
+          <div><p class="kicker">03</p><h2 class="title"><span lang="en">How we can work together</span><span lang="ar">كيف نعمل معًا</span></h2><p class="section__note"><span lang="en">Every engagement starts with a free 30-minute call.</span><span lang="ar">كل تعاون يبدأ بمكالمة مجانية مدتها ٣٠ دقيقة.</span></p></div>
         </header>
         <ol class="process">
           <li class="reveal"><span class="process__n" dir="ltr">01</span><b><span lang="en">Discovery call</span><span lang="ar">مكالمة تعارف</span></b><span><span lang="en">30 minutes, free.</span><span lang="ar">٣٠ دقيقة مجانًا.</span></span></li>
@@ -233,7 +255,7 @@
     <section class="section section--soft" id="experience">
       <div class="wrap">
         <header class="section__head">
-          <div><p class="kicker">05</p><h2 class="title"><span lang="en">Experience</span><span lang="ar">الخبرة</span></h2></div><a class="btn btn--outline btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request full CV</span><span lang="ar">اطلب السيرة الذاتية</span></a>
+          <div><p class="kicker">04</p><h2 class="title"><span lang="en">Experience</span><span lang="ar">الخبرة</span></h2></div><a class="btn btn--outline btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request full CV</span><span lang="ar">اطلب السيرة الذاتية</span></a>
         </header>
         <ol class="timeline">
           <li class="tl reveal tl--now">
