@@ -39,7 +39,7 @@ MAIL = (f"mailto:{EMAIL}?subject={quote('Project enquiry')}&body="
 CV_REQ = wa("Hi Mohammed, could you share your CV? I found you through your portfolio.")
 CALL = wa("Hi Mohammed, I saw your portfolio and would like to book a 30-minute call about a project.")
 
-KIND_LABEL = {"web": ("Web", "ويب"), "erp": ("Odoo ERP", "Odoo ERP"), "mobile": ("Mobile", "جوال")}
+KIND_LABEL = {"web": ("Web", "ويب"), "erp": ("Odoo ERP", "Odoo ERP"), "mobile": ("Mobile", "جوال"), "ecommerce": ("E-commerce", "تجارة إلكترونية")}
 
 # small inline icons (stroke = currentColor)
 ICON = {
@@ -130,6 +130,10 @@ SEO = {
              "Odoo ERP implementation, custom modules, migrations and integrations for Saudi and GCC businesses: HR & payroll, ZATCA, POS, inventory and approvals."),
             ("تطوير أنظمة ERP وأودو Odoo | محمد حفظ الله",
              "تطبيق وتخصيص نظام أودو Odoo ERP لشركات السعودية والخليج: موارد بشرية ورواتب، فوترة زاتكا، نقاط بيع، مخزون، موافقات وترقيات من الإصدار ١١ إلى ١٩.")),
+    "ecommerce": (("Salla & Zid Store Development — Saudi E-commerce | Mohammed Hefzallah",
+                   "Salla and Zid online stores built end to end: theme, catalogue, mada / Apple Pay / Tabby / Tamara payments, shipping, offers, SEO and Odoo integration."),
+                  ("تصميم وإعداد متاجر سلة وزد — التجارة الإلكترونية | محمد حفظ الله",
+                   "إنشاء وتصميم متاجر إلكترونية على سلة وزد: الثيم، والمنتجات، والدفع بمدى وApple Pay وتابي وتمارا، والشحن، والعروض، وSEO، والربط مع أودو.")),
     "web": (("Fullstack Web Development — React, Next.js | Mohammed Hefzallah",
              "Fullstack web platforms built with React, Next.js and JavaScript: booking systems, company websites, CRMs and dashboards."),
             ("تطوير مواقع ومنصّات ويب — React وNext.js | محمد حفظ الله",
@@ -252,6 +256,7 @@ def footer(prefix):
         <li><a href="{prefix}erp.html">{T("Odoo ERP development", "تطوير أنظمة أودو Odoo")}</a></li>
         <li><a href="{prefix}work/odoo-v19-migration.html">{T("Odoo upgrades &amp; migration", "ترقية أودو ونقل البيانات")}</a></li>
         <li><a href="{prefix}erp.html#odoo">{T("ZATCA e-invoicing &amp; Saudi payroll", "فوترة زاتكا والرواتب السعودية")}</a></li>
+        <li><a href="{prefix}ecommerce.html">{T("Salla &amp; Zid online stores", "متاجر سلة وزد")}</a></li>
         <li><a href="{prefix}web.html">{T("React &amp; Next.js web platforms", "منصّات ويب React وNext.js")}</a></li>
         <li><a href="{prefix}backend.html">{T("Django, Python &amp; PHP APIs", "باك إند وAPIs بـ Django وPython وPHP")}</a></li>
         <li><a href="{prefix}mobile.html">{T("Mobile apps", "تطبيقات الجوال")}</a></li>
@@ -312,7 +317,7 @@ def section_head(n, en, ar, note=None, extra=""):
 LOGO_FOR = {"React": "react", "Next.js": "nextdotjs", "TypeScript": "typescript", "Vite": "vite", "Tailwind CSS": "tailwindcss",
             "Vanilla JS": "javascript", "GSAP": "gsap", "Django REST Framework": "django", "Python (Odoo ORM)": "python",
             "PHP MVC": "php", "Supabase": "supabase", "Sanity CMS": "sanity", "PostgreSQL": "postgresql", "MySQL": "mysql",
-            "Capacitor": "capacitor", "PWA": "pwa", "Flutter": "flutter", "Odoo": "odoo"}
+            "Capacitor": "capacitor", "PWA": "pwa", "Flutter": "flutter", "Odoo": "odoo", "Salla": "salla", "Zid": "zid"}
 
 
 def logo(prefix, name, cls="logo"):
@@ -394,6 +399,14 @@ def section_page(sec):
         </header>
         {content}
       </section>''')
+    caps = ""
+    if sec.get("capabilities"):
+        items = "".join(f'<li class="cap reveal"><b>{T(en, ar)}</b><span>{T(den, dar)}</span></li>' for en, ar, den, dar in sec["capabilities"])
+        caps = f'''
+      <section class="group" id="services">
+        <header class="group__head reveal"><div><h2 class="group__title">{T("What I deliver", "ما أقدّمه")}</h2><p>{T("Everything a store needs to sell, on Salla and Zid.", "كل ما يحتاجه المتجر ليبيع، على سلة وزد.")}</p></div></header>
+        <ul class="caps">{items}</ul>
+      </section>'''
     body = f'''
   <main id="main">
     <section class="page-hero">
@@ -405,7 +418,7 @@ def section_page(sec):
         <nav class="subnav" aria-label="{L("Sections", "الأقسام")}">{nav}</nav>
       </div>
     </section>
-    <div class="wrap groups">{"".join(groups)}
+    <div class="wrap groups">{"".join(groups)}{caps}
     </div>
   </main>'''
     title, desc = seo(sec["slug"])
@@ -417,7 +430,7 @@ def projects_page():
     def opts(field):
         vals = sorted({v for s in STACKS.values() for v in s[field]})
         return "".join(f'<option value="{escape(v)}">{escape(v)}</option>' for v in vals)
-    areas = [("all", ("All", "الكل")), ("erp", ("ERP", "ERP")), ("web", ("Web", "الويب")), ("backend", ("Backend", "الباك إند")), ("mobile", ("Mobile", "الجوال"))]
+    areas = [("all", ("All", "الكل")), ("erp", ("ERP", "ERP")), ("ecommerce", ("E-commerce", "تجارة إلكترونية")), ("web", ("Web", "الويب")), ("backend", ("Backend", "الباك إند")), ("mobile", ("Mobile", "الجوال"))]
     chips = "".join(f'<button type="button" class="chip{" is-on" if k == "all" else ""}" data-area="{k}">{T(*l)}</button>' for k, l in areas)
     cards = "".join(project_card(pre, p, 'data-areas="{}" data-frontend="{}" data-backend="{}" data-database="{}"'.format(
         " ".join(STACKS[p["slug"]]["areas"]), escape("|".join(STACKS[p["slug"]]["frontend"])),
@@ -518,7 +531,7 @@ def home():
         <p class="strip__label">{T("Sectors I’ve worked in", "قطاعات عملت فيها")}</p>
         <ul class="strip__list">
           <li>{T("Government", "الحكومة")}</li><li>{T("Oil &amp; Gas", "النفط والغاز")}</li><li>{T("Construction", "المقاولات")}</li>
-          <li>{T("Automotive", "السيارات")}</li><li>{T("Retail &amp; POS", "التجزئة")}</li><li>{T("Logistics", "اللوجستيات")}</li>
+          <li>{T("Automotive", "السيارات")}</li><li>{T("Retail &amp; POS", "التجزئة")}</li><li>{T("E-commerce", "التجارة الإلكترونية")}</li><li>{T("Logistics", "اللوجستيات")}</li>
           <li>{T("Tourism", "السياحة")}</li><li>{T("Education", "التعليم")}</li><li>{T("Consulting", "الاستشارات")}</li>
         </ul>
       </div>

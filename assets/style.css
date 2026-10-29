@@ -738,3 +738,11 @@ tbody tr:hover { background: #FAFBFA; }
 .footer__label { font: 600 13px/1 var(--head); color: var(--gold-300); letter-spacing: .1em; text-transform: uppercase; }
 :root[data-lang="ar"] .footer__label { letter-spacing: 0; }
 .footer__services ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+
+/* e-commerce: five tracks, capabilities list */
+@media (min-width: 1281px) { .tracks__grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 601px) and (max-width: 1280px) { .tracks__grid { grid-template-columns: repeat(2, 1fr); } .tracks__grid > :last-child { grid-column: 1 / -1; } }
+.caps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.cap { padding: 22px; border-radius: var(--r); background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--gold); box-shadow: var(--shadow); }
+.cap b { display: block; font: 700 17px/1.4 var(--head); color: var(--ink); margin-bottom: 6px; }
+.cap span { color: var(--muted); font-size: 15px; line-height: 1.7; }
