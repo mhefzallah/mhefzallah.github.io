@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تطوير تطبيقات الجوال — Flutter | محمد حفظ الله</title>
+  <meta name="description" content="تطبيقات جوال بـ Flutter وCapacitor وPWA مربوطة بأنظمة أودو والباك إند.">
+  <meta name="author" content="Mohammed Hefzallah">
+  <meta name="theme-color" content="#06261F">
+  <link rel="canonical" href="https://mhefzallah.github.io/ar/mobile.html">
+  <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/mobile.html">
+  <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/ar/mobile.html">
+  <link rel="alternate" hreflang="x-default" href="https://mhefzallah.github.io/mobile.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mohammed Hefzallah">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="تطوير تطبيقات الجوال — Flutter | محمد حفظ الله">
+  <meta property="og:description" content="تطبيقات جوال بـ Flutter وCapacitor وPWA مربوطة بأنظمة أودو والباك إند.">
+  <meta property="og:url" content="https://mhefzallah.github.io/ar/mobile.html">
+  <meta property="og:image" content="https://mhefzallah.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/alexandria-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/plex-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main"><span>انتقل إلى المحتوى</span></a>
+  <div class="topbar">
+    <div class="wrap topbar__row">
+      <p class="topbar__status"><span class="dot" aria-hidden="true"></span><span>متاح لمشاريع جديدة · أردّ خلال يوم عمل</span></p>
+      <ul class="topbar__links">
+        <li><a href="mailto:mohammed.hefzallah@gmail.com" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>mohammed.hefzallah@gmail.com</a></li>
+        <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg>+20 155 446 3171</a></li>
+        <li class="topbar__clock"><span>القاهرة</span> · <span data-clock>--:--</span></li>
+      </ul>
+    </div>
+  </div>
+  <header class="masthead" data-masthead>
+    <div class="wrap masthead__row">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
+        <span class="brand__text"><strong><span>محمد حفظ الله</span></strong><small><span>مهندس برمجيات · ERP · ويب · جوال</span></small></span>
+      </a>
+      <nav class="nav" aria-label="القائمة الرئيسية">
+        <a href="index.html"><span>الرئيسية</span></a>
+        <div class="nav__drop" data-drop>
+          <button type="button" class="nav__btn is-active" aria-expanded="false" data-drop-btn><span>الخبرات</span><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="mega" data-drop-panel>
+              <a class="mega__item" href="erp.html">
+                <span class="mega__icon"><img src="../assets/logos/odoo.svg" alt="" width="22" height="22"></span>
+                <span><b><span>أنظمة ERP ومنصّات الأعمال</span></b><small>Odoo · ServiceNow · Zoho</small></span>
+              </a>
+              <a class="mega__item" href="web.html">
+                <span class="mega__icon"><img src="../assets/logos/react.svg" alt="" width="22" height="22"></span>
+                <span><b><span>تطوير الويب — الواجهات</span></b><small>React · Next.js · Vanilla JS + GSAP</small></span>
+              </a>
+              <a class="mega__item" href="backend.html">
+                <span class="mega__icon"><img src="../assets/logos/django.svg" alt="" width="22" height="22"></span>
+                <span><b><span>تطوير الويب — الباك إند والـ APIs</span></b><small>Python · Django REST · Python · Odoo ORM & REST · PHP · MVC REST API · Supabase (BaaS) · Headless CMS · Sanity</small></span>
+              </a>
+              <a class="mega__item" href="mobile.html">
+                <span class="mega__icon"><img src="../assets/logos/flutter.svg" alt="" width="22" height="22"></span>
+                <span><b><span>تطبيقات الجوال</span></b><small>Flutter · Capacitor · PWA</small></span>
+              </a>
+          </div>
+        </div>
+        <a href="projects.html"><span>المشاريع</span></a>
+        <a href="index.html#experience"><span>الخبرة</span></a>
+        <a href="#contact"><span>تواصل</span></a>
+      </nav>
+      <div class="tools">
+        <a class="lang" href="../mobile.html" hreflang="en" lang="en" data-lang-switch="en"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>English</span></a>
+        <a class="btn btn--primary btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span>احجز مكالمة</span></a>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero">
+      <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+      <div class="wrap">
+        <p class="kicker kicker--gold"><span>هندسة البرمجيات</span></p>
+        <h1 class="page-title"><span>تطبيقات الجوال</span></h1>
+        <p class="page-lede"><span>تطبيقات Android وiOS — تطوير متعدد المنصّات بإحساس التطبيقات الأصلية.</span></p>
+        <nav class="subnav" aria-label="الأقسام"><a class="subnav__item" href="#flutter"><img class="subnav__logo" src="../assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy">Flutter<sup dir="ltr">—</sup></a><a class="subnav__item" href="#capacitor"><img class="subnav__logo" src="../assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy">Capacitor<sup dir="ltr">1</sup></a><a class="subnav__item" href="#pwa"><img class="subnav__logo" src="../assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA<sup dir="ltr">2</sup></a></nav>
+      </div>
+    </section>
+    <div class="wrap groups">
+      <section class="group" id="flutter">
+        <header class="group__head reveal">
+          <span class="group__logo"><img class="group__img" src="../assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"></span>
+          <div><h2 class="group__title">Flutter</h2><p><span>تطبيقات متعددة المنصّات بلغة Dart مربوطة بأنظمة ERP.</span></p></div>
+          <span class="group__count group__count--soon"><span>قريبًا</span></span>
+        </header>
+        
+          <div class="soon reveal">
+            <span class="soon__logo"><img class="soon__img" src="../assets/logos/flutter.svg" alt="" width="20" height="20" loading="lazy"></span>
+            <div>
+              <p class="soon__badge"><span>قريبًا</span></p>
+              <h3><span>دراسات حالة Flutter قيد الإعداد</span></h3>
+              <p><span>أعمل حاليًا على مشاريع في هذا المسار. تريد مناقشة متطلبات Flutter الآن؟</span></p>
+            </div>
+            <a class="btn btn--outline btn--sm" href="#contact"><span>تواصل معي</span></a>
+          </div>
+      </section>
+      <section class="group" id="capacitor">
+        <header class="group__head reveal">
+          <span class="group__logo"><img class="group__img" src="../assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy"></span>
+          <div><h2 class="group__title">Capacitor</h2><p><span>قاعدة كود React واحدة منشورة على Android وiOS.</span></p></div>
+          <span class="group__count" dir="ltr">1 <span>مشروع</span></span>
+        </header>
+        <div class="cards cards--2">
+          <article class="card pcard reveal" >
+            <a class="card__link" href="work/ag-academy.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/work/ag-teacher.webp" srcset="../assets/work/ag-teacher-800.webp 800w, ../assets/work/ag-teacher.webp 1440w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" width="1440" height="900" alt="أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span>ويب</span></span><span class="tag"><span>جوال</span></span><span class="card__year">2026</span></div>
+                <h3 class="card__title"><span>أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span></h3>
+                <p class="card__out"><span>تطبيق واحد للمدرّس والطلاب وأولياء الأمور — على الويب وAndroid وiOS.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span>الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="../assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span></dd></div><div class="stackrow"><dt><span>الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy">Supabase</span></dd></div><div class="stackrow"><dt><span>قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div><div class="stackrow"><dt><span>الجوال</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy">Capacitor</span><span class="tech"><img class="tech__logo" src="../assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA</span></dd></div></dl>
+                <span class="card__more"><span>عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article></div>
+      </section>
+      <section class="group" id="pwa">
+        <header class="group__head reveal">
+          <span class="group__logo"><img class="group__img" src="../assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy"></span>
+          <div><h2 class="group__title">PWA</h2><p><span>تطبيقات ويب قابلة للتثبيت وتعمل دون اتصال.</span></p></div>
+          <span class="group__count" dir="ltr">2 <span>مشاريع</span></span>
+        </header>
+        <div class="cards cards--2">
+          <article class="card pcard reveal" >
+            <a class="card__link" href="work/booking-platforms.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/work/booking-somood-home.webp" srcset="../assets/work/booking-somood-home-800.webp 800w, ../assets/work/booking-somood-home.webp 1440w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" width="1440" height="900" alt="منصّات حجز فنادق لسوق العمرة والسياحة" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span>ويب</span></span><span class="tag"><span>جوال</span></span><span class="card__year">2025 — 2026</span></div>
+                <h3 class="card__title"><span>منصّات حجز فنادق لسوق العمرة والسياحة</span></h3>
+                <p class="card__out"><span>ثلاث منصّات حجز عربية أولًا تعمل الآن وتستقبل مدفوعات حقيقية بالريال.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span>الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="../assets/logos/typescript.svg" alt="" width="20" height="20" loading="lazy">TypeScript</span><span class="tech"><img class="tech__logo" src="../assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span><span class="tech"><img class="tech__logo" src="../assets/logos/tailwindcss.svg" alt="" width="20" height="20" loading="lazy">Tailwind CSS</span></dd></div><div class="stackrow"><dt><span>الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/php.svg" alt="" width="20" height="20" loading="lazy">PHP MVC</span></dd></div><div class="stackrow"><dt><span>قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/mysql.svg" alt="" width="20" height="20" loading="lazy">MySQL</span></dd></div><div class="stackrow"><dt><span>الجوال</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA</span></dd></div></dl>
+                <span class="card__more"><span>عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article>
+          <article class="card pcard reveal" >
+            <a class="card__link" href="work/ag-academy.html">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="../assets/work/ag-teacher.webp" srcset="../assets/work/ag-teacher-800.webp 800w, ../assets/work/ag-teacher.webp 1440w" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" width="1440" height="900" alt="أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS" loading="lazy" decoding="async"></div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag"><span>ويب</span></span><span class="tag"><span>جوال</span></span><span class="card__year">2026</span></div>
+                <h3 class="card__title"><span>أكاديمية AG — منصّة تعليمية بتطبيقات Android وiOS</span></h3>
+                <p class="card__out"><span>تطبيق واحد للمدرّس والطلاب وأولياء الأمور — على الويب وAndroid وiOS.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span>الواجهة</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span class="tech"><img class="tech__logo" src="../assets/logos/vite.svg" alt="" width="20" height="20" loading="lazy">Vite</span></dd></div><div class="stackrow"><dt><span>الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/supabase.svg" alt="" width="20" height="20" loading="lazy">Supabase</span></dd></div><div class="stackrow"><dt><span>قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div><div class="stackrow"><dt><span>الجوال</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="../assets/logos/capacitor.svg" alt="" width="20" height="20" loading="lazy">Capacitor</span><span class="tech"><img class="tech__logo" src="../assets/logos/pwa.svg" alt="" width="20" height="20" loading="lazy">PWA</span></dd></div></dl>
+                <span class="card__more"><span>عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </div>
+            </a>
+          </article></div>
+      </section>
+    </div>
+  </main>
+  <section class="cta" id="contact">
+    <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
+    <div class="wrap cta__grid">
+      <div>
+        <p class="kicker kicker--gold"><span>لنعمل معًا</span></p>
+        <h2 class="cta__title"><span>عندك نظام تريد بناءه أو تطويره؟</span></h2>
+        <p class="cta__lede"><span>أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
+        <div class="cta__actions">
+          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span>احجز مكالمة ٣٠ دقيقة</span></a>
+          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>أرسل وصف المشروع</span></a>
+        </div>
+      </div>
+      <ul class="contact-list">
+        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span>البريد · اضغط للنسخ</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><a class="contact-item" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
+        <li><a class="contact-item" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
+        <li><a class="contact-item" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
+      </ul>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="wrap footer__services">
+      <p class="footer__label"><span>الخدمات</span></p>
+      <ul>
+        <li><a href="erp.html"><span>تطوير أنظمة أودو Odoo</span></a></li>
+        <li><a href="work/odoo-v19-migration.html"><span>ترقية أودو ونقل البيانات</span></a></li>
+        <li><a href="erp.html#odoo"><span>فوترة زاتكا والرواتب السعودية</span></a></li>
+        <li><a href="web.html"><span>منصّات ويب React وNext.js</span></a></li>
+        <li><a href="backend.html"><span>باك إند وAPIs بـ Django وPython وPHP</span></a></li>
+        <li><a href="mobile.html"><span>تطبيقات الجوال</span></a></li>
+      </ul>
+    </div>
+    <div class="wrap footer__row">
+      <p>© <span data-year>2026</span> <span>محمد حفظ الله</span></p>
+      <p><span>القاهرة · أعمل مع السعودية والإمارات وأوروبا</span> · <span data-clock>--:--</span></p>
+      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span>اطلب السيرة الذاتية</span></a> · <a href="#main"><span>للأعلى</span> ↑</a></p>
+    </div>
+  </footer>
+  <div class="lightbox" data-lightbox hidden>
+    <button class="lightbox__close" type="button" aria-label="إغلاق">×</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="السابق">‹</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="التالي">›</button>
+  </div>
+  <script src="../assets/main.js" defer></script>
+</body>
+</html>

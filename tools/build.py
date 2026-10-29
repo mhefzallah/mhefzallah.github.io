@@ -4,7 +4,9 @@
 Design: "Vision 2030" — emerald + gold, Alexandria headings, IBM Plex Sans Arabic text.
 Run:  python3 tools/build.py
 """
+import json
 import os
+import re
 from html import escape
 from urllib.parse import quote
 
@@ -14,9 +16,18 @@ from diagrams import diagram
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# Each page is built once per language: English at /, Arabic under /ar/.
+LANG = "en"
+CUR = ""  # path of the page being built, relative to the language root
+
+
+def L(en, ar):
+    return ar if LANG == "ar" else en
+
+
 def T(en, ar, tag="span"):
-    """Bilingual inline text."""
-    return f'<{tag} lang="en">{en}</{tag}><{tag} lang="ar">{ar}</{tag}>'
+    """Text in the language of the page being built."""
+    return f'<{tag}>{L(en, ar)}</{tag}>'
 
 
 def wa(text):
@@ -61,21 +72,30 @@ STATS = [
 # Shared chrome
 # ----------------------------------------------------------------------------
 
-def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
-    url = SITE + "/" + path
+def head(title, desc, path, prefix, og="assets/img/og.jpg", ld=None):
+    en_url, ar_url = SITE + "/" + path, SITE + "/ar/" + path
+    url = ar_url if LANG == "ar" else en_url
+    ld_tag = f'\n  <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>' if ld else ""
+    redirect = "" if LANG == "ar" else f"""
+      try {{ if (!localStorage.getItem('lang') && /^ar/i.test(navigator.language || '')) location.replace('{prefix}ar/{path}'); }} catch (e) {{}}"""
     return f'''<!doctype html>
-<html lang="en" dir="ltr" data-lang="en">
+<html lang="{LANG}" dir="{"rtl" if LANG == "ar" else "ltr"}" data-lang="{LANG}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{escape(title_en)}</title>
+  <title>{escape(title)}</title>
   <meta name="description" content="{escape(desc)}">
-  <meta name="theme-color" content="#0B5D4B">
+  <meta name="author" content="Mohammed Hefzallah">
+  <meta name="theme-color" content="#06261F">
   <link rel="canonical" href="{url}">
-  <link rel="alternate" hreflang="en" href="{url}?lang=en">
-  <link rel="alternate" hreflang="ar" href="{url}?lang=ar">
+  <link rel="alternate" hreflang="en" href="{en_url}">
+  <link rel="alternate" hreflang="ar" href="{ar_url}">
+  <link rel="alternate" hreflang="x-default" href="{en_url}">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="{escape(title_en)}">
+  <meta property="og:site_name" content="Mohammed Hefzallah">
+  <meta property="og:locale" content="{"ar_SA" if LANG == "ar" else "en_US"}">
+  <meta property="og:locale:alternate" content="{"en_US" if LANG == "ar" else "ar_SA"}">
+  <meta property="og:title" content="{escape(title)}">
   <meta property="og:description" content="{escape(desc)}">
   <meta property="og:url" content="{url}">
   <meta property="og:image" content="{SITE}/{og}">
@@ -83,25 +103,74 @@ def head(title_en, desc, path, prefix, og="assets/img/og.jpg"):
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="{prefix}assets/fonts/alexandria-{"arabic" if LANG == "ar" else "latin"}.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{prefix}assets/fonts/plex-arabic-400-{"arabic" if LANG == "ar" else "latin"}.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{prefix}assets/fonts/fonts.css">
   <link rel="stylesheet" href="{prefix}assets/style.css">
   <script>
     (function () {{
-      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
-      try {{ s = localStorage.getItem('lang'); }} catch (e) {{}}
-      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
-      if (l !== 'ar' && l !== 'en') l = 'en';
-      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
-      r.classList.add('js');
+      document.documentElement.classList.add('js');{redirect}
     }})();
-  </script>
+  </script>{ld_tag}
 </head>'''
 
 
 NAV = [("index.html", ("Home", "الرئيسية")), ("erp.html", ("ERP", "ERP")), ("web.html", ("Web", "الويب")),
        ("backend.html", ("Backend", "الباك إند")), ("mobile.html", ("Mobile", "الجوال")), ("projects.html", ("All projects", "كل المشاريع"))]
+
+
+# Search titles and descriptions per page (en, ar), written around the terms
+# clients search for: Odoo developer, ERP, ZATCA, Saudi payroll, React, Django…
+SEO = {
+    "": (("Mohammed Hefzallah | Odoo ERP Developer & Software Engineer — KSA",
+          "Certified Odoo ERP developer and software engineer for Saudi & GCC companies: Odoo customization, migrations, ZATCA e-invoicing, Saudi payroll, React & Django."),
+         ("محمد حفظ الله | مطور أودو Odoo ومهندس برمجيات للسعودية",
+          "مطور أودو (Odoo ERP) معتمد ومهندس برمجيات لشركات السعودية والخليج: تخصيص وتطوير موديولات، ترقية أودو، الفوترة الإلكترونية زاتكا، الرواتب السعودية، ومنصّات ويب.")),
+    "erp": (("Odoo & ERP Development — Odoo, ServiceNow, Zoho | Mohammed Hefzallah",
+             "Odoo ERP implementation, custom modules, migrations and integrations for Saudi and GCC businesses: HR & payroll, ZATCA, POS, inventory and approvals."),
+            ("تطوير أنظمة ERP وأودو Odoo | محمد حفظ الله",
+             "تطبيق وتخصيص نظام أودو Odoo ERP لشركات السعودية والخليج: موارد بشرية ورواتب، فوترة زاتكا، نقاط بيع، مخزون، موافقات وترقيات من الإصدار ١١ إلى ١٩.")),
+    "web": (("Fullstack Web Development — React, Next.js | Mohammed Hefzallah",
+             "Fullstack web platforms built with React, Next.js and JavaScript: booking systems, company websites, CRMs and dashboards."),
+            ("تطوير مواقع ومنصّات ويب — React وNext.js | محمد حفظ الله",
+             "تطوير منصّات ومواقع ويب متكاملة بـ React وNext.js وJavaScript: أنظمة حجز، مواقع شركات، أنظمة CRM ولوحات تحكم.")),
+    "backend": (("Backend & API Development — Django, Python, PHP | Mohammed Hefzallah",
+                 "Backend services and REST APIs with Django, Python, PHP, Supabase and PostgreSQL, including integrations with Odoo ERP."),
+                ("تطوير الباك إند والـ APIs — Django وPython وPHP | محمد حفظ الله",
+                 "تطوير أنظمة الباك إند وواجهات REST API بـ Django وPython وPHP وSupabase وPostgreSQL، مع الربط مع نظام أودو.")),
+    "mobile": (("Mobile App Development — Flutter, Capacitor | Mohammed Hefzallah",
+                "Mobile apps with Flutter, Capacitor and PWAs, connected to Odoo and web backends."),
+               ("تطوير تطبيقات الجوال — Flutter | محمد حفظ الله",
+                "تطبيقات جوال بـ Flutter وCapacitor وPWA مربوطة بأنظمة أودو والباك إند.")),
+    "projects": (("Projects — Odoo, Web & Mobile Case Studies | Mohammed Hefzallah",
+                  "Odoo ERP, web and mobile projects by Mohammed Hefzallah, filterable by area, framework, backend and database."),
+                 ("المشاريع — دراسات حالة أودو والويب والجوال | محمد حفظ الله",
+                  "مشاريع أودو Odoo ERP والويب والجوال، مع فلترة حسب المجال والـ framework والباك إند وقاعدة البيانات.")),
+}
+
+
+def seo(key):
+    return SEO[key][1] if LANG == "ar" else SEO[key][0]
+
+
+def person_ld():
+    return {"@context": "https://schema.org", "@graph": [
+        {"@type": "WebSite", "@id": SITE + "/#site", "url": SITE + "/", "name": "Mohammed Hefzallah", "inLanguage": ["en", "ar"]},
+        {"@type": "Person", "@id": SITE + "/#me", "name": "Mohammed Hefzallah", "alternateName": "محمد حفظ الله",
+         "jobTitle": L("Software Engineer · Odoo ERP Developer", "مهندس برمجيات · مطور أودو Odoo"),
+         "url": SITE + "/", "image": SITE + "/assets/img/portrait.webp", "email": "mailto:" + EMAIL,
+         "sameAs": [LINKEDIN, GITHUB],
+         "address": {"@type": "PostalAddress", "addressLocality": "Cairo", "addressCountry": "EG"},
+         "knowsLanguage": ["ar", "en"],
+         "hasCredential": {"@type": "EducationalOccupationalCredential", "name": "Odoo Certified Professional (Functional v15)"},
+         "knowsAbout": ["Odoo", "Odoo ERP", "ERP implementation", "Odoo migration", "ZATCA e-invoicing", "Saudi payroll",
+                        "Python", "Django", "PHP", "JavaScript", "React", "Next.js", "PostgreSQL", "REST APIs", "Flutter",
+                        "أودو", "نظام ERP", "الفوترة الإلكترونية", "الرواتب السعودية"]},
+        {"@type": "ProfessionalService", "name": L("Mohammed Hefzallah — Odoo & software development", "محمد حفظ الله — تطوير أودو والبرمجيات"),
+         "url": SITE + "/", "image": SITE + "/assets/img/og.jpg", "provider": {"@id": SITE + "/#me"},
+         "areaServed": [{"@type": "Country", "name": n} for n in ("Saudi Arabia", "United Arab Emirates", "Egypt")],
+         "serviceType": ["Odoo ERP development", "Odoo migration", "ZATCA e-invoicing integration", "Fullstack web development", "Backend & API development", "Mobile app development"]},
+    ]}
 
 
 def masthead(prefix, active="index.html"):
@@ -113,6 +182,8 @@ def masthead(prefix, active="index.html"):
                 <span class="mega__icon"><img src="{prefix}assets/logos/{sec["icon"]}.svg" alt="" width="22" height="22"></span>
                 <span><b>{T(*sec["title"])}</b><small>{" · ".join(g["name"] for g in sec["groups"])}</small></span>
               </a>''' for sec in SECTIONS)
+    other = "en" if LANG == "ar" else "ar"
+    alt = prefix + ("../" if LANG == "ar" else "ar/") + CUR
     exp_active = " is-active" if active in [s_["slug"] + ".html" for s_ in SECTIONS] else ""
     return f'''
 <body>
@@ -129,11 +200,11 @@ def masthead(prefix, active="index.html"):
   </div>
   <header class="masthead" data-masthead>
     <div class="wrap masthead__row">
-      <a class="brand" href="{prefix}index.html" aria-label="Mohammed Hefzallah — home">
+      <a class="brand" href="{prefix}index.html">
         <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
         <span class="brand__text"><strong>{T("Mohammed Hefzallah", "محمد حفظ الله")}</strong><small>{T("Software Engineer · ERP · Web · Mobile", "مهندس برمجيات · ERP · ويب · جوال")}</small></span>
       </a>
-      <nav class="nav" aria-label="Main">
+      <nav class="nav" aria-label="{L("Main", "القائمة الرئيسية")}">
         {nl("index.html", ("Home", "الرئيسية"))}
         <div class="nav__drop" data-drop>
           <button type="button" class="nav__btn{exp_active}" aria-expanded="false" data-drop-btn>{T("Expertise", "الخبرات")}<svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
@@ -145,7 +216,7 @@ def masthead(prefix, active="index.html"):
         <a href="#contact">{T("Contact", "تواصل")}</a>
       </nav>
       <div class="tools">
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>{T("العربية", "English")}</button>
+        <a class="lang" href="{alt}" hreflang="{other}" lang="{other}" data-lang-switch="{other}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>{T("العربية", "English")}</a>
         <a class="btn btn--primary btn--sm" href="{CALL}" target="_blank" rel="noopener">{T("Book a call", "احجز مكالمة")}</a>
       </div>
     </div>
@@ -175,6 +246,17 @@ def footer(prefix):
     </div>
   </section>
   <footer class="footer">
+    <div class="wrap footer__services">
+      <p class="footer__label">{T("Services", "الخدمات")}</p>
+      <ul>
+        <li><a href="{prefix}erp.html">{T("Odoo ERP development", "تطوير أنظمة أودو Odoo")}</a></li>
+        <li><a href="{prefix}work/odoo-v19-migration.html">{T("Odoo upgrades &amp; migration", "ترقية أودو ونقل البيانات")}</a></li>
+        <li><a href="{prefix}erp.html#odoo">{T("ZATCA e-invoicing &amp; Saudi payroll", "فوترة زاتكا والرواتب السعودية")}</a></li>
+        <li><a href="{prefix}web.html">{T("React &amp; Next.js web platforms", "منصّات ويب React وNext.js")}</a></li>
+        <li><a href="{prefix}backend.html">{T("Django, Python &amp; PHP APIs", "باك إند وAPIs بـ Django وPython وPHP")}</a></li>
+        <li><a href="{prefix}mobile.html">{T("Mobile apps", "تطبيقات الجوال")}</a></li>
+      </ul>
+    </div>
     <div class="wrap footer__row">
       <p>© <span data-year>2026</span> {T("Mohammed Hefzallah", "محمد حفظ الله")}</p>
       <p>{T("Cairo · Working with KSA, UAE &amp; Europe", "القاهرة · أعمل مع السعودية والإمارات وأوروبا")} · <span data-clock>--:--</span></p>
@@ -182,10 +264,10 @@ def footer(prefix):
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>
-    <button class="lightbox__close" type="button" aria-label="Close">×</button>
-    <button class="lightbox__nav lightbox__prev" type="button" aria-label="Previous">‹</button>
+    <button class="lightbox__close" type="button" aria-label="{L("Close", "إغلاق")}">×</button>
+    <button class="lightbox__nav lightbox__prev" type="button" aria-label="{L("Previous", "السابق")}">‹</button>
     <figure><img alt=""><figcaption></figcaption></figure>
-    <button class="lightbox__nav lightbox__next" type="button" aria-label="Next">›</button>
+    <button class="lightbox__nav lightbox__next" type="button" aria-label="{L("Next", "التالي")}">›</button>
   </div>
   <script src="{prefix}assets/main.js" defer></script>
 </body>
@@ -193,16 +275,19 @@ def footer(prefix):
 '''
 
 
-def img(prefix, name, alt, lazy=True):
+def img(prefix, name, alt, lazy=True, sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw"):
     w, h = (390, 844) if name.endswith("mobile") else (1440, 900)
     lz = ' loading="lazy" decoding="async"' if lazy else ""
-    return f'<img src="{prefix}assets/work/{name}.webp" width="{w}" height="{h}" alt="{escape(alt)}"{lz}>'
+    src = f'{prefix}assets/work/{name}.webp'
+    if os.path.exists(os.path.join(ROOT, "assets", "work", name + "-800.webp")):
+        src += f'" srcset="{prefix}assets/work/{name}-800.webp 800w, {src} 1440w" sizes="{sizes}'
+    return f'<img src="{src}" width="{w}" height="{h}" alt="{escape(alt)}"{lz}>'
 
 
-def cover(prefix, p, lazy=True):
+def cover(prefix, p, lazy=True, sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw"):
     if p.get("diagram"):
         return f'<div class="cover cover--diagram">{diagram(p["diagram"])}</div>'
-    return f'<div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div>{img(prefix, p["cover"], p["title"][0], lazy)}</div>'
+    return f'<div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div>{img(prefix, p["cover"], L(*p["title"]), lazy, sizes if lazy else "(min-width: 1100px) 70vw, 100vw")}</div>'
 
 
 def kinds_label(p):
@@ -285,7 +370,7 @@ def coming_soon(prefix, g):
             <span class="soon__logo">{logo(prefix, g["logo"], "soon__img")}</span>
             <div>
               <p class="soon__badge">{T("Coming soon", "قريبًا")}</p>
-              <h4>{T(f'{g["name"]} case studies are on the way', f'دراسات حالة {g["name"]} قيد الإعداد')}</h4>
+              <h3>{T(f'{g["name"]} case studies are on the way', f'دراسات حالة {g["name"]} قيد الإعداد')}</h3>
               <p>{T("I’m preparing projects for this track. Want to discuss a " + g["name"] + " requirement now?", "أعمل حاليًا على مشاريع في هذا المسار. تريد مناقشة متطلبات " + g["name"] + " الآن؟")}</p>
             </div>
             <a class="btn btn--outline btn--sm" href="#contact">{T("Get in touch", "تواصل معي")}</a>
@@ -317,14 +402,14 @@ def section_page(sec):
         <p class="kicker kicker--gold">{T("Software Engineering", "هندسة البرمجيات")}</p>
         <h1 class="page-title">{T(*sec["title"])}</h1>
         <p class="page-lede">{T(*sec["lede"])}</p>
-        <nav class="subnav" aria-label="Sections">{nav}</nav>
+        <nav class="subnav" aria-label="{L("Sections", "الأقسام")}">{nav}</nav>
       </div>
     </section>
     <div class="wrap groups">{"".join(groups)}
     </div>
   </main>'''
-    title = f'{sec["title"][0]} — Mohammed Hefzallah'
-    return head(title, sec["lede"][0], f'{sec["slug"]}.html', pre) + masthead(pre, f'{sec["slug"]}.html') + body + footer(pre)
+    title, desc = seo(sec["slug"])
+    return head(title, desc, f'{sec["slug"]}.html', pre) + masthead(pre, f'{sec["slug"]}.html') + body + footer(pre)
 
 
 def projects_page():
@@ -349,7 +434,7 @@ def projects_page():
     </section>
     <div class="wrap">
       <div class="toolbar reveal" data-project-filters>
-        <div class="filters" role="group" aria-label="Area">{chips}</div>
+        <div class="filters" role="group" aria-label="{L("Area", "المجال")}">{chips}</div>
         <label class="select"><span>{T("Frontend", "الواجهة")}</span><select data-field="frontend"><option value="">—</option>{opts("frontend")}</select></label>
         <label class="select"><span>{T("Backend", "الباك إند")}</span><select data-field="backend"><option value="">—</option>{opts("backend")}</select></label>
         <label class="select"><span>{T("Database", "قاعدة البيانات")}</span><select data-field="database"><option value="">—</option>{opts("database")}</select></label>
@@ -360,7 +445,7 @@ def projects_page():
       <p class="empty" data-empty hidden>{T("No project matches these filters yet.", "لا يوجد مشروع يطابق هذه الفلاتر حاليًا.")}</p>
     </div>
   </main>'''
-    return head("All projects — Mohammed Hefzallah", "All projects by Mohammed Hefzallah, filterable by area, framework, backend and database.", "projects.html", pre) + masthead(pre, "projects.html") + body + footer(pre)
+    return head(*seo("projects"), "projects.html", pre) + masthead(pre, "projects.html") + body + footer(pre)
 
 
 def home():
@@ -373,7 +458,7 @@ def home():
         pillars.append(f'''
             <a class="track" href="{sec["slug"]}.html">
               <span class="track__top"><span class="track__icon">{logo(pre, sec["icon"], "track__big")}</span><span class="track__count"><b dir="ltr">{total}</b> {T("projects", "مشاريع")}</span></span>
-              <h3>{T(*sec["title"])}</h3>
+              <h2>{T(*sec["title"])}</h2>
               <ul class="track__techs">{gl}</ul>
               <span class="track__more">{T("Explore", "استكشف")} {ICON["arrow"]}</span>
             </a>''')
@@ -400,8 +485,8 @@ def home():
       {PATTERN}
       <div class="wrap hero__grid">
         <div class="hero__text">
-          <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Software Engineer · 4+ years", "مهندس برمجيات · أكثر من ٤ سنوات خبرة")}</p>
-          <h1 class="display">{T("Hi, I’m Mohammed.<br>I build <em>software</em> businesses run on.", "أنا محمد،<br>أبني <em>أنظمة</em> تُدار بها الأعمال.")}</h1>
+          <p class="badge"><span class="dot" aria-hidden="true"></span>{T("Available for projects in KSA &amp; the GCC", "متاح لمشاريع في السعودية والخليج")}</p>
+          <h1 class="display"><span class="display__eyebrow">{T("Mohammed Hefzallah · Software Engineer &amp; Odoo ERP Developer", "محمد حفظ الله · مهندس برمجيات ومطور أودو Odoo ERP")}</span>{T("I build <em>software</em><br>businesses run on.", "أبني <em>أنظمة</em><br>تُدار بها الأعمال.")}</h1>
           <p class="roles" aria-live="polite">{T("Specialised in", "متخصص في")} <span class="roles__track"><span class="roles__item is-on">{T("Odoo ERP systems", "أنظمة Odoo ERP")}</span><span class="roles__item">{T("fullstack web platforms", "منصّات الويب المتكاملة")}</span><span class="roles__item">{T("backend &amp; APIs", "الباك إند والـ APIs")}</span><span class="roles__item">{T("mobile apps", "تطبيقات الجوال")}</span></span></p>
           <p class="lede">{T("I design, build and migrate business systems for companies in Saudi Arabia, the UAE and Egypt — Odoo ERPs with Saudi payroll and ZATCA e-invoicing, web platforms in React, Next.js, Django and PHP, and mobile apps that connect to them.",
                              "أصمّم وأطوّر وأرقّي أنظمة أعمال لشركات في السعودية والإمارات ومصر — أنظمة Odoo ERP برواتب سعودية وفوترة ZATCA، ومنصّات ويب بـ React وNext.js وDjango وPHP، وتطبيقات جوال مربوطة بها.")}</p>
@@ -414,7 +499,7 @@ def home():
         <figure class="portrait">
           <div class="portrait__card">
             {PATTERN}
-            <img src="assets/img/portrait.webp" width="900" height="803" alt="Mohammed Hefzallah" fetchpriority="high">
+            <img src="assets/img/portrait.webp" srcset="assets/img/portrait-600.webp 600w, assets/img/portrait.webp 900w" sizes="(min-width: 1100px) 560px, 92vw" width="900" height="803" alt="{L("Mohammed Hefzallah — Odoo ERP developer and software engineer", "محمد حفظ الله — مطور أودو ومهندس برمجيات")}" fetchpriority="high">
           </div>
           <div class="float float--a"><span class="float__icon">{ICON["check"]}</span><span><b>{T("Odoo Certified", "معتمد من Odoo")}</b><small>{T("Professional · v15", "محترف · الإصدار 15")}</small></span></div>
           <div class="float float--b"><b dir="ltr">17</b><small>{T("Odoo projects · 11 → 19", "مشروع Odoo · من ١١ إلى ١٩")}</small></div>
@@ -425,10 +510,10 @@ def home():
         <p class="tracks__label">{T("Choose a track", "اختر مسارًا")}</p>
         <div class="tracks__grid">{"".join(pillars)}</div>
       </div>
-      <a class="scroll-cue" href="#work" aria-label="Scroll">{T("Featured work", "أعمال مختارة")} <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+      <a class="scroll-cue" href="#work">{T("Featured work", "أعمال مختارة")} <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </section>
 
-    <section class="strip" aria-label="Sectors">
+    <section class="strip" aria-label="{L("Sectors", "القطاعات")}">
       <div class="wrap strip__row">
         <p class="strip__label">{T("Sectors I’ve worked in", "قطاعات عملت فيها")}</p>
         <ul class="strip__list">
@@ -478,9 +563,7 @@ def home():
       </div>
     </section>
   </main>'''
-    title = "Mohammed Hefzallah — Software Engineer · ERP, Fullstack & Mobile"
-    desc = "Software engineer building ERP systems (Odoo), fullstack web platforms and mobile apps for companies in Saudi Arabia, the UAE and Egypt."
-    return head(title, desc, "", "") + masthead("", "index.html") + body + footer("")
+    return head(*seo(""), "", "", ld=person_ld()) + masthead("", "index.html") + body + footer("")
 
 
 
@@ -513,7 +596,7 @@ def exp_rows():
 def case(i, p):
     pre = "../"
     nxt = PROJECTS[i % len(PROJECTS)]
-    did = "".join(f'<li class="step reveal"><span class="step__n" dir="ltr">{n:02d}</span><div><h4>{T(eh, ah)}</h4><p>{T(en, ar)}</p></div></li>'
+    did = "".join(f'<li class="step reveal"><span class="step__n" dir="ltr">{n:02d}</span><div><h3>{T(eh, ah)}</h3><p>{T(en, ar)}</p></div></li>'
                   for n, (eh, ah, en, ar) in enumerate(p["did"], 1))
     decisions = ""
     if p["decisions"]:
@@ -527,12 +610,12 @@ def case(i, p):
     figs_src = [g for g in p["gallery"] if g[0] != p.get("cover") or len(p["gallery"]) == 1]
     if figs_src or p["mobile"]:
         figs = "".join(
-            f'<figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge">{img(pre, name, en)}</button>'
+            f'<figure class="fig reveal"><button type="button" class="fig__btn" data-zoom aria-label="{L("Enlarge", "تكبير")}">{img(pre, name, L(en, ar), sizes="(min-width: 860px) 50vw, 100vw")}</button>'
             f'<figcaption>{T(en, ar)}</figcaption></figure>' for name, en, ar in figs_src)
         phones = ""
         if p["mobile"]:
             phones = '<div class="phones reveal">' + "".join(
-                f'<figure class="phone"><button type="button" class="fig__btn" data-zoom aria-label="Enlarge">{img(pre, m, "Mobile view")}</button></figure>'
+                f'<figure class="phone"><button type="button" class="fig__btn" data-zoom aria-label="{L("Enlarge", "تكبير")}">{img(pre, m, L("Mobile view", "عرض الجوال"))}</button></figure>'
                 for m in p["mobile"]) + "</div>"
         gallery = f'''<section class="gallery-wrap"><div class="wrap">
           <h2 class="block__h">{T("Gallery", "معرض الصور")}</h2>
@@ -563,7 +646,7 @@ def case(i, p):
             <div><dt>{T("Built with", "التقنيات")}</dt><dd class="stack" dir="ltr">{p["stack"]}</dd></div>
             {links_row}
           </dl>
-          <h3 class="case-meta__h">{T("Technical card", "البطاقة التقنية")}</h3>
+          <h2 class="case-meta__h">{T("Technical card", "البطاقة التقنية")}</h2>
           {stack_rows(pre, p, compact=False)}
           <a class="btn btn--primary btn--block" href="{CALL}" target="_blank" rel="noopener">{T("Need something similar?", "تحتاج شيئًا مشابهًا؟")}</a>
         </aside>
@@ -583,24 +666,51 @@ def case(i, p):
       </a>
     </div>
   </main>'''
-    title = f'{p["title"][0]} — Mohammed Hefzallah'
-    return head(title, p["outcome"][0], f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg') + masthead(pre, "") + body + footer(pre)
+    title = L(*p["title"]) + L(" — Mohammed Hefzallah", " | محمد حفظ الله")
+    home_url = SITE + ("/ar/" if LANG == "ar" else "/")
+    ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": L("Home", "الرئيسية"), "item": home_url},
+        {"@type": "ListItem", "position": 2, "name": L("Projects", "المشاريع"), "item": home_url + "projects.html"},
+        {"@type": "ListItem", "position": 3, "name": L(*p["title"]), "item": home_url + f'work/{p["slug"]}.html'}]}
+    return head(title, L(*p["outcome"]), f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg', ld=ld) + masthead(pre, "") + body + footer(pre)
+
+
+def write(rel, html):
+    if LANG == "ar":
+        rel = os.path.join("ar", rel)
+        # pages stay relative inside /ar/, shared assets live one level up
+        html = re.sub(r'(?<=["\s,])((?:\.\./)*)assets/', r'../\1assets/', html)
+    path = os.path.join(ROOT, rel)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def sitemap(pages):
+    rows = []
+    for pg in pages:
+        en, ar = SITE + "/" + pg, SITE + "/ar/" + pg
+        alts = f'<xhtml:link rel="alternate" hreflang="en" href="{en}"/><xhtml:link rel="alternate" hreflang="ar" href="{ar}"/><xhtml:link rel="alternate" hreflang="x-default" href="{en}"/>'
+        rows += [f"  <url><loc>{u}</loc>{alts}</url>" for u in (en, ar)]
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+                + "\n".join(rows) + "\n</urlset>\n")
+    with open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8") as f:
+        f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
 
 
 def main():
-    os.makedirs(os.path.join(ROOT, "work"), exist_ok=True)
-    with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as f:
-        f.write(home())
-    for i, p in enumerate(PROJECTS, 1):
-        with open(os.path.join(ROOT, "work", p["slug"] + ".html"), "w", encoding="utf-8") as f:
-            f.write(case(i, p))
-    for sec in SECTIONS:
-        with open(os.path.join(ROOT, sec["slug"] + ".html"), "w", encoding="utf-8") as f:
-            f.write(section_page(sec))
-    with open(os.path.join(ROOT, "projects.html"), "w", encoding="utf-8") as f:
-        f.write(projects_page())
-    print("built index + projects +", len(SECTIONS), "sections +", len(PROJECTS), "case studies")
-
+    global LANG, CUR
+    pages = [("", home)]
+    pages += [(f'work/{p["slug"]}.html', (lambda i=i, p=p: case(i, p))) for i, p in enumerate(PROJECTS, 1)]
+    pages += [(f'{sec["slug"]}.html', (lambda sec=sec: section_page(sec))) for sec in SECTIONS]
+    pages += [("projects.html", projects_page)]
+    for LANG in ("en", "ar"):
+        for path, build in pages:
+            CUR = path
+            write(path or "index.html", build())
+    sitemap([p for p, _ in pages])
+    print("built", len(pages), "pages × 2 languages + sitemap.xml + robots.txt")
 
 if __name__ == "__main__":
     main()

@@ -3,84 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ERP &amp; Business Platforms — Mohammed Hefzallah</title>
-  <meta name="description" content="Business systems that run operations — implementation, custom modules, migrations and integrations.">
-  <meta name="theme-color" content="#0B5D4B">
+  <title>Odoo &amp; ERP Development — Odoo, ServiceNow, Zoho | Mohammed Hefzallah</title>
+  <meta name="description" content="Odoo ERP implementation, custom modules, migrations and integrations for Saudi and GCC businesses: HR &amp; payroll, ZATCA, POS, inventory and approvals.">
+  <meta name="author" content="Mohammed Hefzallah">
+  <meta name="theme-color" content="#06261F">
   <link rel="canonical" href="https://mhefzallah.github.io/erp.html">
-  <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/erp.html?lang=en">
-  <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/erp.html?lang=ar">
+  <link rel="alternate" hreflang="en" href="https://mhefzallah.github.io/erp.html">
+  <link rel="alternate" hreflang="ar" href="https://mhefzallah.github.io/ar/erp.html">
+  <link rel="alternate" hreflang="x-default" href="https://mhefzallah.github.io/erp.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="ERP &amp; Business Platforms — Mohammed Hefzallah">
-  <meta property="og:description" content="Business systems that run operations — implementation, custom modules, migrations and integrations.">
+  <meta property="og:site_name" content="Mohammed Hefzallah">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ar_SA">
+  <meta property="og:title" content="Odoo &amp; ERP Development — Odoo, ServiceNow, Zoho | Mohammed Hefzallah">
+  <meta property="og:description" content="Odoo ERP implementation, custom modules, migrations and integrations for Saudi and GCC businesses: HR &amp; payroll, ZATCA, POS, inventory and approvals.">
   <meta property="og:url" content="https://mhefzallah.github.io/erp.html">
   <meta property="og:image" content="https://mhefzallah.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/alexandria-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plex-arabic-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
   <link rel="stylesheet" href="assets/style.css">
   <script>
     (function () {
-      var r = document.documentElement, q = new URLSearchParams(location.search), s = null;
-      try { s = localStorage.getItem('lang'); } catch (e) {}
-      var l = q.get('lang') || s || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en');
-      if (l !== 'ar' && l !== 'en') l = 'en';
-      r.lang = l; r.dir = l === 'ar' ? 'rtl' : 'ltr'; r.dataset.lang = l;
-      r.classList.add('js');
+      document.documentElement.classList.add('js');
+      try { if (!localStorage.getItem('lang') && /^ar/i.test(navigator.language || '')) location.replace('ar/erp.html'); } catch (e) {}
     })();
   </script>
 </head>
 <body>
-  <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="ar">انتقل إلى المحتوى</span></a>
+  <a class="skip" href="#main"><span>Skip to content</span></a>
   <div class="topbar">
     <div class="wrap topbar__row">
-      <p class="topbar__status"><span class="dot" aria-hidden="true"></span><span lang="en">Available for new projects · replies within one working day</span><span lang="ar">متاح لمشاريع جديدة · أردّ خلال يوم عمل</span></p>
+      <p class="topbar__status"><span class="dot" aria-hidden="true"></span><span>Available for new projects · replies within one working day</span></p>
       <ul class="topbar__links">
         <li><a href="mailto:mohammed.hefzallah@gmail.com" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>mohammed.hefzallah@gmail.com</a></li>
         <li><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener" dir="ltr"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg>+20 155 446 3171</a></li>
-        <li class="topbar__clock"><span lang="en">Cairo</span><span lang="ar">القاهرة</span> · <span data-clock>--:--</span></li>
+        <li class="topbar__clock"><span>Cairo</span> · <span data-clock>--:--</span></li>
       </ul>
     </div>
   </div>
   <header class="masthead" data-masthead>
     <div class="wrap masthead__row">
-      <a class="brand" href="index.html" aria-label="Mohammed Hefzallah — home">
+      <a class="brand" href="index.html">
         <span class="brand__mark" aria-hidden="true">M<b>H</b></span>
-        <span class="brand__text"><strong><span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></strong><small><span lang="en">Software Engineer · ERP · Web · Mobile</span><span lang="ar">مهندس برمجيات · ERP · ويب · جوال</span></small></span>
+        <span class="brand__text"><strong><span>Mohammed Hefzallah</span></strong><small><span>Software Engineer · ERP · Web · Mobile</span></small></span>
       </a>
       <nav class="nav" aria-label="Main">
-        <a href="index.html"><span lang="en">Home</span><span lang="ar">الرئيسية</span></a>
+        <a href="index.html"><span>Home</span></a>
         <div class="nav__drop" data-drop>
-          <button type="button" class="nav__btn is-active" aria-expanded="false" data-drop-btn><span lang="en">Expertise</span><span lang="ar">الخبرات</span><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <button type="button" class="nav__btn is-active" aria-expanded="false" data-drop-btn><span>Expertise</span><svg class="i i--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
           <div class="mega" data-drop-panel>
               <a class="mega__item" href="erp.html">
                 <span class="mega__icon"><img src="assets/logos/odoo.svg" alt="" width="22" height="22"></span>
-                <span><b><span lang="en">ERP & Business Platforms</span><span lang="ar">أنظمة ERP ومنصّات الأعمال</span></b><small>Odoo · ServiceNow · Zoho</small></span>
+                <span><b><span>ERP & Business Platforms</span></b><small>Odoo · ServiceNow · Zoho</small></span>
               </a>
               <a class="mega__item" href="web.html">
                 <span class="mega__icon"><img src="assets/logos/react.svg" alt="" width="22" height="22"></span>
-                <span><b><span lang="en">Fullstack Web — Frontend</span><span lang="ar">تطوير الويب — الواجهات</span></b><small>React · Next.js · Vanilla JS + GSAP</small></span>
+                <span><b><span>Fullstack Web — Frontend</span></b><small>React · Next.js · Vanilla JS + GSAP</small></span>
               </a>
               <a class="mega__item" href="backend.html">
                 <span class="mega__icon"><img src="assets/logos/django.svg" alt="" width="22" height="22"></span>
-                <span><b><span lang="en">Fullstack Web — Backend & APIs</span><span lang="ar">تطوير الويب — الباك إند والـ APIs</span></b><small>Python · Django REST · Python · Odoo ORM & REST · PHP · MVC REST API · Supabase (BaaS) · Headless CMS · Sanity</small></span>
+                <span><b><span>Fullstack Web — Backend & APIs</span></b><small>Python · Django REST · Python · Odoo ORM & REST · PHP · MVC REST API · Supabase (BaaS) · Headless CMS · Sanity</small></span>
               </a>
               <a class="mega__item" href="mobile.html">
                 <span class="mega__icon"><img src="assets/logos/flutter.svg" alt="" width="22" height="22"></span>
-                <span><b><span lang="en">Mobile Apps</span><span lang="ar">تطبيقات الجوال</span></b><small>Flutter · Capacitor · PWA</small></span>
+                <span><b><span>Mobile Apps</span></b><small>Flutter · Capacitor · PWA</small></span>
               </a>
           </div>
         </div>
-        <a href="projects.html"><span lang="en">Projects</span><span lang="ar">المشاريع</span></a>
-        <a href="index.html#experience"><span lang="en">Experience</span><span lang="ar">الخبرة</span></a>
-        <a href="#contact"><span lang="en">Contact</span><span lang="ar">تواصل</span></a>
+        <a href="projects.html"><span>Projects</span></a>
+        <a href="index.html#experience"><span>Experience</span></a>
+        <a href="#contact"><span>Contact</span></a>
       </nav>
       <div class="tools">
-        <button class="lang" type="button" data-lang-toggle aria-label="Switch language"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span lang="en">العربية</span><span lang="ar">English</span></button>
-        <a class="btn btn--primary btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span lang="en">Book a call</span><span lang="ar">احجز مكالمة</span></a>
+        <a class="lang" href="ar/erp.html" hreflang="ar" lang="ar" data-lang-switch="ar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>العربية</span></a>
+        <a class="btn btn--primary btn--sm" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><span>Book a call</span></a>
       </div>
     </div>
   </header>
@@ -88,9 +89,9 @@
     <section class="page-hero">
       <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
       <div class="wrap">
-        <p class="kicker kicker--gold"><span lang="en">Software Engineering</span><span lang="ar">هندسة البرمجيات</span></p>
-        <h1 class="page-title"><span lang="en">ERP & Business Platforms</span><span lang="ar">أنظمة ERP ومنصّات الأعمال</span></h1>
-        <p class="page-lede"><span lang="en">Business systems that run operations — implementation, custom modules, migrations and integrations.</span><span lang="ar">أنظمة الأعمال التي تدير العمليات — تطبيق وتطوير موديولات وترقيات وتكاملات.</span></p>
+        <p class="kicker kicker--gold"><span>Software Engineering</span></p>
+        <h1 class="page-title"><span>ERP & Business Platforms</span></h1>
+        <p class="page-lede"><span>Business systems that run operations — implementation, custom modules, migrations and integrations.</span></p>
         <nav class="subnav" aria-label="Sections"><a class="subnav__item" href="#odoo"><img class="subnav__logo" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy">Odoo<sup dir="ltr">2</sup></a><a class="subnav__item" href="#servicenow"><img class="subnav__logo" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy">ServiceNow<sup dir="ltr">—</sup></a><a class="subnav__item" href="#zoho"><img class="subnav__logo" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy">Zoho<sup dir="ltr">—</sup></a></nav>
       </div>
     </section>
@@ -98,8 +99,8 @@
       <section class="group" id="odoo">
         <header class="group__head reveal">
           <span class="group__logo"><img class="group__img" src="assets/logos/odoo.svg" alt="" width="20" height="20" loading="lazy"></span>
-          <div><h2 class="group__title">Odoo</h2><p><span lang="en">Odoo 11 → 19, Community & Enterprise: HR & payroll, ZATCA, POS, inventory, approvals and migrations.</span><span lang="ar">Odoo من ١١ إلى ١٩، Community وEnterprise: موارد بشرية ورواتب، ZATCA، نقاط بيع، مخزون، موافقات وترقيات.</span></p></div>
-          <span class="group__count" dir="ltr">2 <span lang="en">projects</span><span lang="ar">مشاريع</span></span>
+          <div><h2 class="group__title">Odoo</h2><p><span>Odoo 11 → 19, Community & Enterprise: HR & payroll, ZATCA, POS, inventory, approvals and migrations.</span></p></div>
+          <span class="group__count" dir="ltr">2 <span>projects</span></span>
         </header>
         <div class="cards cards--2">
           <article class="card pcard reveal" >
@@ -138,11 +139,11 @@
       <g transform="translate(40 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">POS</text></g><g transform="translate(135 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">ZATCA</text></g><g transform="translate(230 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Telr</text></g><g transform="translate(325 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">HR</text></g><g transform="translate(420 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Website</text></g><g transform="translate(515 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Inventory</text></g><g transform="translate(610 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Accounting</text></g><g transform="translate(705 330)"><rect width="85" height="30" class="d-chip"/><text x="42.5" y="20" text-anchor="middle" class="d-mono">Reports</text></g>
     </svg></div>
               <div class="card__body">
-                <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2025 — 2026</span></div>
-                <h3 class="card__title"><span lang="en">A full Odoo v17 → v19 migration, as the only developer</span><span lang="ar">ترقية Odoo كاملة من v17 إلى v19، كمطوّر وحيد</span></h3>
-                <p class="card__out"><span lang="en">63 custom modules moved to Odoo 19 with zero data loss.</span><span lang="ar">٦٣ موديول مخصّص انتقلت إلى Odoo 19 دون فقدان أي بيانات.</span></p>
-                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
-                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="card__tags"><span class="tag"><span>Odoo ERP</span></span><span class="card__year">2025 — 2026</span></div>
+                <h3 class="card__title"><span>A full Odoo v17 → v19 migration, as the only developer</span></h3>
+                <p class="card__out"><span>63 custom modules moved to Odoo 19 with zero data loss.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span>Frontend</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span>Backend</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span></dd></div><div class="stackrow"><dt><span>Database</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
+                <span class="card__more"><span>View case study</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </div>
             </a>
           </article>
@@ -157,11 +158,11 @@
       <text x="24" y="28" class="d-mono">FIG. — MODULES &amp; INTEGRATIONS</text>
     </svg></div>
               <div class="card__body">
-                <div class="card__tags"><span class="tag"><span lang="en">Odoo ERP</span><span lang="ar">Odoo ERP</span></span><span class="card__year">2022 — 2026</span></div>
-                <h3 class="card__title"><span lang="en">ERP systems for Saudi operations</span><span lang="ar">أنظمة ERP لعمليات سعودية</span></h3>
-                <p class="card__out"><span lang="en">Odoo systems that run payroll, deliveries, dealerships and government departments.</span><span lang="ar">أنظمة Odoo تدير الرواتب والتوصيل ووكالات السيارات وإدارات حكومية.</span></p>
-                <dl class="stackcard"><div class="stackrow"><dt><span lang="en">Frontend</span><span lang="ar">الواجهة</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span lang="en">Backend</span><span lang="ar">الباك إند</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span><span class="tech">Odoo REST / JWT</span></dd></div><div class="stackrow"><dt><span lang="en">Database</span><span lang="ar">قاعدة البيانات</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
-                <span class="card__more"><span lang="en">View case study</span><span lang="ar">عرض دراسة الحالة</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="card__tags"><span class="tag"><span>Odoo ERP</span></span><span class="card__year">2022 — 2026</span></div>
+                <h3 class="card__title"><span>ERP systems for Saudi operations</span></h3>
+                <p class="card__out"><span>Odoo systems that run payroll, deliveries, dealerships and government departments.</span></p>
+                <dl class="stackcard"><div class="stackrow"><dt><span>Frontend</span></dt><dd dir="ltr"><span class="tech">OWL</span><span class="tech">QWeb</span></dd></div><div class="stackrow"><dt><span>Backend</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/python.svg" alt="" width="20" height="20" loading="lazy">Python (Odoo ORM)</span><span class="tech">Odoo REST / JWT</span></dd></div><div class="stackrow"><dt><span>Database</span></dt><dd dir="ltr"><span class="tech"><img class="tech__logo" src="assets/logos/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span></dd></div></dl>
+                <span class="card__more"><span>View case study</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
               </div>
             </a>
           </article></div>
@@ -169,35 +170,35 @@
       <section class="group" id="servicenow">
         <header class="group__head reveal">
           <span class="group__logo"><img class="group__img" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy"></span>
-          <div><h2 class="group__title">ServiceNow</h2><p><span lang="en">ITSM workflows, service catalogue and platform development.</span><span lang="ar">مسارات ITSM وكتالوج الخدمات وتطوير المنصّة.</span></p></div>
-          <span class="group__count group__count--soon"><span lang="en">Coming soon</span><span lang="ar">قريبًا</span></span>
+          <div><h2 class="group__title">ServiceNow</h2><p><span>ITSM workflows, service catalogue and platform development.</span></p></div>
+          <span class="group__count group__count--soon"><span>Coming soon</span></span>
         </header>
         
           <div class="soon reveal">
             <span class="soon__logo"><img class="soon__img" src="assets/logos/servicenow.svg" alt="" width="20" height="20" loading="lazy"></span>
             <div>
-              <p class="soon__badge"><span lang="en">Coming soon</span><span lang="ar">قريبًا</span></p>
-              <h4><span lang="en">ServiceNow case studies are on the way</span><span lang="ar">دراسات حالة ServiceNow قيد الإعداد</span></h4>
-              <p><span lang="en">I’m preparing projects for this track. Want to discuss a ServiceNow requirement now?</span><span lang="ar">أعمل حاليًا على مشاريع في هذا المسار. تريد مناقشة متطلبات ServiceNow الآن؟</span></p>
+              <p class="soon__badge"><span>Coming soon</span></p>
+              <h3><span>ServiceNow case studies are on the way</span></h3>
+              <p><span>I’m preparing projects for this track. Want to discuss a ServiceNow requirement now?</span></p>
             </div>
-            <a class="btn btn--outline btn--sm" href="#contact"><span lang="en">Get in touch</span><span lang="ar">تواصل معي</span></a>
+            <a class="btn btn--outline btn--sm" href="#contact"><span>Get in touch</span></a>
           </div>
       </section>
       <section class="group" id="zoho">
         <header class="group__head reveal">
           <span class="group__logo"><img class="group__img" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy"></span>
-          <div><h2 class="group__title">Zoho</h2><p><span lang="en">Zoho CRM, Books and Creator — setup, automation and integrations.</span><span lang="ar">Zoho CRM وBooks وCreator — إعداد وأتمتة وتكاملات.</span></p></div>
-          <span class="group__count group__count--soon"><span lang="en">Coming soon</span><span lang="ar">قريبًا</span></span>
+          <div><h2 class="group__title">Zoho</h2><p><span>Zoho CRM, Books and Creator — setup, automation and integrations.</span></p></div>
+          <span class="group__count group__count--soon"><span>Coming soon</span></span>
         </header>
         
           <div class="soon reveal">
             <span class="soon__logo"><img class="soon__img" src="assets/logos/zoho.svg" alt="" width="20" height="20" loading="lazy"></span>
             <div>
-              <p class="soon__badge"><span lang="en">Coming soon</span><span lang="ar">قريبًا</span></p>
-              <h4><span lang="en">Zoho case studies are on the way</span><span lang="ar">دراسات حالة Zoho قيد الإعداد</span></h4>
-              <p><span lang="en">I’m preparing projects for this track. Want to discuss a Zoho requirement now?</span><span lang="ar">أعمل حاليًا على مشاريع في هذا المسار. تريد مناقشة متطلبات Zoho الآن؟</span></p>
+              <p class="soon__badge"><span>Coming soon</span></p>
+              <h3><span>Zoho case studies are on the way</span></h3>
+              <p><span>I’m preparing projects for this track. Want to discuss a Zoho requirement now?</span></p>
             </div>
-            <a class="btn btn--outline btn--sm" href="#contact"><span lang="en">Get in touch</span><span lang="ar">تواصل معي</span></a>
+            <a class="btn btn--outline btn--sm" href="#contact"><span>Get in touch</span></a>
           </div>
       </section>
     </div>
@@ -206,16 +207,16 @@
     <svg class="pattern" aria-hidden="true"><defs><pattern id="star" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z" fill="none" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="20" height="20" transform="rotate(45 32 32)" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#star)"/></svg>
     <div class="wrap cta__grid">
       <div>
-        <p class="kicker kicker--gold"><span lang="en">Let’s work together</span><span lang="ar">لنعمل معًا</span></p>
-        <h2 class="cta__title"><span lang="en">Have a system to build — or fix?</span><span lang="ar">عندك نظام تريد بناءه أو تطويره؟</span></h2>
-        <p class="cta__lede"><span lang="en">Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.</span><span lang="ar">أخبرني بما تريد حلّه. أردّ خلال يوم عمل واحد، وساعات عملي متوافقة بالكامل مع ساعات العمل في السعودية.</span></p>
+        <p class="kicker kicker--gold"><span>Let’s work together</span></p>
+        <h2 class="cta__title"><span>Have a system to build — or fix?</span></h2>
+        <p class="cta__lede"><span>Tell me what you’re trying to solve. I reply within one working day, and my hours overlap fully with Saudi business hours.</span></p>
         <div class="cta__actions">
-          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span lang="en">Book a 30-min call</span><span lang="ar">احجز مكالمة ٣٠ دقيقة</span></a>
-          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span lang="en">Send a project brief</span><span lang="ar">أرسل وصف المشروع</span></a>
+          <a class="btn btn--gold" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span>Book a 30-min call</span></a>
+          <a class="btn btn--ghost" href="mailto:mohammed.hefzallah@gmail.com?subject=Project%20enquiry&body=Hi%20Mohammed%2C%0A%0ACompany%3A%0AWhat%20we%20need%20%28Odoo%20/%20web%20/%20mobile%29%3A%0ATimeline%3A%0ABudget%20range%3A%0A%0AThanks%2C"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Send a project brief</span></a>
         </div>
       </div>
       <ul class="contact-list">
-        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span lang="en">Email · click to copy</span><span lang="ar">البريد · اضغط للنسخ</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
+        <li><button type="button" class="contact-item" data-copy="mohammed.hefzallah@gmail.com"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><small><span>Email · click to copy</span></small><b dir="ltr">mohammed.hefzallah@gmail.com</b></span><em class="copied" aria-live="polite"></em></button></li>
         <li><a class="contact-item" href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20book%20a%2030-minute%20call%20about%20a%20project." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 1-.6 1.6c-3.6.2-7.4-3.6-7.2-7.2L10 7.6l1 2z"/></svg><span><small>WhatsApp</small><b dir="ltr">+20 155 446 3171</b></span></a></li>
         <li><a class="contact-item" href="https://www.linkedin.com/in/mhefzallah/" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span><small>LinkedIn</small><b dir="ltr">in/mhefzallah</b></span></a></li>
         <li><a class="contact-item" href="https://github.com/mhefzallah" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C5.6 2.8 4.6 3.1 4.6 3.1a4.3 4.3 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span><small>GitHub</small><b dir="ltr">@mhefzallah</b></span></a></li>
@@ -223,10 +224,21 @@
     </div>
   </section>
   <footer class="footer">
+    <div class="wrap footer__services">
+      <p class="footer__label"><span>Services</span></p>
+      <ul>
+        <li><a href="erp.html"><span>Odoo ERP development</span></a></li>
+        <li><a href="work/odoo-v19-migration.html"><span>Odoo upgrades &amp; migration</span></a></li>
+        <li><a href="erp.html#odoo"><span>ZATCA e-invoicing &amp; Saudi payroll</span></a></li>
+        <li><a href="web.html"><span>React &amp; Next.js web platforms</span></a></li>
+        <li><a href="backend.html"><span>Django, Python &amp; PHP APIs</span></a></li>
+        <li><a href="mobile.html"><span>Mobile apps</span></a></li>
+      </ul>
+    </div>
     <div class="wrap footer__row">
-      <p>© <span data-year>2026</span> <span lang="en">Mohammed Hefzallah</span><span lang="ar">محمد حفظ الله</span></p>
-      <p><span lang="en">Cairo · Working with KSA, UAE &amp; Europe</span><span lang="ar">القاهرة · أعمل مع السعودية والإمارات وأوروبا</span> · <span data-clock>--:--</span></p>
-      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span lang="en">Request CV</span><span lang="ar">اطلب السيرة الذاتية</span></a> · <a href="#main"><span lang="en">Back to top</span><span lang="ar">للأعلى</span> ↑</a></p>
+      <p>© <span data-year>2026</span> <span>Mohammed Hefzallah</span></p>
+      <p><span>Cairo · Working with KSA, UAE &amp; Europe</span> · <span data-clock>--:--</span></p>
+      <p><a href="https://wa.me/201554463171?text=Hi%20Mohammed%2C%20could%20you%20share%20your%20CV%3F%20I%20found%20you%20through%20your%20portfolio." target="_blank" rel="noopener"><span>Request CV</span></a> · <a href="#main"><span>Back to top</span> ↑</a></p>
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>

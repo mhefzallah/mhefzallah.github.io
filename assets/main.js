@@ -4,14 +4,9 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-  /* language */
-  var baseTitle = document.title;
-  function setLang(l) {
-    root.lang = l; root.dir = l === 'ar' ? 'rtl' : 'ltr'; root.dataset.lang = l;
-    store('lang', l); moveBar(); tick();
-  }
-  $$('[data-lang-toggle]').forEach(function (b) {
-    b.addEventListener('click', function () { setLang(root.dataset.lang === 'ar' ? 'en' : 'ar'); });
+  /* language: each language has its own URL; remember an explicit choice */
+  $$('[data-lang-switch]').forEach(function (a) {
+    a.addEventListener('click', function () { store('lang', a.dataset.langSwitch); });
   });
 
   /* theme */
@@ -115,7 +110,7 @@
     function show(i) {
       idx = (i + zooms.length) % zooms.length;
       var src = $('img', zooms[idx]), fig = zooms[idx].closest('figure'), cap = fig && $('figcaption', fig);
-      lbImg.src = src.currentSrc || src.src; lbImg.alt = src.alt;
+      lbImg.src = src.src; lbImg.alt = src.alt;
       lbCap.innerHTML = cap ? cap.innerHTML : '';
     }
     function open(i) { lastFocus = document.activeElement; show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; $('.lightbox__close', lb).focus(); }
