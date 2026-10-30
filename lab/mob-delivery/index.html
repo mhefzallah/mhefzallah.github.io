@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sufra — Food &amp; Grocery Delivery App — Concept project</title>
+<meta name="description" content="A bilingual React Native + Expo delivery app: browse Riyadh kitchens, build a cart, check out and follow the courier live on an animated map. Concept project with demo data." />
+<meta name="theme-color" content="#FFF6EC" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'16'%20fill%3D'%23E8472B'%2F%3E%3Ctext%20x%3D'32'%20y%3D'42'%20font-size%3D'30'%20text-anchor%3D'middle'%20font-family%3D'sans-serif'%20font-weight%3D'700'%20fill%3D'%23FFFFFF'%3ES%3C%2Ftext%3E%3C%2Fsvg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" />
+<style>
+:root{--bg:#FFF6EC;--bg2:#FCE3CC;--ink:#22180F;--muted:#7D6A5A;--accent:#E8472B;--on-accent:#FFFFFF;--card:#FFFFFF;--line:#EED6BF;--screen:#FFF6EC;--status:#22180F;--s:1}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[lang=ar] body{font-family:'Tajawal','Poppins',system-ui,sans-serif}
+.bgfx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bgfx i{position:absolute;border-radius:50%;filter:blur(2px)}
+.bgfx i:nth-child(1){width:620px;height:620px;background:var(--bg2);top:-180px;inset-inline-end:-120px}
+.bgfx i:nth-child(2){width:300px;height:300px;border:2px solid var(--line);bottom:-90px;inset-inline-start:30%}
+.bgfx i:nth-child(3){width:140px;height:140px;background:var(--accent);opacity:.16;top:22%;inset-inline-start:-50px}
+.wrap{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:56px;max-width:1240px;margin:0 auto;padding:32px 48px}
+.info{max-width:540px}
+.topline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.back{color:var(--muted);text-decoration:none;font-size:14px}
+.back:hover{color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:600;background:var(--card)}
+.pill b{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+.lang{margin-inline-start:auto;font:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:99px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.lang:hover{background:var(--ink);color:var(--bg)}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.mark{width:52px;height:52px;border-radius:16px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-size:24px}
+.tag{color:var(--muted);font-size:15px;font-weight:600;letter-spacing:.02em}
+h1{font-size:46px;line-height:1.08;margin:6px 0 14px;letter-spacing:-.02em}
+html[lang=ar] h1{letter-spacing:0;line-height:1.3}
+.summary{font-size:18px;line-height:1.6;color:var(--muted);margin:0 0 22px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:22px 0 10px}
+html[lang=ar] h2{letter-spacing:0;font-size:15px}
+ul.feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+ul.feat li{position:relative;padding-inline-start:22px;font-size:15px;line-height:1.45}
+ul.feat li::before{content:'';position:absolute;inset-inline-start:0;top:.45em;width:10px;height:10px;border-radius:3px;background:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;padding:6px 11px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+.jump{display:flex;flex-wrap:wrap;gap:8px}
+.jump button,.open{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-decoration:none}
+.jump button:hover,.open:hover{border-color:var(--ink)}
+.jump button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.open{display:inline-flex;gap:8px;align-items:center;background:var(--accent);color:var(--on-accent);border-color:transparent;margin-top:22px}
+.note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:18px;max-width:480px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* phone */
+.stage{width:calc(418px * var(--s));height:calc(872px * var(--s));position:relative}
+.phone{position:absolute;top:0;left:0;width:418px;height:872px;transform:scale(var(--s));transform-origin:top left;border-radius:64px;background:#0d0d10;padding:14px;box-shadow:0 0 0 2px #2a2a30,0 0 0 4px #6d6d75 inset,0 50px 90px -30px rgba(0,0,0,.45),0 30px 60px -40px rgba(0,0,0,.6)}
+.phone::before,.phone::after{content:'';position:absolute;width:4px;background:#26262b;border-radius:2px}
+.phone::before{left:-4px;top:170px;height:64px;box-shadow:0 84px 0 #26262b}
+.phone::after{right:-4px;top:220px;height:96px}
+.screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:var(--screen);direction:ltr}
+.status{position:absolute;inset:0 0 auto 0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 36px;font:600 16px/1 -apple-system,'SF Pro Text',system-ui,sans-serif;color:var(--status);z-index:2;pointer-events:none;background:var(--screen)}
+.island{position:absolute;left:50%;top:11px;width:122px;height:35px;border-radius:20px;background:#000;transform:translateX(-50%)}
+.icons{display:flex;gap:6px;align-items:center}
+.screen iframe{position:absolute;top:50px;left:0;width:390px;height:794px;border:0;background:var(--screen)}
+.home{position:absolute;bottom:8px;left:50%;width:134px;height:5px;border-radius:3px;background:var(--status);opacity:.85;transform:translateX(-50%);z-index:2;pointer-events:none}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;max-width:calc(418px * var(--s))}
+@media (max-width:1100px){.wrap{gap:32px;padding:28px}h1{font-size:38px}ul.feat{grid-template-columns:1fr}}
+/* Real phones: the app goes full-screen, the showcase copy is hidden. */
+@media (max-width:640px){
+  body{overflow:hidden;background:var(--screen)}
+  .bgfx,.info,.hint{display:none}
+  .wrap{display:block;padding:0;min-height:0}
+  .stage{width:100vw!important;height:100vh;height:100dvh}
+  .phone{position:static;transform:none;width:100%;height:100%;padding:0;border-radius:0;background:var(--screen);box-shadow:none}
+  .phone::before,.phone::after,.status,.home{display:none}
+  .screen{width:100%;height:100%;border-radius:0}
+  .screen iframe{top:0;width:100%;height:100%}
+}
+</style>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"><i></i><i></i><i></i></div>
+<main class="wrap">
+  <section class="info" aria-labelledby="title">
+    <div class="topline">
+      <a class="back" href="../../lab.html" data-t="back"></a>
+      <span class="pill"><b></b><span data-t="concept"></span></span>
+      <button class="lang" id="lang" type="button" data-t="lang"></button>
+    </div>
+    <div class="brand"><div class="mark" aria-hidden="true">S</div><div class="tag" data-t="tagline"></div></div>
+    <h1 id="title" data-t="title"></h1>
+    <p class="summary" data-t="summary"></p>
+    <h2 data-t="featuresH"></h2>
+    <ul class="feat" id="features"></ul>
+    <h2 data-t="jumpH"></h2>
+    <div class="jump" id="jump"></div>
+    <h2 data-t="stackH"></h2>
+    <div class="chips"><span class="chip">React Native</span><span class="chip">Expo SDK 51</span><span class="chip">Expo Router</span><span class="chip">TypeScript</span><span class="chip">react-native-svg</span><span class="chip">AsyncStorage</span><span class="chip">React Native Web</span></div>
+    <a class="open" id="open" href="app/" target="_blank" rel="noopener"><span data-t="open"></span> ↗</a>
+    <p class="note" data-t="conceptNote"></p>
+  </section>
+  <div>
+    <div class="stage" id="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="status" aria-hidden="true">
+            <span>9:41</span><span class="island"></span>
+            <span class="icons">
+              <svg width="18" height="12" viewBox="0 0 18 12"><g fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></g></svg>
+              <svg width="16" height="12" viewBox="0 0 16 12"><path fill="currentColor" d="M8 2.6c2.2 0 4.2.9 5.7 2.3l1.1-1.1A9.6 9.6 0 0 0 8 1 9.6 9.6 0 0 0 1.2 3.8l1.1 1.1A8 8 0 0 1 8 2.6zm0 3.3c1.3 0 2.5.5 3.4 1.3l1.1-1.1A6.3 6.3 0 0 0 8 4.3a6.3 6.3 0 0 0-4.5 1.8l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3zM8 9.2 6 11.2 8 13l2-1.8z"/></svg>
+              <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor"/><rect x="24.5" y="4.5" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>
+            </span>
+          </div>
+          <iframe id="app" title="Sufra — Food &amp; Grocery Delivery App — interactive demo" loading="eager"></iframe>
+          <div class="home" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <p class="hint" data-t="hint"></p>
+  </div>
+</main>
+<script>
+(function(){
+  var COPY={"en":{"concept":"Concept project","conceptNote":"Fictional brand and demo data — built to showcase React Native + Expo work. Nothing is ordered, booked or charged.","title":"Sufra — Food & Grocery Delivery App","tagline":"Sufra · food & grocery delivery","summary":"A bilingual React Native + Expo delivery app: browse Riyadh kitchens, build a cart, check out and follow the courier live on an animated map.","featuresH":"What you can try","features":["Restaurant discovery with search and category filters","Menus by section with one-tap add and single-restaurant cart rule","Cart with quantity steppers, minimum order and free-delivery promo","Checkout: address, payment method and courier tip (demo mode)","Live tracking timeline with an animated courier on a vector map","Arabic/English toggle with full RTL, saved with AsyncStorage"],"stackH":"Built with","jumpH":"Jump to a screen","open":"Open full screen","back":"All lab projects","lang":"عربي","hint":"Interactive — click around inside the phone. Your changes are saved in this browser."},"ar":{"concept":"مشروع تجريبي (Concept)","conceptNote":"علامة تجارية خيالية وبيانات افتراضية — لعرض أعمال React Native و Expo. لا يتم طلب أو حجز أو دفع أي شيء فعليًا.","title":"سُفرة — تطبيق توصيل الطعام والبقالة","tagline":"سُفرة · توصيل الطعام والبقالة","summary":"تطبيق توصيل ثنائي اللغة مبني بـ React Native و Expo: تصفّح مطاعم الرياض، أنشئ سلتك، أتمم الطلب وتابع المندوب مباشرة على خريطة متحركة.","featuresH":"ما يمكنك تجربته","features":["اكتشاف المطاعم مع البحث وتصفية الفئات","قوائم مقسّمة مع إضافة بلمسة وقاعدة سلة من مطعم واحد","سلة بعدّاد الكميات والحد الأدنى للطلب وعرض التوصيل المجاني","إتمام الطلب: العنوان وطريقة الدفع والإكرامية (وضع تجريبي)","خط زمني للتتبع المباشر مع مندوب متحرك على خريطة متجهة","تبديل عربي/إنجليزي مع دعم كامل للاتجاه من اليمين لليسار وحفظ عبر AsyncStorage"],"stackH":"التقنيات","jumpH":"انتقل إلى شاشة","open":"فتح بملء الشاشة","back":"كل مشاريع المختبر","lang":"English","hint":"تفاعلي — جرّب التطبيق داخل الهاتف. تُحفظ تغييراتك في هذا المتصفح."}};
+  var SCREENS=[{"go":"/","en":"Discover","ar":"اكتشف"},{"go":"/restaurant/najd-grill","en":"Menu","ar":"القائمة"},{"go":"/track/live-demo","en":"Live tracking","ar":"التتبع المباشر"},{"go":"/orders","en":"Orders","ar":"الطلبات"}];
+  var params=new URLSearchParams(location.search);
+  var lang=params.get('lang')==='ar'?'ar':(params.get('lang')==='en'?'en':null);
+  try{ if(!lang) lang=localStorage.getItem('lab-frame-lang'); }catch(e){}
+  if(lang!=='ar') lang='en';
+  var current=params.get('screen')||'';
+  var frame=document.getElementById('app');
+  function appSrc(){ var q='?lang='+lang; var s=SCREENS.find(function(x){return x.go===current}); if(current&&s) q+='&go='+encodeURIComponent(s.go); else if(current) q+='&go='+encodeURIComponent(current); return 'app/'+q; }
+  function render(){
+    var c=COPY[lang];
+    document.documentElement.lang=lang; document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+    document.title=c.title+' — '+c.concept;
+    document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=c[el.getAttribute('data-t')]; });
+    document.getElementById('lang').setAttribute('aria-label', lang==='ar'?'Switch to English':'التبديل إلى العربية');
+    document.getElementById('features').innerHTML=c.features.map(function(f){var li=document.createElement('li');li.textContent=f;return li.outerHTML}).join('');
+    var jump=document.getElementById('jump'); jump.innerHTML='';
+    SCREENS.forEach(function(s){ var b=document.createElement('button'); b.type='button'; b.textContent=s[lang]; b.setAttribute('aria-pressed', String(current===s.go)); b.onclick=function(){ current=s.go; load(); render(); }; jump.appendChild(b); });
+    document.getElementById('open').href=appSrc();
+  }
+  function load(){ frame.src=appSrc(); }
+  document.getElementById('lang').onclick=function(){ lang=lang==='ar'?'en':'ar'; try{localStorage.setItem('lab-frame-lang',lang)}catch(e){} render(); load(); };
+  function fit(){ var s=Math.min(1,(window.innerHeight-64)/872); document.documentElement.style.setProperty('--s', String(Math.max(.55,s))); }
+  window.addEventListener('resize',fit); fit(); render(); load();
+})();
+</script>
+</body>
+</html>
