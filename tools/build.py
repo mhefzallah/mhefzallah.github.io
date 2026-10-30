@@ -10,7 +10,7 @@ import re
 from html import escape
 from urllib.parse import quote
 
-from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE, STACKS, SECTIONS, ODOO_CLIENTS
+from content import SITE, EMAIL, WHATSAPP, LINKEDIN, GITHUB, PROJECTS, ARCHIVE, STACKS, SECTIONS, ODOO_CLIENTS, PLATFORMS
 from diagrams import diagram
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -609,6 +609,10 @@ def home():
           <li class="reveal"><span class="process__n" dir="ltr">03</span><b>{T("Build in sprints", "التنفيذ على مراحل")}</b><span>{T("Weekly demos on staging.", "عرض أسبوعي على بيئة تجريبية.")}</span></li>
           <li class="reveal"><span class="process__n" dir="ltr">04</span><b>{T("Launch &amp; support", "الإطلاق والدعم")}</b><span>{T("Go-live, training and support.", "التشغيل والتدريب والدعم.")}</span></li>
         </ol>
+        <div class="hire" id="freelance">
+          <p class="hire__label">{T("Prefer a freelance platform? Hire me with escrow protection on", "تفضّل منصّة عمل حر؟ وظّفني بضمان المنصّة على")}</p>
+          <ul class="hire__list">{"".join(f'<li class="reveal"><a class="hire__item" href="{url}" target="_blank" rel="noopener"><b>{T(*name)}</b><small>{T(*note)}</small></a></li>' for name, note, url in PLATFORMS)}</ul>
+        </div>
       </div>
     </section>
 

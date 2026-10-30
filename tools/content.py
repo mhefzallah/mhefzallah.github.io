@@ -7,6 +7,13 @@ WHATSAPP = "201554463171"
 LINKEDIN = "https://www.linkedin.com/in/mhefzallah/"
 GITHUB = "https://github.com/mhefzallah"
 
+# Freelance platforms: (name, note, profile URL)
+PLATFORMS = [
+    (("Khamsat", "خمسات"), ("Fixed-price services · Arabic", "خدمات بسعر ثابت · عربي"), "https://khamsat.com/user/mohamed1478zz"),
+    (("Mostaql", "مستقل"), ("Custom projects · Arabic", "مشاريع حسب الطلب · عربي"), "https://mostaql.com/u/MO_Developer"),
+    (("Freelancer.com", "Freelancer.com"), ("Projects & milestones · English", "مشاريع ودفعات مرحلية · إنجليزي"), "https://www.freelancer.com/u/mohammedabdull15"),
+]
+
 # --------------------------------------------------------------------------
 # Case studies. Order = order on the home page.
 # kind: web | erp | mobile (a project can have several)
