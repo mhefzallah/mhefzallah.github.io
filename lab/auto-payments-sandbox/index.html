@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Paygate Kit — Moyasar, Tap, PayTabs & Stripe (Concept)</title>
+    <meta name="description" content="Concept project: one TypeScript interface over Moyasar, Tap, PayTabs and Stripe — create charge, verify webhook signatures, refund — with an interactive sandbox flow simulator." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1220'/%3E%3Crect x='7' y='10' width='18' height='12' rx='3' fill='none' stroke='%23f5b83d' stroke-width='2.4'/%3E%3Cpath d='M7 14h18' stroke='%23f5b83d' stroke-width='2.4'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-DBJ6x2hT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B6eQLv9R.css">
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="#top"><span class="logo" aria-hidden="true"></span><b data-i18n="brand"></b><span class="ver">v1 · TypeScript</span></a>
+      <span class="sandbox" data-i18n="sandbox"></span>
+      <button id="langBtn" class="lang" type="button"></button>
+    </header>
+    <div class="layout">
+      <nav class="side" aria-label="Docs">
+        <a href="#top" data-i18n="navOverview"></a>
+        <a href="#simulator" data-i18n="navSim"></a>
+        <a href="#compare" data-i18n="navCompare"></a>
+        <a href="#interface" data-i18n="navInterface"></a>
+        <a href="#security" data-i18n="navSecurity"></a>
+      </nav>
+      <main id="top">
+        <section class="hero">
+          <p class="eyebrow" data-i18n="eyebrow"></p>
+          <h1 data-i18n="title"></h1>
+          <p class="lede" data-i18n="lede"></p>
+        </section>
+
+        <section id="simulator" class="sim card">
+          <div class="sim-head">
+            <h2 data-i18n="simTitle"></h2>
+            <p class="muted" data-i18n="simHelp"></p>
+          </div>
+          <div class="controls">
+            <div class="seg" role="radiogroup" aria-label="Gateway" id="gwSeg"></div>
+            <label><span data-i18n="amount"></span><input id="amount" type="number" min="1" step="0.01" value="349.50" inputmode="decimal" /></label>
+            <label><span data-i18n="currency"></span><select id="currency"><option>SAR</option><option>AED</option><option>KWD</option></select></label>
+            <button id="start" class="btn" type="button" data-i18n="start"></button>
+          </div>
+          <ol class="timeline" id="timeline"></ol>
+        </section>
+
+        <section id="compare" class="card">
+          <h2 data-i18n="compareTitle"></h2>
+          <div class="table-wrap"><table id="compareTable"></table></div>
+        </section>
+
+        <section id="interface" class="card">
+          <h2 data-i18n="ifaceTitle"></h2>
+          <p class="muted" data-i18n="ifaceHelp"></p>
+          <pre class="code" dir="ltr"><code><span class="kw">export interface</span> <span class="ty">PaymentGateway</span> {
+  <span class="kw">readonly</span> name: <span class="st">'moyasar'</span> | <span class="st">'tap'</span> | <span class="st">'paytabs'</span> | <span class="st">'stripe'</span>;
+  createCharge(input: <span class="ty">CreateChargeInput</span>): <span class="ty">Promise</span>&lt;<span class="ty">Charge</span>&gt;;
+  refund(charge, amount?, reason?): <span class="ty">Promise</span>&lt;<span class="ty">Refund</span>&gt;;
+  verifyWebhook(rawBody: <span class="ty">string</span>, headers): <span class="ty">Promise</span>&lt;<span class="ty">WebhookEvent</span>&gt;; <span class="cm">// throws WebhookSignatureError</span>
+}
+
+<span class="kw">const</span> gateway = createGateway({ gateway: <span class="st">'moyasar'</span>, secretKey: process.env.MOYASAR_SECRET_KEY, webhookSecret: process.env.MOYASAR_WEBHOOK_TOKEN });
+<span class="kw">const</span> charge = <span class="kw">await</span> gateway.createCharge({ amount: <span class="nu">34950</span>, currency: <span class="st">'SAR'</span>, token, orderId: <span class="st">'1042'</span>, returnUrl, customer, description });
+<span class="kw">if</span> (charge.status === <span class="st">'requires_action'</span>) res.redirect(charge.redirectUrl);</code></pre>
+        </section>
+
+        <section id="security" class="card">
+          <h2 data-i18n="secTitle"></h2>
+          <ul class="checks">
+            <li data-i18n="sec1"></li>
+            <li data-i18n="sec2"></li>
+            <li data-i18n="sec3"></li>
+            <li data-i18n="sec4"></li>
+          </ul>
+        </section>
+        <footer class="foot"><span class="pill">Concept</span><span data-i18n="footer"></span></footer>
+      </main>
+    </div>
+  </body>
+</html>
