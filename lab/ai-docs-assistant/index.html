@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daleel — Docs Assistant (Concept)</title>
+    <meta name="description" content="Concept project: chat with company documents using retrieval-augmented generation with cited answers. Arabic & English." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f5c46'/%3E%3Cpath d='M9 8h9a6 6 0 0 1 0 12h-4v4H9z' fill='%23f6f1e7'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Instrument+Sans:wght@400;500;600&family=Tajawal:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-CJSDymOB.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CcfghRTV.css">
+  </head>
+  <body>
+    <a class="skip" href="#question">Skip to question</a>
+    <header class="top">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">د</span>
+        <div>
+          <strong data-i18n="brand">Daleel</strong>
+          <span class="tagline" data-i18n="tagline"></span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span id="modeBadge" class="badge"></span>
+        <button id="langBtn" class="ghost" type="button" aria-label="Switch language">العربية</button>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" data-tab="library" data-i18n="tabLibrary"></button>
+      <button type="button" data-tab="chat" data-i18n="tabChat" aria-current="true"></button>
+      <button type="button" data-tab="settings" data-i18n="tabSettings"></button>
+    </nav>
+
+    <main class="layout" data-active="chat">
+      <aside class="panel library" data-panel="library" aria-labelledby="libTitle">
+        <h2 id="libTitle" data-i18n="library"></h2>
+        <p class="stats" id="libStats"></p>
+        <ul id="docList" class="doc-list"></ul>
+        <details class="add-doc">
+          <summary data-i18n="addDoc"></summary>
+          <form id="addForm">
+            <label><span data-i18n="docTitle"></span><input id="docTitle" required maxlength="80" /></label>
+            <label><span data-i18n="docText"></span><textarea id="docText" rows="6" required></textarea></label>
+            <div class="row">
+              <button class="primary" type="submit" data-i18n="addBtn"></button>
+              <label class="file-btn"><input id="fileInput" type="file" accept=".txt,.md,text/plain,text/markdown" multiple /><span data-i18n="upload"></span></label>
+            </div>
+          </form>
+        </details>
+      </aside>
+
+      <section class="chat" data-panel="chat" aria-label="Conversation">
+        <div id="thread" class="thread" aria-live="polite"></div>
+        <form id="askForm" class="ask">
+          <label class="sr" for="question" data-i18n="ask"></label>
+          <input id="question" autocomplete="off" data-i18n-ph="askPlaceholder" />
+          <button class="primary" type="submit" data-i18n="send"></button>
+        </form>
+      </section>
+
+      <aside class="panel inspector" data-panel="settings" aria-label="Settings">
+        <h2 data-i18n="settings"></h2>
+        <fieldset>
+          <legend data-i18n="retrieval"></legend>
+          <label><span data-i18n="topK"></span> <output id="kOut">4</output><input id="kRange" type="range" min="1" max="8" value="4" /></label>
+          <label><span data-i18n="chunkSize"></span> <output id="cOut">700</output><input id="cRange" type="range" min="300" max="1500" step="100" value="700" /></label>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="connect"></legend>
+          <p class="help" data-i18n="connectHelp"></p>
+          <form id="keyForm">
+            <label><span data-i18n="provider"></span>
+              <select id="provider"><option value="anthropic">Anthropic (Claude)</option><option value="openai">OpenAI-compatible</option></select>
+            </label>
+            <label><span data-i18n="model"></span><input id="model" value="claude-opus-5-5" spellcheck="false" /></label>
+            <label><span data-i18n="apiKey"></span><input id="apiKey" type="password" autocomplete="off" spellcheck="false" /></label>
+            <div class="row">
+              <button class="primary" type="submit" data-i18n="connectBtn"></button>
+              <button class="ghost" type="button" id="forgetKey" data-i18n="disconnect"></button>
+            </div>
+          </form>
+        </fieldset>
+        <section class="trace" aria-labelledby="traceTitle">
+          <h3 id="traceTitle" data-i18n="pipeline"></h3>
+          <ol id="trace"><li class="muted" data-i18n="traceEmpty"></li></ol>
+        </section>
+      </aside>
+    </main>
+    <footer class="foot"><span class="pill">Concept</span> <span data-i18n="footer"></span></footer>
+  </body>
+</html>

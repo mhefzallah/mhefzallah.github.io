@@ -1,0 +1,253 @@
+[
+  {
+    "slug": "orders",
+    "file": "01-order-to-sheets-whatsapp.json",
+    "tags": [
+      "Salla",
+      "WooCommerce",
+      "Google Sheets",
+      "WhatsApp"
+    ],
+    "title": {
+      "en": "New order → Google Sheets + WhatsApp",
+      "ar": "طلب جديد ← Google Sheets + واتساب"
+    },
+    "summary": {
+      "en": "Verifies the Salla webhook signature, merges Salla and WooCommerce orders into one format, logs each order to a sheet and sends a WhatsApp template confirmation.",
+      "ar": "يتحقق من توقيع Webhook سلة، ويوحّد طلبات سلة وWooCommerce، ثم يسجّل كل طلب في جدول ويرسل تأكيداً عبر قالب واتساب."
+    },
+    "trigger": {
+      "en": "Salla webhook / WooCommerce trigger",
+      "ar": "Webhook سلة / مشغّل WooCommerce"
+    },
+    "credentials": [
+      "Google Sheets OAuth2",
+      "WooCommerce API",
+      "WhatsApp Cloud API (header auth)"
+    ],
+    "env": [
+      "SALLA_WEBHOOK_SECRET",
+      "NODE_FUNCTION_ALLOW_BUILTIN=crypto"
+    ],
+    "setup": {
+      "en": [
+        "Import the JSON (Workflows → Import from file).",
+        "Set SALLA_WEBHOOK_SECRET and NODE_FUNCTION_ALLOW_BUILTIN=crypto on your n8n instance.",
+        "Create an \"Orders\" sheet with the columns used in \"Append order to sheet\".",
+        "Fill the \"Add settings\" node: Sheet ID, WhatsApp phone-number ID, approved template name.",
+        "In Salla Partners → Webhooks, subscribe order.created to the production webhook URL. Connect WooCommerce credentials.",
+        "Activate the workflow."
+      ],
+      "ar": [
+        "استورد ملف JSON (Workflows ← Import from file).",
+        "اضبط المتغيرين SALLA_WEBHOOK_SECRET وNODE_FUNCTION_ALLOW_BUILTIN=crypto في n8n.",
+        "أنشئ ورقة باسم Orders بالأعمدة المستخدمة في عقدة الإضافة.",
+        "عبّئ عقدة Add settings: معرّف الجدول ومعرّف رقم واتساب واسم القالب المعتمد.",
+        "في لوحة شركاء سلة اشترك في order.created برابط الإنتاج، واربط بيانات WooCommerce.",
+        "فعّل سير العمل."
+      ]
+    }
+  },
+  {
+    "slug": "leads",
+    "file": "02-form-lead-to-crm-email.json",
+    "tags": [
+      "Forms",
+      "HubSpot",
+      "Gmail",
+      "SMTP"
+    ],
+    "title": {
+      "en": "Website lead → CRM + emails",
+      "ar": "عميل محتمل من الموقع ← CRM + بريد"
+    },
+    "summary": {
+      "en": "Validates form submissions (honeypot, email, Saudi mobile normalisation), upserts the contact in HubSpot, alerts sales and sends a bilingual auto-reply.",
+      "ar": "يتحقق من النموذج (حقل فخ للسبام، البريد، توحيد رقم الجوال السعودي)، ويضيف العميل إلى HubSpot، وينبّه فريق المبيعات، ويرسل رداً تلقائياً بلغة العميل."
+    },
+    "trigger": {
+      "en": "Webhook (form POST)",
+      "ar": "Webhook (إرسال النموذج)"
+    },
+    "credentials": [
+      "HubSpot private app token",
+      "SMTP",
+      "Gmail OAuth2"
+    ],
+    "setup": {
+      "en": [
+        "Import the JSON.",
+        "Point your website form (or Webflow/WordPress) to the webhook URL with fields name, email, phone, company, message and a hidden \"website\" honeypot.",
+        "Connect HubSpot, SMTP and Gmail credentials; change the from/to addresses.",
+        "Activate and submit a test lead."
+      ],
+      "ar": [
+        "استورد ملف JSON.",
+        "وجّه نموذج موقعك إلى رابط الـ Webhook مع الحقول: name وemail وphone وcompany وmessage وحقل مخفي باسم website.",
+        "اربط HubSpot وSMTP وGmail وعدّل عناوين المرسل والمستلم.",
+        "فعّل سير العمل وجرّب إرسال نموذج."
+      ]
+    }
+  },
+  {
+    "slug": "daily-report",
+    "file": "03-daily-sales-report.json",
+    "tags": [
+      "Schedule",
+      "Google Sheets",
+      "Gmail",
+      "WhatsApp"
+    ],
+    "title": {
+      "en": "Daily sales report",
+      "ar": "تقرير المبيعات اليومي"
+    },
+    "summary": {
+      "en": "Every evening it reads the Orders sheet, computes revenue, average order, top products and channels in Riyadh time, emails an HTML report and sends an Arabic WhatsApp summary.",
+      "ar": "كل مساء يقرأ جدول الطلبات ويحسب المبيعات ومتوسط الطلب والمنتجات الأكثر مبيعاً بتوقيت الرياض، ثم يرسل تقريراً بالبريد وملخصاً بالعربية عبر واتساب."
+    },
+    "trigger": {
+      "en": "Schedule (21:00 Asia/Riyadh)",
+      "ar": "جدولة (21:00 بتوقيت الرياض)"
+    },
+    "credentials": [
+      "Google Sheets OAuth2",
+      "Gmail OAuth2",
+      "WhatsApp Cloud API (header auth)"
+    ],
+    "setup": {
+      "en": [
+        "Import the JSON (works with the sheet filled by workflow 1).",
+        "Fill \"Report settings\": Sheet ID, owner email and WhatsApp number.",
+        "Adjust the cron expression if needed and activate."
+      ],
+      "ar": [
+        "استورد ملف JSON (يعمل مع الجدول الذي يملؤه سير العمل الأول).",
+        "عبّئ Report settings: معرّف الجدول وبريد المالك ورقم واتساب.",
+        "عدّل توقيت الجدولة عند الحاجة ثم فعّل."
+      ]
+    }
+  },
+  {
+    "slug": "abandoned-cart",
+    "file": "04-abandoned-cart-reminder.json",
+    "tags": [
+      "E-commerce",
+      "Wait",
+      "WhatsApp",
+      "Coupons"
+    ],
+    "title": {
+      "en": "Abandoned-cart reminder",
+      "ar": "تذكير السلات المتروكة"
+    },
+    "summary": {
+      "en": "Waits one hour after an abandoned cart, checks the store API for a new order, and only then sends a WhatsApp template with a coupon and checkout button, respecting opt-in, and logs it.",
+      "ar": "ينتظر ساعة بعد ترك السلة، ويتحقق من واجهة المتجر من عدم إتمام الطلب، ثم يرسل قالب واتساب بكوبون وزر إكمال الشراء مع احترام موافقة العميل، ويسجّل ذلك."
+    },
+    "trigger": {
+      "en": "Webhook (abandoned.cart)",
+      "ar": "Webhook (سلة متروكة)"
+    },
+    "credentials": [
+      "Store API (header auth)",
+      "WhatsApp Cloud API (header auth)",
+      "Google Sheets OAuth2"
+    ],
+    "setup": {
+      "en": [
+        "Import the JSON.",
+        "Create an approved WhatsApp template \"cart_reminder\" with two body variables and a URL button.",
+        "Fill \"Cart settings\" (store API base, coupon, template, sheet).",
+        "Send abandoned-cart events from your store to the webhook URL, then activate."
+      ],
+      "ar": [
+        "استورد ملف JSON.",
+        "أنشئ قالب واتساب معتمداً باسم cart_reminder بمتغيرين وزر رابط.",
+        "عبّئ Cart settings (رابط واجهة المتجر والكوبون والقالب والجدول).",
+        "أرسل أحداث السلات المتروكة إلى رابط الـ Webhook ثم فعّل."
+      ]
+    }
+  },
+  {
+    "slug": "odoo-invoice",
+    "file": "05-odoo-invoice-whatsapp-pdf.json",
+    "tags": [
+      "Odoo",
+      "ERP",
+      "WhatsApp",
+      "PDF"
+    ],
+    "title": {
+      "en": "Odoo invoice → WhatsApp PDF",
+      "ar": "فاتورة Odoo ← PDF عبر واتساب"
+    },
+    "summary": {
+      "en": "Every 15 minutes it finds posted customer invoices not yet sent, downloads the PDF via the portal link, uploads it to the WhatsApp media API, sends it as a document and flags the invoice in Odoo.",
+      "ar": "كل 15 دقيقة يجلب فواتير العملاء المرحّلة غير المرسلة، وينزّل ملف PDF عبر رابط البوابة، ويرفعه إلى واتساب ويرسله كمستند، ثم يعلّم الفاتورة كمرسلة في Odoo."
+    },
+    "trigger": {
+      "en": "Schedule (every 15 min)",
+      "ar": "جدولة (كل 15 دقيقة)"
+    },
+    "credentials": [
+      "Odoo API (API key)",
+      "WhatsApp Cloud API (header auth)"
+    ],
+    "setup": {
+      "en": [
+        "In Odoo (Studio or a module) add boolean x_whatsapp_sent on account.move.",
+        "Add an automated action on invoice post: record._portal_ensure_token().",
+        "Import the JSON, connect the Odoo credential (URL, DB, user, API key) and WhatsApp.",
+        "Fill \"Odoo settings\", then activate."
+      ],
+      "ar": [
+        "أضف في Odoo حقلاً منطقياً x_whatsapp_sent على account.move.",
+        "أضف إجراءً آلياً عند ترحيل الفاتورة: record._portal_ensure_token().",
+        "استورد ملف JSON واربط بيانات Odoo (الرابط وقاعدة البيانات والمستخدم ومفتاح API) وواتساب.",
+        "عبّئ Odoo settings ثم فعّل."
+      ]
+    }
+  },
+  {
+    "slug": "telegram-bot",
+    "file": "06-telegram-support-bot.json",
+    "tags": [
+      "Telegram",
+      "Claude",
+      "Support",
+      "Switch"
+    ],
+    "title": {
+      "en": "Telegram support bot",
+      "ar": "بوت دعم على تيليجرام"
+    },
+    "summary": {
+      "en": "Routes Telegram messages: /start welcome, /order lookups against your store API, /human handoff to a support group, and an AI answer from Claude grounded in your FAQ for everything else.",
+      "ar": "يوجّه رسائل تيليجرام: ترحيب عند /start، واستعلام عن الطلب عبر /order، وتحويل إلى فريق الدعم عبر /human، وإجابة ذكية من Claude مبنية على الأسئلة الشائعة لباقي الرسائل."
+    },
+    "trigger": {
+      "en": "Telegram trigger",
+      "ar": "مشغّل تيليجرام"
+    },
+    "credentials": [
+      "Telegram bot token",
+      "Store API (header auth)",
+      "Anthropic API (header auth: x-api-key)"
+    ],
+    "setup": {
+      "en": [
+        "Create a bot with @BotFather and add the token as a Telegram credential.",
+        "Add a header-auth credential named x-api-key with your Anthropic key.",
+        "Fill \"Bot settings\": store API, support group chat ID, FAQ text.",
+        "Import, then activate (Telegram needs a public HTTPS n8n URL)."
+      ],
+      "ar": [
+        "أنشئ بوتاً عبر ‎@BotFather وأضف الرمز كبيانات اعتماد تيليجرام.",
+        "أضف بيانات اعتماد Header Auth باسم x-api-key بمفتاح Anthropic الخاص بك.",
+        "عبّئ Bot settings: واجهة المتجر ومعرّف مجموعة الدعم ونص الأسئلة الشائعة.",
+        "استورد ثم فعّل (يتطلب تيليجرام رابط n8n عاماً عبر HTTPS)."
+      ]
+    }
+  }
+]

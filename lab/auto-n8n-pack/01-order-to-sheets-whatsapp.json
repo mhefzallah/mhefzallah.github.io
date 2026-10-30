@@ -1,0 +1,383 @@
+{
+  "name": "New Salla / WooCommerce order → Google Sheets + WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## New order → Sheet + WhatsApp\n1. Set **SALLA_WEBHOOK_SECRET** and `NODE_FUNCTION_ALLOW_BUILTIN=crypto` on n8n.\n2. Fill **Add settings** (Sheet ID, WhatsApp phone-number ID, template).\n3. Connect Google Sheets, WooCommerce and the WhatsApp header credential.\n4. Salla → Webhooks: point `order.created` to the production URL of **Salla webhook**.",
+        "height": 260,
+        "width": 460,
+        "color": 5
+      },
+      "id": "54220ffd-5b59-48d2-99e5-1cf600ad0095",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "salla/orders",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "id": "ee68d6c7-ab25-4858-90c3-2c67afad322c",
+      "name": "Salla webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "62665f5c-8a46-4212-9068-d6de24da6733"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Salla signs the raw request body with HMAC-SHA256 (header: x-salla-signature).\n// Needs NODE_FUNCTION_ALLOW_BUILTIN=crypto and the SALLA_WEBHOOK_SECRET env var.\nconst crypto = require('crypto');\nconst secret = $env.SALLA_WEBHOOK_SECRET;\nif (!secret) throw new Error('SALLA_WEBHOOK_SECRET is not set');\nconst items = $input.all();\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const raw = await this.helpers.getBinaryDataBuffer(i, 'data');\n  const expected = crypto.createHmac('sha256', secret).update(raw).digest('hex');\n  const given = String(items[i].json.headers['x-salla-signature'] || '');\n  const valid = given.length === expected.length && crypto.timingSafeEqual(Buffer.from(given), Buffer.from(expected));\n  if (!valid) throw new Error('Invalid Salla signature');\n  out.push({ json: JSON.parse(raw.toString('utf8')) });\n}\nreturn out;"
+      },
+      "id": "8e781518-30ed-42b9-8f2f-e7bd43287af1",
+      "name": "Verify Salla signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"received\": true}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "af7e895b-639e-48f1-bc3d-a748768c7a06",
+      "name": "Acknowledge Salla",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "5d2d47c0-161d-4055-915b-8d30cae13ab5",
+              "leftValue": "={{ $json.event }}",
+              "rightValue": "order.created",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "724d9242-48c8-4313-8a9b-9ab90c4d5cd5",
+      "name": "Is order.created?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        960,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const o = $json.data;\nreturn {\n  source: 'Salla',\n  orderId: String(o.id),\n  reference: String(o.reference_id || o.id),\n  customerName: [o.customer?.first_name, o.customer?.last_name].filter(Boolean).join(' '),\n  phone: String((o.customer?.mobile_code || '') + (o.customer?.mobile || '')).replace(/\\D/g, ''),\n  city: o.shipping?.address?.city || o.customer?.city || '',\n  items: (o.items || []).map((i) => i.name + ' x' + i.quantity).join(', '),\n  total: Number(o.amounts?.total?.amount ?? 0),\n  currency: o.amounts?.total?.currency || 'SAR',\n  createdAt: o.date?.date || new Date().toISOString(),\n};"
+      },
+      "id": "a6d522f4-2429-42db-92a3-1db8aec67f41",
+      "name": "Normalize Salla order",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "event": "order.created"
+      },
+      "id": "605d3fd1-fd3a-43d6-a1cc-a0b3851d2266",
+      "name": "WooCommerce order created",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [
+        960,
+        500
+      ],
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "5bb206d3fbbf49",
+          "name": "WooCommerce account"
+        }
+      },
+      "webhookId": "57d537ea-e558-4a9c-b4b0-5ccad46f07aa"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const o = $json;\nreturn {\n  source: 'WooCommerce',\n  orderId: String(o.id),\n  reference: String(o.number || o.id),\n  customerName: [o.billing?.first_name, o.billing?.last_name].filter(Boolean).join(' '),\n  phone: String(o.billing?.phone || '').replace(/\\D/g, '').replace(/^0(?=5)/, '966'),\n  city: o.shipping?.city || o.billing?.city || '',\n  items: (o.line_items || []).map((i) => i.name + ' x' + i.quantity).join(', '),\n  total: Number(o.total || 0),\n  currency: o.currency || 'SAR',\n  createdAt: o.date_created_gmt ? o.date_created_gmt + 'Z' : new Date().toISOString(),\n};"
+      },
+      "id": "6c00a5c4-07e2-4070-839c-3ef8ceb60cea",
+      "name": "Normalize Woo order",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af3e2d01-fe52-4f5e-a977-04d6d032dc3a",
+              "name": "sheetId",
+              "value": "YOUR_GOOGLE_SHEET_ID",
+              "type": "string"
+            },
+            {
+              "id": "67975678-d919-44f1-a5a7-6ca36548a4a5",
+              "name": "waPhoneNumberId",
+              "value": "YOUR_WA_PHONE_NUMBER_ID",
+              "type": "string"
+            },
+            {
+              "id": "ec6dd79f-7612-4245-ad89-f57934dda4a4",
+              "name": "waTemplate",
+              "value": "order_confirmation",
+              "type": "string"
+            },
+            {
+              "id": "1867f4a1-0a89-47ee-8e78-72016fe9036a",
+              "name": "waTemplateLang",
+              "value": "ar",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "b9825b09-1b5f-418f-a997-3f629394869b",
+      "name": "Add settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.sheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Orders",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order ID": "={{ $json.reference }}",
+            "Source": "={{ $json.source }}",
+            "Customer": "={{ $json.customerName }}",
+            "Phone": "={{ $json.phone }}",
+            "City": "={{ $json.city }}",
+            "Items": "={{ $json.items }}",
+            "Total": "={{ $json.total }}",
+            "Currency": "={{ $json.currency }}",
+            "Created at": "={{ $json.createdAt }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "fa57865e-acae-4cbd-81e5-ce1e7ab851e4",
+      "name": "Append order to sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1680,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "c97696bf9ff145",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.waPhoneNumberId }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"{{ $json.waTemplate }}\",\n    \"language\": { \"code\": \"{{ $json.waTemplateLang }}\" },\n    \"components\": [{\n      \"type\": \"body\",\n      \"parameters\": [\n        { \"type\": \"text\", \"text\": \"{{ $json.customerName || 'عميلنا العزيز' }}\" },\n        { \"type\": \"text\", \"text\": \"{{ $json.reference }}\" },\n        { \"type\": \"text\", \"text\": \"{{ $json.total }} {{ $json.currency }}\" }\n      ]\n    }]\n  }\n}",
+        "options": {}
+      },
+      "id": "60f7a449-0c6c-4447-af78-c7e6ae42c7b1",
+      "name": "Send WhatsApp confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        500
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "WhatsApp Cloud API (Bearer token)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Salla webhook": {
+      "main": [
+        [
+          {
+            "node": "Verify Salla signature",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Salla signature": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Salla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acknowledge Salla": {
+      "main": [
+        [
+          {
+            "node": "Is order.created?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is order.created?": {
+      "main": [
+        [
+          {
+            "node": "Normalize Salla order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce order created": {
+      "main": [
+        [
+          {
+            "node": "Normalize Woo order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Salla order": {
+      "main": [
+        [
+          {
+            "node": "Add settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Woo order": {
+      "main": [
+        [
+          {
+            "node": "Add settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add settings": {
+      "main": [
+        [
+          {
+            "node": "Append order to sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send WhatsApp confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "f4477f34-e30b-4c5b-a587-396ef545de3b",
+  "tags": [
+    {
+      "name": "e-commerce"
+    },
+    {
+      "name": "whatsapp"
+    },
+    {
+      "name": "google-sheets"
+    }
+  ]
+}

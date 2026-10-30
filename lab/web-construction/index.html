@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sakhr Contracting — a fictional Saudi general contractor. Concept website with project gallery, animated stats and a tender request form." />
+    <meta name="theme-color" content="#121314" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>Sakhr Contracting — Concept project</title>
+    <script type="module" crossorigin src="./assets/index-DQlZIP6O.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-ccj4KbhA.css">
+  </head>
+  <body>
+    <a class="skip" href="#main" data-i18n="skip"></a>
+    <header class="bar" id="top">
+      <div class="wrap bar__row">
+        <a class="logo" href="#main">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 34 20 6l16 28z" fill="#ffc400" /><path d="M14 34l6-10 6 10z" fill="#121314" /></svg>
+          <span><strong data-i18n="brand"></strong><small data-i18n="brandSub"></small></span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#services" data-i18n="nav.services"></a>
+          <a href="#projects" data-i18n="nav.projects"></a>
+          <a href="#process" data-i18n="nav.process"></a>
+          <a href="#tender" data-i18n="nav.tender"></a>
+        </nav>
+        <button class="lang" type="button" id="lang-toggle" data-i18n="langSwitch" data-i18n-aria="langAria"></button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero__bg" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2000&q=70" alt="" />
+        </div>
+        <div class="wrap hero__inner">
+          <p class="tagline" data-i18n="hero.kicker"></p>
+          <h1 class="hero__title" aria-describedby="hero-sub">
+            <span class="line"><span data-i18n="hero.l1"></span></span>
+            <span class="line"><span data-i18n="hero.l2"></span></span>
+            <span class="line line--accent"><span data-i18n="hero.l3"></span></span>
+          </h1>
+          <p class="hero__sub" id="hero-sub" data-i18n="hero.body"></p>
+          <div class="hero__cta">
+            <a class="btn btn--yellow" href="#tender" data-i18n="hero.cta"></a>
+            <a class="btn btn--ghost" href="#projects" data-i18n="hero.secondary"></a>
+          </div>
+        </div>
+        <div class="hazard" aria-hidden="true"></div>
+      </section>
+
+      <section class="stats" aria-labelledby="stats-title">
+        <div class="wrap">
+          <h2 class="sr-only" id="stats-title" data-i18n="stats.title"></h2>
+          <dl class="stats__grid" id="stats"></dl>
+          <p class="fine" data-i18n="stats.note"></p>
+        </div>
+      </section>
+
+      <section class="section services" id="services">
+        <div class="wrap">
+          <header class="head">
+            <p class="tagline" data-i18n="services.kicker"></p>
+            <h2 data-i18n="services.title"></h2>
+          </header>
+          <ul class="svc" id="services-list"></ul>
+        </div>
+      </section>
+
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <div class="projects__pin">
+          <div class="wrap projects__head">
+            <div>
+              <p class="tagline" data-i18n="projects.kicker"></p>
+              <h2 id="projects-title" data-i18n="projects.title"></h2>
+            </div>
+            <div class="filters" role="group" data-i18n-aria="projects.filterLabel" id="project-filters"></div>
+          </div>
+          <div class="track-wrap">
+            <ul class="track" id="project-track"></ul>
+          </div>
+          <p class="wrap fine" data-i18n="projects.note"></p>
+        </div>
+      </section>
+
+      <section class="section process" id="process">
+        <div class="wrap process__grid">
+          <header class="head head--sticky">
+            <p class="tagline" data-i18n="process.kicker"></p>
+            <h2 data-i18n="process.title"></h2>
+            <p class="muted" data-i18n="process.body"></p>
+          </header>
+          <div class="timeline">
+            <div class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></div>
+            <ol id="process-list"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="marquee" aria-label="Sectors">
+        <div class="marquee__track" id="marquee"></div>
+      </section>
+
+      <section class="section tender" id="tender">
+        <div class="wrap tender__grid">
+          <div>
+            <p class="tagline" data-i18n="tender.kicker"></p>
+            <h2 data-i18n="tender.title"></h2>
+            <p class="muted" data-i18n="tender.body"></p>
+            <ul class="checks" id="tender-points"></ul>
+          </div>
+          <div class="panel">
+            <form id="tender-form" novalidate>
+              <div class="grid2">
+                <div class="fld"><label for="t-company" data-i18n="form.company"></label><input id="t-company" name="company" autocomplete="organization" /><p class="err" id="t-company-err"></p></div>
+                <div class="fld"><label for="t-name" data-i18n="form.name"></label><input id="t-name" name="name" autocomplete="name" /><p class="err" id="t-name-err"></p></div>
+                <div class="fld"><label for="t-email" data-i18n="form.email"></label><input id="t-email" name="email" type="email" dir="ltr" autocomplete="email" /><p class="err" id="t-email-err"></p></div>
+                <div class="fld"><label for="t-phone" data-i18n="form.phone"></label><input id="t-phone" name="phone" type="tel" dir="ltr" autocomplete="tel" placeholder="05XXXXXXXX" /><p class="err" id="t-phone-err"></p></div>
+                <div class="fld"><label for="t-type" data-i18n="form.type"></label><select id="t-type" name="type"></select><p class="err" id="t-type-err"></p></div>
+                <div class="fld"><label for="t-budget" data-i18n="form.budget"></label><select id="t-budget" name="budget"></select><p class="err" id="t-budget-err"></p></div>
+                <div class="fld"><label for="t-city" data-i18n="form.city"></label><input id="t-city" name="city" /><p class="err" id="t-city-err"></p></div>
+                <div class="fld"><label for="t-start" data-i18n="form.start"></label><input id="t-start" name="start" type="month" /><p class="err" id="t-start-err"></p></div>
+              </div>
+              <div class="fld"><label for="t-scope" data-i18n="form.scope"></label><textarea id="t-scope" name="scope" rows="4"></textarea><p class="err" id="t-scope-err"></p></div>
+              <button class="btn btn--yellow btn--block" type="submit" data-i18n="form.submit"></button>
+              <p class="fine" data-i18n="form.demo"></p>
+            </form>
+            <div class="done" id="tender-done" hidden tabindex="-1">
+              <div class="done__stamp" aria-hidden="true">RFQ</div>
+              <h3 data-i18n="form.successTitle"></h3>
+              <p id="tender-done-body"></p>
+              <button class="btn btn--ghost-dark" type="button" id="tender-again" data-i18n="form.again"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot__row">
+        <p class="foot__brand" data-i18n="brand"></p>
+        <div>
+          <p><span class="badge" data-i18n="footer.badge"></span> <span data-i18n="footer.rights"></span></p>
+          <p class="fine" data-i18n="footer.note"></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

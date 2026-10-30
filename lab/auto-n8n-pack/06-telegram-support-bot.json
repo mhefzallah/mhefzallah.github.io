@@ -1,0 +1,497 @@
+{
+  "name": "Telegram support bot — FAQ, order lookup, AI answers, human handoff",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Telegram support bot\nCommands: `/start`, `/order 1042`, `/human`. Anything else is answered by Claude from your FAQ (edit it in **Bot settings**).\nCredentials: Telegram bot token, Store API, and an **Anthropic** header credential (`x-api-key`).",
+        "height": 230,
+        "width": 460,
+        "color": 5
+      },
+      "id": "1ffa8e84-d183-473c-a0ee-45b0c971f02d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "9d6ddffa-fa7c-45bb-84ba-e3c366342424",
+      "name": "Telegram message",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      },
+      "webhookId": "2fcb3ab6-951c-492f-9fbb-f0bd64ac53b1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83773c71-cc2a-4588-a579-bcfe95904381",
+              "name": "storeApiBase",
+              "value": "https://api.your-store.sa/v1",
+              "type": "string"
+            },
+            {
+              "id": "02bf3548-c8fd-49ec-b5d0-f35c05064ce9",
+              "name": "supportChatId",
+              "value": "YOUR_SUPPORT_GROUP_CHAT_ID",
+              "type": "string"
+            },
+            {
+              "id": "d50b4fb5-5a57-433d-b5f2-f4a9a01c7942",
+              "name": "claudeModel",
+              "value": "claude-opus-5-5",
+              "type": "string"
+            },
+            {
+              "id": "b5e03eb2-24e7-4fc1-8478-a9b667f8fd2d",
+              "name": "faq",
+              "value": "Hours: daily 9:00–23:00. Delivery: same day in Riyadh before 2 pm, 2–4 days elsewhere, free over 200 SAR. Returns: within 15 days, unused, with invoice.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "80d8cb0f-4662-4ffd-b72b-90421deef67b",
+      "name": "Bot settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "r-start",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "r-order",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/order",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "order"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "r-human",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/human",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "human"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "ai"
+        }
+      },
+      "id": "694f10dc-e02f-4709-942d-5cb90f71bc40",
+      "name": "Route message",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "=أهلاً {{ $json.message.from.first_name }} 👋\nWelcome! Send <b>/order 1042</b> to track an order, <b>/human</b> to talk to our team, or just ask a question.",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "59b00f4a-14dd-4aed-95b2-221c5ce2257b",
+      "name": "Send welcome",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        60
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const m = String($json.message.text || '').match(/\\d{3,10}/);\nreturn { ...$json, orderNo: m ? m[0] : null };"
+      },
+      "id": "0238960e-4199-40ac-8739-a836c86d88fa",
+      "name": "Parse order number",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.storeApiBase }}/orders/{{ $json.orderNo }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "5e556b38-7f20-4669-b81a-2a976b5c587a",
+      "name": "Look up order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        220
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "Store API (Bearer token)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Parse order number').item.json.message.chat.id }}",
+        "text": "={{ $json.status ? '📦 Order <b>#' + $('Parse order number').item.json.orderNo + '</b>: ' + $json.status + ($json.eta ? '\\nETA: ' + $json.eta : '') : 'I could not find that order. Please check the number or send /human.' }}",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "2c9dda03-e5d3-41c6-b796-06bbdda22d4a",
+      "name": "Reply with order status",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1440,
+        220
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.supportChatId }}",
+        "text": "=🙋 Handoff request from <b>{{ $json.message.from.first_name }}</b> (@{{ $json.message.from.username || \"no username\" }})\nChat ID: <code>{{ $json.message.chat.id }}</code>",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "c0bc050a-fd86-4f83-8ca7-a4bb58a17159",
+      "name": "Notify support team",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        380
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Route message').item.json.message.chat.id }}",
+        "text": "=Done — a team member will reply here shortly. 🙏",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "e80be0fe-af1c-49d2-bf33-a385d7649b46",
+      "name": "Confirm handoff",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1200,
+        380
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2026-10-21"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  model: $json.claudeModel,\n  max_tokens: 1024,\n  output_config: { effort: \"low\" },\n  system: \"You are a friendly support agent for an online store. Answer in the customer's language (Arabic or English), in at most 3 sentences, using only this FAQ. If the FAQ does not cover it, suggest /human.\\nFAQ: \" + $json.faq,\n  messages: [{ role: \"user\", content: $json.message.text }]\n}) }}",
+        "options": {}
+      },
+      "id": "7b3d976c-f815-4189-966c-75709e8a7cf1",
+      "name": "Ask Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        560
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "Anthropic API (x-api-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Route message').item.json.message.chat.id }}",
+        "text": "={{ ($json.content || []).filter(b => b.type === 'text').map(b => b.text).join('') || 'Sorry, I could not answer that. Send /human to reach our team.' }}",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "d93a0bd7-23f2-4fae-811f-d8f5de7f784f",
+      "name": "Send AI answer",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1200,
+        560
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "e25a467b9e334f",
+          "name": "Telegram bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram message": {
+      "main": [
+        [
+          {
+            "node": "Bot settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bot settings": {
+      "main": [
+        [
+          {
+            "node": "Route message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route message": {
+      "main": [
+        [
+          {
+            "node": "Send welcome",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse order number",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify support team",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ask Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse order number": {
+      "main": [
+        [
+          {
+            "node": "Look up order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Look up order": {
+      "main": [
+        [
+          {
+            "node": "Reply with order status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify support team": {
+      "main": [
+        [
+          {
+            "node": "Confirm handoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask Claude": {
+      "main": [
+        [
+          {
+            "node": "Send AI answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "94edce3c-085b-429b-934f-815658d1087c",
+  "tags": [
+    {
+      "name": "telegram"
+    },
+    {
+      "name": "support"
+    },
+    {
+      "name": "ai"
+    }
+  ]
+}

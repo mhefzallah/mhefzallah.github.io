@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Qahwa Lane Roastery — Support Widget Demo (Concept)</title>
+    <meta name="description" content="Concept project: an embeddable bilingual AI support chat widget with quick replies, lead capture and WhatsApp handoff, shown on a fictional coffee roastery website." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23c8553d'/%3E%3Cellipse cx='16' cy='16' rx='6' ry='9' fill='%232b1b14'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Alexandria:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-Bd-BS_Vk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CGTMbkXB.css">
+  </head>
+  <body>
+    <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+    <header class="nav">
+      <a class="logo" href="#top" aria-label="Qahwa Lane">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#c8553d"/><path d="M20 8c-6 4-6 20 0 24 6-4 6-20 0-24z" fill="#2b1b14"/><path d="M20 9c-2 6 2 16 0 22" stroke="#c8553d" stroke-width="1.6" fill="none"/></svg>
+        <span><b data-i18n="brand">Qahwa Lane</b><small data-i18n="brandSub">Roastery · Riyadh</small></span>
+      </a>
+      <nav aria-label="Main">
+        <a href="#coffee" data-i18n="navCoffee">Coffee</a>
+        <a href="#subscribe" data-i18n="navSub">Subscription</a>
+        <a href="#visit" data-i18n="navVisit">Visit</a>
+        <a href="#embed" class="dev" data-i18n="navEmbed">The widget</a>
+      </nav>
+      <button id="langBtn" class="lang" type="button">العربية</button>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="kicker" data-i18n="kicker">Specialty coffee · roasted every Sunday</p>
+          <h1 data-i18n="heroTitle">Roasted on Olaya. Poured everywhere.</h1>
+          <p class="lede" data-i18n="heroLede">Single-origin beans from Ethiopia, Colombia and Yemen, roasted in small batches and delivered the same day across Riyadh.</p>
+          <div class="cta">
+            <a class="btn" href="#coffee" data-i18n="heroCta">Shop beans</a>
+            <button class="btn ghost" type="button" id="askBtn" data-i18n="heroAsk">Ask our assistant</button>
+          </div>
+          <ul class="facts">
+            <li><b>48h</b><span data-i18n="fact1">from roaster to cup</span></li>
+            <li><b>12</b><span data-i18n="fact2">origins this season</span></li>
+            <li><b>2pm</b><span data-i18n="fact3">same-day cut-off</span></li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div>
+          <svg class="bag b1" viewBox="0 0 120 170"><path d="M14 22h92l8 140H6z" fill="#2b1b14"/><path d="M14 22l12-14h68l12 14z" fill="#3d2a20"/><rect x="26" y="62" width="68" height="62" rx="6" fill="#f4ebe0"/><text x="60" y="88" text-anchor="middle" font-size="11" font-weight="800" fill="#2b1b14" font-family="Bricolage Grotesque, sans-serif">GUJI</text><text x="60" y="106" text-anchor="middle" font-size="8" fill="#c8553d" font-family="sans-serif">ETHIOPIA</text></svg>
+          <svg class="bag b2" viewBox="0 0 120 170"><path d="M14 22h92l8 140H6z" fill="#c8553d"/><path d="M14 22l12-14h68l12 14z" fill="#a8432f"/><rect x="26" y="62" width="68" height="62" rx="34" fill="#fffaf3"/><text x="60" y="97" text-anchor="middle" font-size="11" font-weight="800" fill="#2b1b14" font-family="Bricolage Grotesque, sans-serif">HUILA</text></svg>
+          <svg class="cup" viewBox="0 0 160 120"><ellipse cx="80" cy="108" rx="70" ry="10" fill="#2b1b14" opacity=".15"/><path d="M22 30h104l-10 64a18 18 0 0 1-18 14H50a18 18 0 0 1-18-14z" fill="#fffaf3" stroke="#2b1b14" stroke-width="4"/><path d="M126 44h10a14 14 0 0 1 0 28h-14" fill="none" stroke="#2b1b14" stroke-width="4"/><ellipse cx="74" cy="30" rx="52" ry="8" fill="#6b3f2a"/><path d="M60 26c6-3 22-3 28 0-6 4-22 4-28 0z" fill="#f4ebe0"/></svg>
+        </div>
+      </section>
+
+      <section id="coffee" class="section">
+        <h2 data-i18n="coffeeTitle">This week’s roasts</h2>
+        <div class="grid" id="products"></div>
+      </section>
+
+      <section id="subscribe" class="band">
+        <div>
+          <h2 data-i18n="subTitle">Never run out.</h2>
+          <p data-i18n="subBody">2 × 250 g of fresh beans every month for 115 SAR, with free delivery. Pause or cancel anytime.</p>
+        </div>
+        <button class="btn light" type="button" data-ask="subscription" data-i18n="subCta">Ask about the subscription</button>
+      </section>
+
+      <section id="visit" class="section visit">
+        <div>
+          <h2 data-i18n="visitTitle">Visit the roastery</h2>
+          <p data-i18n="visitAddr">Al Olaya St, Riyadh (fictional address)</p>
+          <p data-i18n="visitHours">Daily 7:00–23:00 · Friday from 13:00</p>
+        </div>
+        <div class="map" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section id="embed" class="section dev-section">
+        <p class="kicker" data-i18n="devKicker">For developers</p>
+        <h2 data-i18n="devTitle">One script tag. Any website.</h2>
+        <div class="dev-grid">
+          <pre class="code" dir="ltr" aria-label="Embed code"><code>&lt;script
+  src="https://cdn.example.com/widget.js"
+  data-whatsapp="9665XXXXXXXX"
+  data-accent="#c8553d"
+  data-lang="auto"
+  data-endpoint="/api/chat"   <span class="c">// optional LLM backend</span>
+  defer&gt;&lt;/script&gt;</code></pre>
+          <ul class="features">
+            <li data-i18n="f1">Shadow DOM: host CSS can’t break it, and it can’t break the host</li>
+            <li data-i18n="f2">Arabic & English with RTL, following the page language</li>
+            <li data-i18n="f3">Intent engine with quick replies and order tracking (works with no AI)</li>
+            <li data-i18n="f4">Lead capture with Saudi mobile validation → your CRM endpoint</li>
+            <li data-i18n="f5">One-tap handoff to WhatsApp with the conversation summary</li>
+            <li data-i18n="f6">Pluggable LLM backend (Claude) with automatic fallback</li>
+          </ul>
+        </div>
+        <div class="leads">
+          <h3 data-i18n="leadsTitle">Leads captured in this demo</h3>
+          <p class="muted" data-i18n="leadsHint">Open the chat, choose “Office / wholesale” and submit the form. Leads are stored in your browser only.</p>
+          <table>
+            <thead><tr><th data-i18n="thName">Name</th><th data-i18n="thPhone">Mobile</th><th data-i18n="thInterest">Interest</th><th data-i18n="thTime">Time</th></tr></thead>
+            <tbody id="leadRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span class="pill">Concept</span>
+      <span data-i18n="footer">Concept project. Qahwa Lane is a fictional business; prices and orders are demo data. Built by Mohammed Hefzallah.</span>
+    </footer>
+
+    <script>
+      window.SupportWidgetConfig = {
+        business: {
+          name: { en: 'Qahwa Lane Roastery', ar: 'محمصة درب القهوة' },
+          whatsapp: '966500000000',
+          hours: { en: 'Daily 7:00–23:00 (Friday from 13:00)', ar: 'يومياً 7:00–23:00 (الجمعة من 13:00)' },
+          address: { en: 'Al Olaya St, Riyadh (fictional)', ar: 'شارع العليا، الرياض (عنوان خيالي)' }
+        },
+        greetingDelayMs: 1800
+      };
+    </script>
+    <script src="./widget.js" data-accent="#c8553d" data-lang="auto" defer></script>
+  </body>
+</html>

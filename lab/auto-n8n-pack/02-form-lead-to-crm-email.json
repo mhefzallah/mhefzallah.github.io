@@ -1,0 +1,259 @@
+{
+  "name": "Website form lead → HubSpot CRM + emails",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Form lead → CRM\nPOST your form to **Lead form webhook** (JSON or form-encoded): `name, email, phone, company, message, website` (`website` is a hidden honeypot field).\nConnect HubSpot (private app token), SMTP and Gmail.",
+        "height": 240,
+        "width": 440,
+        "color": 5
+      },
+      "id": "c361274d-353b-48d6-b0a0-3392d1c1f1eb",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leads",
+        "responseMode": "onReceived",
+        "options": {
+          "responseData": "Thanks! We will contact you shortly."
+        }
+      },
+      "id": "5483293e-4b81-4a23-ae42-7cadaa7eee91",
+      "name": "Lead form webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "64f91597-8e3d-4b17-b9ee-8d4ee306ae7d"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const b = $json.body || $json;\nconst email = String(b.email || '').trim().toLowerCase();\nlet phone = String(b.phone || '').replace(/[\\s()-]/g, '').replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));\nif (/^05\\d{8}$/.test(phone)) phone = '+966' + phone.slice(1);\nif (/^9665\\d{8}$/.test(phone)) phone = '+' + phone;\nconst [firstName, ...rest] = String(b.name || '').trim().split(/\\s+/);\nconst spam = Boolean(b.website) || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email);\nreturn {\n  firstName: firstName || '',\n  lastName: rest.join(' '),\n  email,\n  phone,\n  company: String(b.company || ''),\n  message: String(b.message || '').slice(0, 2000),\n  lang: /[\\u0600-\\u06FF]/.test(String(b.message || b.name || '')) ? 'ar' : 'en',\n  spam,\n  receivedAt: new Date().toISOString(),\n};"
+      },
+      "id": "5d43a425-3edf-4cf5-afc6-71b0ef7b61da",
+      "name": "Validate & normalize",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "1896fbdb-88e3-4596-8c49-b4b6a83b692d",
+              "leftValue": "={{ $json.spam }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "055df74a-23a3-4ffc-ab3d-4096a0640a5d",
+      "name": "Is genuine lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "resource": "contact",
+        "operation": "upsert",
+        "email": "={{ $json.email }}",
+        "additionalFields": {
+          "firstName": "={{ $json.firstName }}",
+          "lastName": "={{ $json.lastName }}",
+          "phoneNumber": "={{ $json.phone }}",
+          "companyName": "={{ $json.company }}",
+          "message": "={{ $json.message }}",
+          "leadStatus": "NEW"
+        },
+        "options": {}
+      },
+      "id": "99b529d7-da81-4363-a7ed-6df0bef0133b",
+      "name": "Upsert HubSpot contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        200
+      ],
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "e290a81f583244",
+          "name": "HubSpot private app"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "leads@your-domain.sa",
+        "toEmail": "sales@your-domain.sa",
+        "subject": "=New lead: {{ $('Validate & normalize').item.json.firstName }} ({{ $('Validate & normalize').item.json.company || 'no company' }})",
+        "emailFormat": "html",
+        "html": "=<h2>New website lead</h2><p><b>Name:</b> {{ $('Validate & normalize').item.json.firstName }} {{ $('Validate & normalize').item.json.lastName }}<br><b>Email:</b> {{ $('Validate & normalize').item.json.email }}<br><b>Phone:</b> {{ $('Validate & normalize').item.json.phone }}<br><b>Company:</b> {{ $('Validate & normalize').item.json.company }}</p><p>{{ $('Validate & normalize').item.json.message }}</p>",
+        "options": {}
+      },
+      "id": "2e74bf95-1687-47fd-9161-7eafaf644a98",
+      "name": "Email sales team",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        200
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "54a0ee05d6b344",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "={{ $json.lang === 'ar' ? 'شكراً لتواصلك معنا' : 'Thanks for reaching out' }}",
+        "emailType": "html",
+        "message": "={{ $json.lang === 'ar' ? '<div dir=\"rtl\">مرحباً ' + $json.firstName + '،<br>استلمنا رسالتك وسيتواصل معك أحد مستشارينا خلال يوم عمل واحد.</div>' : 'Hi ' + $json.firstName + ',<br>We received your message and one of our consultants will contact you within one working day.' }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "e5adf319-049d-4887-924a-9a89313c2bd5",
+      "name": "Auto-reply to lead",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        400
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3dceb227cb0b4f",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "0f682809-463f-44e5-90a1-db1f8337d624",
+      "name": "Drop spam",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        580
+      ]
+    }
+  ],
+  "connections": {
+    "Lead form webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate & normalize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & normalize": {
+      "main": [
+        [
+          {
+            "node": "Is genuine lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is genuine lead?": {
+      "main": [
+        [
+          {
+            "node": "Upsert HubSpot contact",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Auto-reply to lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Drop spam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert HubSpot contact": {
+      "main": [
+        [
+          {
+            "node": "Email sales team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "6c8d0eae-4cd9-417a-b864-2b60962165cf",
+  "tags": [
+    {
+      "name": "crm"
+    },
+    {
+      "name": "lead-generation"
+    },
+    {
+      "name": "email"
+    }
+  ]
+}

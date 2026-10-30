@@ -1,0 +1,254 @@
+{
+  "name": "Daily sales report → email + WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Daily sales report\nRuns every day at 21:00 (Asia/Riyadh). Reads the **Orders** sheet filled by the order workflow, builds totals and top products, then emails an HTML report and sends a short WhatsApp summary to the owner.",
+        "height": 220,
+        "width": 440,
+        "color": 5
+      },
+      "id": "cb9bd5b4-e177-4e40-8d28-fd5899c6513d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 21 * * *"
+            }
+          ]
+        }
+      },
+      "id": "75f83f8f-3996-4828-a3ac-b06182ff5f9f",
+      "name": "Every day 21:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af3e2d01-fe52-4f5e-a977-04d6d032dc3a",
+              "name": "sheetId",
+              "value": "YOUR_GOOGLE_SHEET_ID",
+              "type": "string"
+            },
+            {
+              "id": "0217b66d-b59d-4682-8596-685487477463",
+              "name": "ownerEmail",
+              "value": "owner@your-domain.sa",
+              "type": "string"
+            },
+            {
+              "id": "fe7ffe9a-56df-4254-9005-254cbb45ac39",
+              "name": "ownerWhatsApp",
+              "value": "9665XXXXXXXX",
+              "type": "string"
+            },
+            {
+              "id": "67975678-d919-44f1-a5a7-6ca36548a4a5",
+              "name": "waPhoneNumberId",
+              "value": "YOUR_WA_PHONE_NUMBER_ID",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "140d1f27-574e-45b8-896d-354b39a5b810",
+      "name": "Report settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.sheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Orders",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "7702ab62-b9d3-43f2-987a-bc668a146f46",
+      "name": "Read orders sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        720,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "c97696bf9ff145",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tz = 'Asia/Riyadh';\nconst day = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(new Date(d));\nconst today = day(Date.now());\nconst rows = $input.all().map((i) => i.json).filter((r) => r['Created at'] && day(r['Created at']) === today);\nconst total = rows.reduce((s, r) => s + Number(r.Total || 0), 0);\nconst byProduct = {};\nfor (const r of rows) for (const part of String(r.Items || '').split(', ')) {\n  const m = part.match(/^(.*) x(\\d+)$/);\n  if (m) byProduct[m[1]] = (byProduct[m[1]] || 0) + Number(m[2]);\n}\nconst top = Object.entries(byProduct).sort((a, b) => b[1] - a[1]).slice(0, 3);\nconst bySource = rows.reduce((acc, r) => ((acc[r.Source] = (acc[r.Source] || 0) + 1), acc), {});\nconst fmt = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });\nconst settings = $('Report settings').first().json;\nconst html = '<h2>Sales report ' + today + '</h2>' +\n  '<p><b>Orders:</b> ' + rows.length + '<br><b>Revenue:</b> ' + fmt(total) + ' SAR<br><b>Average order:</b> ' + fmt(rows.length ? total / rows.length : 0) + ' SAR</p>' +\n  '<h3>Top products</h3><ol>' + top.map(([p, q]) => '<li>' + p + ' — ' + q + '</li>').join('') + '</ol>' +\n  '<h3>By channel</h3><ul>' + Object.entries(bySource).map(([s, c]) => '<li>' + s + ': ' + c + '</li>').join('') + '</ul>';\nconst text = '📊 ' + today + '\\nالطلبات: ' + rows.length + '\\nالمبيعات: ' + fmt(total) + ' ر.س\\nالأكثر مبيعاً: ' + (top[0] ? top[0][0] : '—');\nreturn [{ json: { today, orders: rows.length, total, html, text, ...settings } }];"
+      },
+      "id": "19df1907-962e-42a4-9cf6-25ea9686e0d6",
+      "name": "Build report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.ownerEmail }}",
+        "subject": "=Daily sales report — {{ $json.today }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "c5140773-87a8-4070-b14d-05318408af33",
+      "name": "Email report",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        200
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3dceb227cb0b4f",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.waPhoneNumberId }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: \"whatsapp\", to: $json.ownerWhatsApp, type: \"text\", text: { body: $json.text } }) }}",
+        "options": {}
+      },
+      "id": "bb8b9557-013a-49f5-bc85-2e20b4b841df",
+      "name": "WhatsApp summary to owner",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        400
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "WhatsApp Cloud API (Bearer token)"
+        }
+      },
+      "notes": "Free-form text works inside the 24h customer-service window; otherwise use an approved template.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Every day 21:00": {
+      "main": [
+        [
+          {
+            "node": "Report settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Report settings": {
+      "main": [
+        [
+          {
+            "node": "Read orders sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read orders sheet": {
+      "main": [
+        [
+          {
+            "node": "Build report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build report": {
+      "main": [
+        [
+          {
+            "node": "Email report",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp summary to owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "24e322e7-3b46-4504-94f1-0cc69371434a",
+  "tags": [
+    {
+      "name": "reporting"
+    },
+    {
+      "name": "google-sheets"
+    },
+    {
+      "name": "whatsapp"
+    }
+  ]
+}

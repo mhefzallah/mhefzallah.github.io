@@ -779,3 +779,6 @@ tbody tr:hover { background: #FAFBFA; }
 .client__mark--dark { background: #06261F; border-color: #06261F; }
 .client__mark--mono { background: linear-gradient(135deg, #06261F, #0B3B2F); border-color: #06261F; }
 .client__mark--mono span { font: 800 26px/1 var(--head); letter-spacing: .06em; color: var(--gold); }
+
+.tag--concept { background: rgba(201, 162, 74, .14); color: #8a6a1f; border-color: rgba(201, 162, 74, .45); }
+.labchips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }

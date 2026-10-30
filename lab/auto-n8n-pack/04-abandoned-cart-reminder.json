@@ -1,0 +1,371 @@
+{
+  "name": "Abandoned cart → WhatsApp reminder with coupon",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Abandoned-cart recovery\nYour store posts `abandoned.cart` events to **Cart webhook**. After 1 hour, the workflow checks whether the customer ordered; if not, it sends an approved WhatsApp template with a coupon and logs it to a sheet.\nOnly message customers who opted in to WhatsApp marketing.",
+        "height": 250,
+        "width": 460,
+        "color": 5
+      },
+      "id": "d733ff37-f434-4048-bb9a-85f874a602e0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "carts/abandoned",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "ca0be38c-b2cb-4e3d-b71f-4ad1b7bddb77",
+      "name": "Cart webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "31ca9db1-f8d1-4c1b-90e9-781ceb1293f8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83773c71-cc2a-4588-a579-bcfe95904381",
+              "name": "storeApiBase",
+              "value": "https://api.your-store.sa/v1",
+              "type": "string"
+            },
+            {
+              "id": "56217ce0-cce8-4d8c-8309-359f89694ae8",
+              "name": "coupon",
+              "value": "COMEBACK10",
+              "type": "string"
+            },
+            {
+              "id": "67975678-d919-44f1-a5a7-6ca36548a4a5",
+              "name": "waPhoneNumberId",
+              "value": "YOUR_WA_PHONE_NUMBER_ID",
+              "type": "string"
+            },
+            {
+              "id": "8319f2d4-c1e0-418b-be47-5b5817cfc542",
+              "name": "waTemplate",
+              "value": "cart_reminder",
+              "type": "string"
+            },
+            {
+              "id": "af3e2d01-fe52-4f5e-a977-04d6d032dc3a",
+              "name": "sheetId",
+              "value": "YOUR_GOOGLE_SHEET_ID",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "dbb8b821-48eb-4214-9731-5442d76ee612",
+      "name": "Cart settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const c = $json.body?.data || $json.body || {};\nreturn {\n  cartId: String(c.id || ''),\n  customerName: c.customer?.name || '',\n  phone: String(c.customer?.mobile || c.customer?.phone || '').replace(/\\D/g, '').replace(/^0(?=5)/, '966'),\n  optIn: c.customer?.whatsapp_opt_in !== false,\n  total: Number(c.total?.amount ?? c.total ?? 0),\n  checkoutUrl: c.checkout_url || '',\n  abandonedAt: c.updated_at || new Date().toISOString(),\n  storeApiBase: $json.storeApiBase, coupon: $json.coupon, waPhoneNumberId: $json.waPhoneNumberId, waTemplate: $json.waTemplate, sheetId: $json.sheetId,\n};"
+      },
+      "id": "bf1ce287-b966-49a3-8356-c1b9b1598e27",
+      "name": "Normalize cart",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "hours"
+      },
+      "id": "419e76ef-cd59-47c3-96b5-af8111a87066",
+      "name": "Wait 1 hour",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        300
+      ],
+      "webhookId": "1362236f-6339-4a8f-b843-1af585eec92a"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.storeApiBase }}/orders",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "customer_phone",
+              "value": "={{ $json.phone }}"
+            },
+            {
+              "name": "created_after",
+              "value": "={{ $json.abandonedAt }}"
+            }
+          ]
+        }
+      },
+      "id": "641138ba-6347-443e-b170-7af89efc5266",
+      "name": "Check for a new order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "Store API (Bearer token)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "0dec701e-7c89-4996-bf10-81d8af911aef",
+              "leftValue": "={{ ($json.data || []).length === 0 && $('Normalize cart').item.json.optIn }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "2cd8bfbb-c9e4-44ea-9c86-ecbd211b5a0b",
+      "name": "Still abandoned?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Normalize cart').item.json.waPhoneNumberId }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  messaging_product: \"whatsapp\",\n  to: $('Normalize cart').item.json.phone,\n  type: \"template\",\n  template: {\n    name: $('Normalize cart').item.json.waTemplate,\n    language: { code: \"ar\" },\n    components: [\n      { type: \"body\", parameters: [\n        { type: \"text\", text: $('Normalize cart').item.json.customerName || \"عميلنا العزيز\" },\n        { type: \"text\", text: $('Normalize cart').item.json.coupon }\n      ] },\n      { type: \"button\", sub_type: \"url\", index: \"0\", parameters: [{ type: \"text\", text: $('Normalize cart').item.json.cartId }] }\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "id": "09627894-2730-4824-80cb-5c2bb8622684",
+      "name": "Send WhatsApp reminder",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        200
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "WhatsApp Cloud API (Bearer token)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Normalize cart').item.json.sheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Cart reminders",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Cart ID": "={{ $('Normalize cart').item.json.cartId }}",
+            "Phone": "={{ $('Normalize cart').item.json.phone }}",
+            "Total": "={{ $('Normalize cart').item.json.total }}",
+            "Sent at": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "021369ce-73da-4890-a6bb-06ace0e76ebc",
+      "name": "Log reminder",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1920,
+        200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "c97696bf9ff145",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "4ff92051-eb4b-41c8-8404-23244ee90c4e",
+      "name": "Recovered or opted out",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Cart webhook": {
+      "main": [
+        [
+          {
+            "node": "Cart settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cart settings": {
+      "main": [
+        [
+          {
+            "node": "Normalize cart",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize cart": {
+      "main": [
+        [
+          {
+            "node": "Wait 1 hour",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 1 hour": {
+      "main": [
+        [
+          {
+            "node": "Check for a new order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for a new order": {
+      "main": [
+        [
+          {
+            "node": "Still abandoned?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still abandoned?": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp reminder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Recovered or opted out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp reminder": {
+      "main": [
+        [
+          {
+            "node": "Log reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "627127a7-74db-4c58-bba2-f3c961563a64",
+  "tags": [
+    {
+      "name": "e-commerce"
+    },
+    {
+      "name": "whatsapp"
+    },
+    {
+      "name": "marketing"
+    }
+  ]
+}

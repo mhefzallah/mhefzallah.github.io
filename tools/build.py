@@ -217,6 +217,7 @@ def masthead(prefix, active="index.html"):
           </div>
         </div>
         {nl("projects.html", ("Projects", "المشاريع"))}
+        {nl("lab.html", ("Lab", "المعمل"))}
         <a href="{prefix}index.html#experience">{T("Experience", "الخبرة")}</a>
         <a href="#contact">{T("Contact", "تواصل")}</a>
       </nav>
@@ -740,6 +741,98 @@ def case(i, p):
     return head(title, L(*p["outcome"]), f'work/{p["slug"]}.html', pre, og=f'assets/og/{p["slug"]}.jpg', ld=ld) + masthead(pre, "") + body + footer(pre)
 
 
+
+# ----------------------------------------------------------------------------
+# Lab: concept projects built from ../lab/<track>/<slug>/meta.json
+# ----------------------------------------------------------------------------
+LAB_SRC = os.path.join(os.path.dirname(ROOT), "lab")
+LAB_TRACKS = [("websites", ("Websites & landing pages", "مواقع وصفحات هبوط")),
+              ("stores", ("E-commerce stores", "متاجر إلكترونية")),
+              ("dashboards", ("Dashboards & SaaS", "لوحات تحكم وأنظمة SaaS")),
+              ("ai-automation", ("AI & automation", "ذكاء اصطناعي وأتمتة")),
+              ("mobile", ("Mobile apps", "تطبيقات الجوال")),
+              ("wordpress", ("WordPress", "ووردبريس")),
+              ("odoo", ("Odoo modules", "موديولات أودو"))]
+
+
+def lab_items():
+    import glob
+    items = []
+    for f in sorted(glob.glob(os.path.join(LAB_SRC, "*", "*", "meta.json"))):
+        try:
+            m = json.load(open(f, encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        slug = m.get("slug") or os.path.basename(os.path.dirname(f))
+        if not os.path.exists(os.path.join(ROOT, "lab", slug, "index.html")):
+            continue  # only list projects whose demo is published
+        thumb = os.path.join(ROOT, "assets", "lab", slug + ".webp")
+        shot = os.path.join(os.path.dirname(f), "screenshots", "desktop-en.png")
+        if os.path.exists(shot) and (not os.path.exists(thumb) or os.path.getmtime(shot) > os.path.getmtime(thumb)):
+            from PIL import Image
+            os.makedirs(os.path.dirname(thumb), exist_ok=True)
+            im = Image.open(shot).convert("RGB")
+            im.thumbnail((960, 600))
+            im.save(thumb, "WEBP", quality=82)
+        m["slug"], m["track"] = slug, m.get("track") or os.path.basename(os.path.dirname(os.path.dirname(f)))
+        m["has_thumb"] = os.path.exists(thumb)
+        items.append(m)
+    return items
+
+
+def lab_card(prefix, m):
+    up = "../" if LANG == "ar" else ""
+    t = lambda d: escape(d.get(LANG) or d.get("en") or "")
+    img_html = (f'<img src="{prefix}assets/lab/{m["slug"]}.webp" width="960" height="600" alt="{t(m["title"])}" loading="lazy" decoding="async">'
+                if m["has_thumb"] else "")
+    chips = "".join(f'<span class="tech">{escape(v)}</span>' for v in m.get("stack", [])[:6])
+    return f'''
+          <article class="card pcard reveal" data-areas="{m["track"]}">
+            <a class="card__link" href="{up}lab/{m["slug"]}/" target="_blank" rel="noopener">
+              <div class="cover"><div class="cover__bar" aria-hidden="true"><i></i><i></i><i></i></div>{img_html}</div>
+              <div class="card__body">
+                <div class="card__tags"><span class="tag tag--concept">{T("Concept project", "مشروع تجريبي")}</span></div>
+                <h3 class="card__title">{t(m["title"])}</h3>
+                <p class="card__out">{t(m["summary"])}</p>
+                <p class="labchips" dir="ltr">{chips}</p>
+                <span class="card__more">{T("Open live demo", "افتح العرض الحي")} {ICON["arrow"]}</span>
+              </div>
+            </a>
+          </article>'''
+
+
+def lab_page():
+    pre = ""
+    items = lab_items()
+    tracks = [(k, lab) for k, lab in LAB_TRACKS if any(m["track"] == k for m in items)]
+    chips = f'<button type="button" class="chip is-on" data-area="all">{T("All", "الكل")}</button>' + "".join(
+        f'<button type="button" class="chip" data-area="{k}">{T(*lab)}</button>' for k, lab in tracks)
+    body = f'''
+  <main id="main">
+    <section class="page-hero page-hero--short">
+      {PATTERN}
+      <div class="wrap">
+        <p class="kicker kicker--gold">{T("Lab", "المعمل")}</p>
+        <h1 class="page-title">{T("Concept projects", "مشاريع تجريبية")}</h1>
+        <p class="page-lede">{T("Working demos I build to show range across stacks — websites, stores, dashboards, AI and automation. These are concept projects with fictional brands, not client work; my client work is on the Projects page.",
+                               "عروض حيّة أبنيها لأُظهر تنوّع خبرتي في التقنيات — مواقع ومتاجر ولوحات تحكم وذكاء اصطناعي وأتمتة. هذه مشاريع تجريبية بعلامات تجارية خيالية وليست أعمال عملاء؛ أعمال العملاء في صفحة المشاريع.")}</p>
+      </div>
+    </section>
+    <div class="wrap">
+      <div class="toolbar reveal" data-project-filters>
+        <div class="filters" role="group" aria-label="{L("Track", "المسار")}">{chips}</div>
+        <p class="toolbar__count" aria-live="polite"><b data-count>{len(items)}</b> {T("demos", "عرض")}</p>
+      </div>
+      <div class="cards cards--3" data-project-grid>{"".join(lab_card(pre, m) for m in items)}
+      </div>
+      <p class="empty" data-empty hidden>{T("No demo in this track yet.", "لا يوجد عرض في هذا المسار بعد.")}</p>
+    </div>
+  </main>'''
+    return head(L("Lab — concept projects · Mohammed Hefzallah", "المعمل — مشاريع تجريبية · محمد حفظ الله"),
+                L("Live demos of websites, e-commerce stores, dashboards, AI and automation built by Mohammed Hefzallah.",
+                  "عروض حيّة لمواقع ومتاجر ولوحات تحكم وحلول ذكاء اصطناعي وأتمتة من تنفيذ محمد حفظ الله."),
+                "lab.html", pre) + masthead(pre, "lab.html") + body + footer(pre)
+
 def write(rel, html):
     if LANG == "ar":
         rel = os.path.join("ar", rel)
@@ -770,6 +863,7 @@ def main():
     pages += [(f'work/{p["slug"]}.html', (lambda i=i, p=p: case(i, p))) for i, p in enumerate(PROJECTS, 1)]
     pages += [(f'{sec["slug"]}.html', (lambda sec=sec: section_page(sec))) for sec in SECTIONS]
     pages += [("projects.html", projects_page)]
+    pages += [("lab.html", lab_page)]
     for LANG in ("en", "ar"):
         for path, build in pages:
             CUR = path

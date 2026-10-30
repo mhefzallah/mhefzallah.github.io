@@ -1,0 +1,393 @@
+{
+  "name": "Odoo posted invoice → WhatsApp PDF",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Odoo invoice → WhatsApp\n1. In Odoo, add a boolean field `x_whatsapp_sent` on **account.move**.\n2. Add an automated action on invoice post that runs `record._portal_ensure_token()` so each invoice has a portal `access_token`.\n3. Fill **Odoo settings** and connect the Odoo API (API key) and WhatsApp credentials.",
+        "height": 260,
+        "width": 470,
+        "color": 5
+      },
+      "id": "666acfc1-fc00-456a-95a1-f824e28c058d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "eb0eb07f-c258-4857-a0c1-04cd5f4e272b",
+      "name": "Every 15 minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32ad4134-c37c-47ce-9e95-3e5a7325e6a1",
+              "name": "odooUrl",
+              "value": "https://your-company.odoo.com",
+              "type": "string"
+            },
+            {
+              "id": "67975678-d919-44f1-a5a7-6ca36548a4a5",
+              "name": "waPhoneNumberId",
+              "value": "YOUR_WA_PHONE_NUMBER_ID",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "37091791-e869-40a9-9197-953a1a128a1d",
+      "name": "Odoo settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "account.move",
+        "operation": "getAll",
+        "limit": 20,
+        "options": {
+          "fieldsList": [
+            "name",
+            "partner_id",
+            "amount_total",
+            "currency_id",
+            "invoice_date",
+            "access_token"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "move_type",
+              "value": "out_invoice"
+            },
+            {
+              "fieldName": "state",
+              "value": "posted"
+            },
+            {
+              "fieldName": "x_whatsapp_sent",
+              "value": "False"
+            }
+          ]
+        }
+      },
+      "id": "fe6a483d-a67e-42a9-8d64-ef953ba3d054",
+      "name": "Get unsent invoices",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        720,
+        300
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "cb43718392f84f",
+          "name": "Odoo API key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "get",
+        "contactId": "={{ $json.partner_id[0] }}"
+      },
+      "id": "cf966a4a-42e1-4d94-a2c8-5e04cb30da0b",
+      "name": "Get customer",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        960,
+        300
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "cb43718392f84f",
+          "name": "Odoo API key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const inv = $('Get unsent invoices').item.json;\nconst partner = $json;\nconst settings = $('Odoo settings').first().json;\nconst raw = String(partner.mobile || partner.phone || '').replace(/\\D/g, '').replace(/^0(?=5)/, '966');\nif (!raw) throw new Error('No mobile number on partner ' + partner.name);\nreturn {\n  invoiceId: inv.id,\n  number: inv.name,\n  customer: partner.name,\n  phone: raw,\n  amount: inv.amount_total,\n  currency: inv.currency_id?.[1] || 'SAR',\n  pdfUrl: settings.odooUrl + '/my/invoices/' + inv.id + '?report_type=pdf&download=true&access_token=' + inv.access_token,\n  waPhoneNumberId: settings.waPhoneNumberId,\n};"
+      },
+      "id": "29427af6-b65a-4ce9-ba17-9545a844968c",
+      "name": "Prepare message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.pdfUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "id": "3acffa66-a29a-4da9-a93a-e2b15aa881f1",
+      "name": "Download invoice PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Prepare message').item.json.waPhoneNumberId }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "type",
+              "value": "application/pdf"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1baf248-83ed-432a-934a-412cc3210714",
+      "name": "Upload PDF to WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "WhatsApp Cloud API (Bearer token)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Prepare message').item.json.waPhoneNumberId }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  messaging_product: \"whatsapp\",\n  to: $('Prepare message').item.json.phone,\n  type: \"document\",\n  document: {\n    id: $json.id,\n    filename: $('Prepare message').item.json.number.replace(/\\//g, '-') + \".pdf\",\n    caption: \"فاتورة \" + $('Prepare message').item.json.number + \" — \" + $('Prepare message').item.json.amount + \" \" + $('Prepare message').item.json.currency\n  }\n}) }}",
+        "options": {}
+      },
+      "id": "1c5a709b-a91f-4173-8d05-212d7a20128c",
+      "name": "Send document message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "a50cca1956d742",
+          "name": "WhatsApp Cloud API (Bearer token)"
+        }
+      },
+      "notes": "Outside a 24h session, send an approved template with a document header instead.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "account.move",
+        "operation": "update",
+        "customResourceId": "={{ $('Prepare message').item.json.invoiceId }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "x_whatsapp_sent",
+              "fieldValue": "True"
+            }
+          ]
+        }
+      },
+      "id": "3bb0fd66-b224-4d9e-bb5d-02a6a5be5904",
+      "name": "Mark invoice as sent",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        300
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "cb43718392f84f",
+          "name": "Odoo API key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every 15 minutes": {
+      "main": [
+        [
+          {
+            "node": "Odoo settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo settings": {
+      "main": [
+        [
+          {
+            "node": "Get unsent invoices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get unsent invoices": {
+      "main": [
+        [
+          {
+            "node": "Get customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get customer": {
+      "main": [
+        [
+          {
+            "node": "Prepare message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare message": {
+      "main": [
+        [
+          {
+            "node": "Download invoice PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download invoice PDF": {
+      "main": [
+        [
+          {
+            "node": "Upload PDF to WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload PDF to WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Send document message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send document message": {
+      "main": [
+        [
+          {
+            "node": "Mark invoice as sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Riyadh",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "source": "auto-n8n-pack (concept project)"
+  },
+  "versionId": "0e5bfad9-7b34-4c01-80eb-d5e290855f3c",
+  "tags": [
+    {
+      "name": "odoo"
+    },
+    {
+      "name": "erp"
+    },
+    {
+      "name": "whatsapp"
+    },
+    {
+      "name": "invoicing"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Bayt Al Zafaran — a fictional Saudi restaurant in Riyadh. Concept website with menu, gallery and table reservations." />
+    <meta name="theme-color" content="#5b1a18" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>Bayt Al Zafaran — Concept project</title>
+    <script type="module" crossorigin src="./assets/index-DkashEWY.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DbzTAVpM.css">
+  </head>
+  <body>
+    <a class="skip" href="#main" data-t="skip"></a>
+    <header class="top">
+      <div class="wrap top__row">
+        <a href="#main" class="brand">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><path d="M32 8c4 7 4 15 0 22-4-7-4-15 0-22z"/><path d="M32 56c-4-7-4-15 0-22 4 7 4 15 0 22z"/><path d="M8 32c7-4 15-4 22 0-7 4-15 4-22 0z"/><path d="M56 32c-7 4-15 4-22 0 7-4 15-4 22 0z"/></g></svg>
+          <span data-t="brand"></span>
+        </a>
+        <nav aria-label="Primary" class="top__nav">
+          <a href="#menu" data-t="nav.menu"></a>
+          <a href="#gallery" data-t="nav.gallery"></a>
+          <a href="#visit" data-t="nav.visit"></a>
+        </nav>
+        <div class="top__actions">
+          <button type="button" class="lang" id="lang" data-t="langSwitch" data-t-aria="langAria"></button>
+          <a class="btn btn--saffron" href="#reserve" data-t="nav.reserve"></a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="wrap hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow" data-t="hero.eyebrow"></p>
+            <h1><span data-t="hero.title"></span> <em data-t="hero.titleEm"></em></h1>
+            <p class="lead" data-t="hero.body"></p>
+            <div class="hero__cta">
+              <a class="btn btn--saffron" href="#reserve" data-t="hero.cta"></a>
+              <a class="btn btn--line" href="#menu" data-t="hero.secondary"></a>
+            </div>
+            <ul class="hero__facts" id="hero-facts"></ul>
+          </div>
+          <div class="hero__art">
+            <div class="arch">
+              <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=1100&q=75" data-t-alt="hero.imgAlt" alt="" />
+            </div>
+            <div class="seal" aria-hidden="true"><span data-t="hero.seal"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story">
+        <div class="wrap story__grid">
+          <h2 data-t="story.title"></h2>
+          <p data-t="story.body"></p>
+        </div>
+      </section>
+
+      <section class="section menu" id="menu" aria-labelledby="menu-title">
+        <div class="wrap">
+          <header class="sec-head">
+            <p class="eyebrow" data-t="menu.eyebrow"></p>
+            <h2 id="menu-title" data-t="menu.title"></h2>
+          </header>
+          <div class="menu__bar">
+            <div role="tablist" class="tabs" id="menu-tabs" data-t-aria="menu.tabsLabel"></div>
+            <label class="toggle"><input type="checkbox" id="veg-only" /><span data-t="menu.vegOnly"></span></label>
+          </div>
+          <div id="menu-panels"></div>
+          <p class="legend" id="menu-legend"></p>
+        </div>
+      </section>
+
+      <section class="section gallery" id="gallery" aria-labelledby="gallery-title">
+        <div class="wrap">
+          <header class="sec-head sec-head--light">
+            <p class="eyebrow" data-t="gallery.eyebrow"></p>
+            <h2 id="gallery-title" data-t="gallery.title"></h2>
+          </header>
+          <ul class="mosaic" id="mosaic"></ul>
+          <p class="fine" data-t="gallery.credit"></p>
+        </div>
+        <dialog class="lightbox" id="lightbox" aria-labelledby="lb-caption">
+          <figure>
+            <img id="lb-img" alt="" />
+            <figcaption id="lb-caption"></figcaption>
+          </figure>
+          <button type="button" class="lb-btn lb-prev" id="lb-prev" data-t-aria="gallery.prev">‹</button>
+          <button type="button" class="lb-btn lb-next" id="lb-next" data-t-aria="gallery.next">›</button>
+          <button type="button" class="lb-close" id="lb-close" data-t-aria="gallery.close">×</button>
+        </dialog>
+      </section>
+
+      <section class="section reserve" id="reserve" aria-labelledby="reserve-title">
+        <div class="wrap reserve__grid">
+          <div class="reserve__intro">
+            <p class="eyebrow" data-t="reserve.eyebrow"></p>
+            <h2 id="reserve-title" data-t="reserve.title"></h2>
+            <p data-t="reserve.body"></p>
+            <ul class="notes" id="reserve-notes"></ul>
+          </div>
+          <div class="card">
+            <form id="reserve-form" novalidate></form>
+            <div id="reserve-done" class="done" hidden tabindex="-1"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section visit" id="visit">
+        <div class="wrap visit__grid">
+          <div>
+            <p class="eyebrow" data-t="visit.eyebrow"></p>
+            <h2 data-t="visit.title"></h2>
+            <p class="addr" data-t="visit.address"></p>
+            <p class="phone" dir="ltr" data-t="visit.phone"></p>
+          </div>
+          <dl class="hours" id="hours"></dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot__row">
+        <p class="foot__brand" data-t="brand"></p>
+        <div>
+          <p><span class="badge" data-t="footer.badge"></span> <span data-t="footer.rights"></span></p>
+          <p class="fine" data-t="footer.note"></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
