@@ -36,6 +36,7 @@ def wa(text):
 
 MAIL = (f"mailto:{EMAIL}?subject={quote('Project enquiry')}&body="
         + quote("Hi Mohammed,\n\nCompany:\nWhat we need (Odoo / web / mobile):\nTimeline:\nBudget range:\n\nThanks,"))
+CV_FILE = "assets/cv/Mohammed_Hefzallah_CV.pdf"
 CV_REQ = wa("Hi Mohammed, could you share your CV? I found you through your portfolio.")
 CALL = wa("Hi Mohammed, I saw your portfolio and would like to book a 30-minute call about a project.")
 
@@ -239,6 +240,7 @@ def footer(prefix):
         <div class="cta__actions">
           <a class="btn btn--gold" href="{CALL}" target="_blank" rel="noopener">{ICON["wa"]}{T("Book a 30-min call", "احجز مكالمة ٣٠ دقيقة")}</a>
           <a class="btn btn--ghost" href="{MAIL}">{ICON["mail"]}{T("Send a project brief", "أرسل وصف المشروع")}</a>
+          <a class="btn btn--ghost" href="{prefix}{CV_FILE}" download>{ICON["arrow"]}{T("Download CV", "تحميل السيرة الذاتية")}</a>
         </div>
       </div>
       <ul class="contact-list">
@@ -265,7 +267,7 @@ def footer(prefix):
     <div class="wrap footer__row">
       <p>© <span data-year>2026</span> {T("Mohammed Hefzallah", "محمد حفظ الله")}</p>
       <p>{T("Cairo · Working with KSA, UAE &amp; Europe", "القاهرة · أعمل مع السعودية والإمارات وأوروبا")} · <span data-clock>--:--</span></p>
-      <p><a href="{CV_REQ}" target="_blank" rel="noopener">{T("Request CV", "اطلب السيرة الذاتية")}</a> · <a href="#main">{T("Back to top", "للأعلى")} ↑</a></p>
+      <p><a href="{prefix}{CV_FILE}" download>{T("Download CV (PDF)", "تحميل السيرة الذاتية PDF")}</a> · <a href="#main">{T("Back to top", "للأعلى")} ↑</a></p>
     </div>
   </footer>
   <div class="lightbox" data-lightbox hidden>
@@ -612,7 +614,7 @@ def home():
 
     <section class="section section--soft" id="experience">
       <div class="wrap">
-        {section_head("04", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_REQ}" target="_blank" rel="noopener">{T("Request full CV", "اطلب السيرة الذاتية")}</a>')}
+        {section_head("04", "Experience", "الخبرة", None, f'<a class="btn btn--outline btn--sm" href="{CV_FILE}" download>{T("Download CV", "تحميل السيرة الذاتية")}</a>')}
         <ol class="timeline">{exp_rows()}</ol>
         <div class="creds">
           <div class="cred reveal"><span class="cred__icon">{ICON["check"]}</span><b>{T("B.Sc. Computer Science", "بكالوريوس علوم الحاسب")}</b><span>{T("New Cairo Academy · 2024", "أكاديمية القاهرة الجديدة · ٢٠٢٤")}</span></div>
